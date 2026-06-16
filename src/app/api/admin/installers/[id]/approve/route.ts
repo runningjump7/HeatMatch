@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs/server';
 import { query } from '@/lib/db';
 
 export async function POST(
@@ -7,8 +6,8 @@ export async function POST(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { userId } = await auth();
-    if (!userId) {
+    const session = request.cookies.get('tradeev2_session')?.value;
+    if (!session) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 

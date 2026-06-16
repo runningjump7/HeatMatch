@@ -1,0 +1,727 @@
+# TRADEEV2 Authentication System — PRD
+
+**Status:** MVP  
+**Version:** 1.0  
+**Owner:** Alex Vaz  
+**Date:** 2026-06-14
+
+---
+
+## Problem Statement
+
+Current implementation uses Clerk for all authentication (admin + installers). This adds unnecessary complexity and cost for MVP, where:
+- **Admin** = 1 user (Alex)
+- **Installers** = 20–30 manually-invited users (no self-signup)
+- **End users** = anonymous, no accounts
+
+**Goal:** Replace Clerk with simple email + password authentication. Installers and admin use the same auth scheme, but different login pages and roles.
+
+---
+
+## Goals and Non-Goals
+
+### In Scope (MVP)
+- ✅ Email + password login for installers (`/installer-login`)
+- ✅ Email + password login for admin (`/admin-login`)
+- ✅ Simple session management (HTTP-only cookies or JWT)
+- ✅ Password reset via email (token-based link)
+- ✅ Installer invitation via email (admin creates record + sends invite with temp password)
+- ✅ Secure password hashing (bcrypt)
+- ✅ Role-based access control (installer vs admin)
+- ✅ Logout functionality
+
+### Out of Scope (MVP)
+- ❌ Multi-factor authentication (SMS or TOTP)
+- ❌ OAuth / social login
+- ❌ Self-signup for installers
+- ❌ Advanced role granularity (all installers have equal access)
+- ❌ User deactivation / admin disable
+- ❌ Session timeout policies
+
+---
+
+## Users and Jobs-to-be-Done
+
+### 1. **End User (Homeowner)** — Anonymous
+- **Job:** Submit lead form, get confirmation email with installer quotes
+- **Auth needed?** No
+- **Scope:** Not affected by this PRD
+
+### 2. **Installer (Tradie/Business)**
+- **Jobs:**
+  1. Sign up, verify credentials, and complete business profile
+  2. Log in and view incoming leads for their service areas
+  3. Respond to leads (interested/not relevant)
+  4. View performance metrics (leads sent, response rate, conversion)
+- **Auth needed?** Yes, email + password
+- **Onboarding flow:** Self-signup → verify credentials + license → payment method → profile setup → first login → view dashboard
+- **Access:** All leads in their service suburbs, own metrics only
+
+### 3. **Admin (Alex)**
+- **Job:** Create installer invites, approve/reject applications (if needed), view platform metrics
+- **Auth needed?** Yes, email + password
+- **One-time setup:** Email + hardcoded password (or manual database insert)
+- **Access:** All installers, all leads, all analytics
+
+---
+
+## Scope (In / Out)
+
+### In Scope
+1. **Database schema** — users, installer_profiles tables
+   - `users`: id, email, password_hash, role, installer_id, created_at, verified_at, payment_method_saved
+   - `installer_profiles`: id, installer_id, bio, years_in_business, specializations, service_radius, status (unverified/verified/active/paused)
+
+2. **Auth endpoints:**
+   - `POST /api/auth/signup` — email + password → create user
+   - `POST /api/auth/verify-email` — token → mark email verified
+   - `POST /api/auth/login` — email + password → session token
+   - `POST /api/auth/logout` — destroy session
+   - `POST /api/auth/password-reset` — email → send reset link
+   - `POST /api/auth/password-reset-confirm` — token + new password → update
+
+3. **Customer Signup Pages:**
+   - `/customer-signup` — email + password registration
+   - `/customer-signup/verify-email` — email verification status
+   - `/customer-signup/verify` — business verification (ABN, service areas)
+   - `/customer-signup/payment` — payment method (Stripe)
+   - `/customer-signup/profile` — bio, specializations, photo
+   - `/customer-signup/review` — summary before confirming
+
+4. **Customer Dashboard Pages:**
+   - `/customer-dashboard` — metrics overview (leads, response rate, etc.)
+   - `/customer-dashboard/leads` — list of leads sent + responses
+   - `/customer-dashboard/metrics` — detailed analytics (future)
+   - `/customer-dashboard/profile` — edit profile, change password
+   - `/customer-dashboard/settings` — pause/resume account, payment method
+
+5. **Admin Pages:**
+   - `/admin/installers` — list all installers with status
+   - `/admin/installers/pending-verification` — manual verification queue
+
+6. **Protected routes** — `/customer-dashboard/*`, `/customer-signup/*`, `/admin/*`
+
+7. **Middleware** — verify session token, attach user context, check verification status
+
+8. **Email templates** — email verification, payment confirmation, lead notifications (future)
+
+9. **Database integrations (TODO for future):**
+   - EWRB license verification API
+   - EPA Refrigerant License lookup
+   - Stripe payment processing
+   - Resend email service
+
+### Out of Scope (MVP)
+- Profile picture uploads
+- Advanced role matrix / permission levels
+- Audit logs
+- Session analytics
+- Installer ratings/reviews
+- Direct messaging between customer and installer
+- Bulk lead import
+- API access for installers
+
+---
+
+## Customer Signup & Onboarding
+
+### Signup Process (Self-Service)
+
+**Goal:** Convert high-quality heat pump installers from lead generators to paying customers. Verify credentials upfront to maintain platform quality.
+
+**User Journey:**
+
+```
+STAGE 1: Discovery & Interest
+→ Installer finds TRADEEV2 via Google/word-of-mouth
+→ Visits homepage, sees value prop: "Get qualified leads in your area"
+→ Clicks "Become a Partner" or "Sign Up as Installer"
+
+STAGE 2: Account Creation
+→ /customer-signup page
+→ Enters: email, password, confirm password
+→ Email verified via confirmation link (TODO: Resend integration)
+→ Redirected to /customer-signup
+
+STAGE 3: Business Verification (Mandatory)
+→ /customer-signup/verify
+→ Enters business details:
+  - Business name (required)
+  - ABN / Company number (required - for lookup)
+  - Phone (required)
+  - Business email (auto-filled from signup email)
+  - Service suburbs (checkboxes: Takapuna, Devonport, Birkenhead, etc.)
+→ System verifies via EWRB / EPA Refrigerant License registry (TODO: API integration)
+→ If verified → "✓ Credentials verified"
+→ If not found → "We couldn't verify your credentials. Please upload proof."
+  - Upload license/certificate (PDF, JPG)
+  - Manual review by Alex (48-72 hour turnaround)
+
+STAGE 4: Payment Method (Mandatory)
+→ /customer-signup/payment
+→ Stripe integration (TODO)
+→ Collects:
+  - Card details (visa, mastercard)
+  - Billing name, address, postal code
+→ Explanation: "You'll be charged $X per lead sent to you, billed monthly"
+→ Test charge: $0.01 (to verify card works)
+
+STAGE 5: Profile Setup (Mandatory)
+→ /customer-signup/profile
+→ Installer completes:
+  - Business bio/description (100-300 chars)
+  - Years in business
+  - Specializations (residential, commercial, retrofit, etc.)
+  - Photo (business/team photo) - optional for MVP, required later
+  - Service radius (km from primary suburb)
+→ Preview profile as end users will see it
+
+STAGE 6: Review & Confirm
+→ /customer-signup/review
+→ Summary screen showing:
+  - ✓ Email verified
+  - ✓ Credentials verified / pending review
+  - ✓ Payment method saved
+  - ✓ Profile complete
+  - Business name, service areas, bio
+→ "Confirm & Start Receiving Leads" button
+→ Terms checkbox: "I agree to TRADEEV2 terms of service"
+
+STAGE 7: Welcome & First Login
+→ Welcome email: "Your account is ready! Log in to see your first leads."
+→ /customer-dashboard shows:
+  - "Welcome, [Business Name]!"
+  - "0 leads available for [Takapuna, Devonport]"
+  - Quick start guide: "How to respond to leads"
+  - Link to view metrics
+
+STAGE 8: Ongoing
+→ Installer logs in to /customer-dashboard
+→ Sees: new leads, past leads, metrics, account settings
+```
+
+### Metrics Visible to Customers
+
+Each installer sees their own performance dashboard:
+
+- **Leads This Month:** Count of leads sent to them
+- **Response Rate:** % of leads they've responded to
+- **Interest Rate:** % of leads they marked "interested"
+- **Profile Views:** How many customers viewed their profile (future)
+- **Avg Response Time:** How quickly they respond (future)
+
+### Customer Roles & Permissions
+
+- **Status: Unverified** → Can sign up, enter details, but cannot receive leads until verified
+- **Status: Verified (Manual)** → Credentials verified by Alex, can receive leads
+- **Status: Verified (Auto)** → License verified via registry, can receive leads immediately
+- **Status: Active** → Actively receiving leads
+- **Status: Paused** → Installer paused, no new leads (account stays active)
+- **Status: Inactive** → Unsubscribed, account closed
+
+---
+
+## User Flows
+
+### Flow 1: Customer Signs Up (Self-Service)
+```
+1. John (installer) visits tradeev2.nz/customer-signup
+2. Enters email: john@coolcomfort.co.nz, password, confirm
+3. Clicks "Create Account"
+4. System sends email: "Verify your email address"
+5. John clicks verification link in email
+6. Redirected to /customer-signup/verify
+7. Enters business details:
+   - Business name: Cool Comfort Heat Pumps
+   - ABN: 12 345 678 901
+   - Phone: 021234567
+   - Service suburbs: [Takapuna, Devonport, Birkenhead]
+8. System looks up ABN in EWRB registry
+9. If found: ✓ "Credentials verified" → proceeds
+10. If not found: Shows "Upload proof of license" → Alex reviews (48-72h)
+11. Redirected to /customer-signup/payment
+12. Enters payment card details via Stripe
+13. Test charge of $0.01 (verifies card works)
+14. Redirected to /customer-signup/profile
+15. Completes business profile:
+    - Bio: "Expert heat pump installers with 15+ years experience..."
+    - Years in business: 15
+    - Specializations: [Residential, Retrofit]
+    - Photo: uploads business photo (optional for MVP)
+16. Redirected to /customer-signup/review
+17. Reviews account summary
+18. Clicks "Confirm & Start Receiving Leads"
+19. Sees welcome message: "Your account is active!"
+20. Redirected to /customer-dashboard
+21. Can now view leads for [Takapuna, Devonport, Birkenhead]
+```
+
+### Flow 2: Customer Logs In
+```
+1. John goes to /installer-login
+2. John enters email + password
+3. System validates credentials against users table
+4. System creates HTTP-only session cookie (or JWT)
+5. John is redirected to /customer-dashboard
+6. John can now:
+   - View leads assigned to him
+   - Mark leads as interested / not relevant
+   - View profile
+   - Change password
+```
+
+### Flow 3: Customer Views Metrics
+```
+1. John logs in to /customer-dashboard
+2. Sees dashboard with metrics cards:
+   - Leads This Month: 12
+   - Response Rate: 75% (9 of 12 responded)
+   - Interest Rate: 56% (5 of 9 interested)
+3. Can click "View all leads" to see detailed list
+4. Can click each metric to drill down into details
+5. Sees trends over time (if available)
+```
+
+### Flow 4: Installer Forgets Password
+```
+1. John goes to /installer-login
+2. John clicks "Forgot password?"
+3. John enters his email
+4. System checks if email exists, sends reset link:
+   - Email: john@heatpumps.nz
+   - Link: tradeev2.nz/password-reset-confirm/[uuid-token]
+   - Token expires in 24 hours
+5. John clicks link in email
+6. John enters new password
+7. System validates password, updates users table
+8. John can now log in with new password
+```
+
+### Flow 5: Admin Logs In
+```
+1. Alex goes to /admin-login
+2. Alex enters email + password
+3. System validates credentials + checks role = 'admin'
+4. System creates session
+5. Alex is redirected to /admin
+6. Alex can:
+   - View all installers
+   - Create new installer invites
+   - View platform metrics
+   - View all leads
+```
+
+---
+
+## Functional Requirements
+
+### FR-1: User Table Schema
+**Database:**
+```sql
+CREATE TABLE users (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  role VARCHAR(50) NOT NULL DEFAULT 'installer', -- 'installer' or 'admin'
+  installer_id UUID REFERENCES installers(id) ON DELETE CASCADE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  password_reset_token VARCHAR(255) UNIQUE,
+  password_reset_expires_at TIMESTAMP,
+  last_login_at TIMESTAMP,
+  CONSTRAINT role_check CHECK (role IN ('installer', 'admin'))
+);
+
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_users_installer_id ON users(installer_id);
+```
+
+### FR-2: Login Endpoint
+**Route:** `POST /api/auth/login`
+
+**Request:**
+```json
+{
+  "email": "john@example.com",
+  "password": "MyPassword123"
+}
+```
+
+**Response (Success - 200):**
+```json
+{
+  "success": true,
+  "user": {
+    "id": "uuid",
+    "email": "john@example.com",
+    "role": "installer",
+    "installer_id": "uuid"
+  },
+  "token": "jwt_or_session_id"
+}
+```
+
+**Response (Failure - 401):**
+```json
+{
+  "success": false,
+  "error": "Invalid email or password"
+}
+```
+
+**Session Management:**
+- Option A: HTTP-only cookie (recommended for security)
+  - Cookie name: `tradeev2_session`
+  - HttpOnly: true
+  - Secure: true (HTTPS only)
+  - SameSite: Strict
+  - Max-Age: 7 days
+- Option B: JWT token (if stateless required)
+  - Algorithm: HS256
+  - Expires: 7 days
+  - Include in response body, client stores in secure storage
+
+### FR-3: Logout Endpoint
+**Route:** `POST /api/auth/logout`
+
+**Response (200):**
+```json
+{
+  "success": true
+}
+```
+
+**Action:** Clear HTTP-only cookie or invalidate token.
+
+### FR-4: Password Reset Flow
+**Route 1:** `POST /api/auth/password-reset`
+
+**Request:**
+```json
+{
+  "email": "john@example.com"
+}
+```
+
+**Response (200):**
+```json
+{
+  "success": true,
+  "message": "If an account exists, a reset link has been sent to your email"
+}
+```
+
+**Action:**
+- Generate UUID token
+- Store in `users.password_reset_token`
+- Set `password_reset_expires_at` to 24 hours from now
+- Send email with link: `tradeev2.nz/password-reset-confirm/[token]`
+
+**Route 2:** `POST /api/auth/password-reset-confirm`
+
+**Request:**
+```json
+{
+  "token": "uuid-token",
+  "new_password": "NewPassword456"
+}
+```
+
+**Response (200):**
+```json
+{
+  "success": true,
+  "message": "Password reset successfully"
+}
+```
+
+**Action:**
+- Validate token exists + not expired
+- Hash new password with bcrypt
+- Update `users.password_hash`
+- Clear `password_reset_token` and `password_reset_expires_at`
+
+### FR-5: Middleware — Session Verification
+**File:** `src/middleware.ts`
+
+**Logic:**
+1. For protected routes (`/customer-dashboard/*`, `/admin/*`):
+   - Extract session cookie or Authorization header
+   - Verify token / session validity
+   - If invalid, redirect to login page
+   - If valid, attach user context to request
+2. For public routes (`/`, `/installer-login`, `/admin-login`):
+   - No check required
+
+### FR-6: Admin Invite Endpoint (Future API)
+**Route:** `POST /api/admin/installers/invite`
+
+**Request:**
+```json
+{
+  "email": "john@heatpumps.nz",
+  "business_name": "Cool Comfort",
+  "phone": "021234567",
+  "service_suburbs": ["Takapuna", "Devonport"]
+}
+```
+
+**Response (201):**
+```json
+{
+  "success": true,
+  "installer": {
+    "id": "uuid",
+    "email": "john@heatpumps.nz",
+    "business_name": "Cool Comfort"
+  },
+  "message": "Invitation email sent"
+}
+```
+
+**Action:**
+1. Create record in `installers` table
+2. Create record in `users` table with role='installer', temp password
+3. Send email with login credentials
+
+### FR-7: Password Requirements
+- Minimum 8 characters
+- At least 1 uppercase letter
+- At least 1 number
+- Can contain special characters (optional but allowed)
+
+### FR-8: Rate Limiting (Login)
+- Max 5 failed login attempts per email per 15 minutes
+- Respond with 429 (Too Many Requests) after limit hit
+- Clear limit on successful login
+
+---
+
+## Non-Functional Requirements
+
+### NFR-1: Security
+- ✅ Passwords hashed with bcrypt (salt rounds: 10)
+- ✅ No plaintext passwords in logs or responses
+- ✅ Session tokens cannot be reused after logout
+- ✅ HTTPS enforced (Vercel default)
+- ✅ SQL injection protection (parameterized queries)
+- ✅ CSRF protection via SameSite cookies
+- ✅ Password reset tokens are single-use, 24-hour expiry
+
+### NFR-2: Performance
+- ✅ Login endpoint: <200ms (bcrypt comparison ~100ms)
+- ✅ Password reset email: <500ms
+- ✅ Middleware session check: <50ms
+- ✅ No session table queries on every request (stateless JWT or quick cookie check)
+
+### NFR-3: Reliability
+- ✅ Database connection pooling (already in db.ts)
+- ✅ Email delivery via Resend (transactional + retries)
+- ✅ Graceful error handling (no tech details leaked)
+
+### NFR-4: Maintainability
+- ✅ Clear separation of auth logic (lib/auth.ts)
+- ✅ Reusable email templates
+- ✅ TypeScript types for user/session objects
+- ✅ Unit tests for password hashing, token validation
+
+---
+
+## Acceptance Criteria
+
+### AC-1: Email + Password Login Works
+- [ ] Admin can log in at `/admin-login` with email + password
+- [ ] Installer can log in at `/installer-login` with email + password
+- [ ] Failed login shows "Invalid email or password"
+- [ ] Successful login creates session and redirects to dashboard
+
+### AC-2: Session Persistence
+- [ ] After login, user remains logged in across page refreshes
+- [ ] After logout, user cannot access protected routes without re-logging in
+- [ ] Session expires after 7 days of inactivity (optional for MVP)
+
+### AC-3: Password Reset Works
+- [ ] User enters email, receives reset email within 2 minutes
+- [ ] Reset link is single-use
+- [ ] Reset link expires after 24 hours
+- [ ] User can log in with new password
+
+### AC-4: Admin Can Invite Installers
+- [ ] Admin creates installer invite via dashboard or API
+- [ ] Installer receives email with temporary password
+- [ ] Installer can log in and change password on first login
+
+### AC-5: Passwords Are Secure
+- [ ] Weak passwords (e.g., "password123") are rejected
+- [ ] Passwords are hashed, not stored plaintext
+- [ ] Failed logins do not reveal whether email exists (generic error message)
+
+### AC-6: Roles Are Enforced
+- [ ] Admin-only routes (`/admin/*`) redirect non-admin users to `/` or login
+- [ ] Installer routes (`/customer-dashboard/*`) redirect non-installers
+- [ ] Installers cannot access other installers' leads
+
+### AC-7: Rate Limiting Prevents Brute Force
+- [ ] After 5 failed login attempts, IP is rate-limited for 15 minutes
+- [ ] Rate limit applies per email, not globally
+
+### AC-8: Clerk Is Removed
+- [ ] No `@clerk/nextjs` imports remain in codebase
+- [ ] middleware.ts uses custom auth logic
+- [ ] All Clerk environment variables can be deleted
+- [ ] No Clerk dashboard calls required
+
+---
+
+## Metrics and Instrumentation
+
+### M-1: Authentication Events
+Log to analytics_daily (optional for MVP, but structure should exist):
+```sql
+-- Extend analytics or create new table
+CREATE TABLE auth_events (
+  id UUID PRIMARY KEY,
+  event_type VARCHAR(50), -- 'login', 'logout', 'password_reset', 'failed_login'
+  user_id UUID REFERENCES users(id),
+  ip_address INET,
+  created_at TIMESTAMP
+);
+```
+
+### M-2: Key Metrics
+- Failed login attempts per email (detect brute force)
+- Password reset requests per email
+- Session duration (average time logged in before logout)
+
+### M-3: Monitoring
+- Email delivery failures (password reset emails bouncing)
+- Login endpoint latency (should stay <200ms)
+- Database connection pool health
+
+---
+
+## Risks and Mitigations
+
+| Risk | Severity | Mitigation |
+|------|----------|-----------|
+| Weak password policies | Medium | Enforce 8+ chars, uppercase, number |
+| Brute force attacks | High | Rate limit failed logins (5 per 15min) |
+| Email compromise | High | Password reset tokens are single-use, 24hr expiry |
+| Session hijacking | High | HTTP-only cookies + Secure + SameSite=Strict |
+| Database breach | High | Passwords hashed with bcrypt (irreversible) |
+| Email delivery failure | Medium | Monitor Resend, fall back to manual reset process |
+| Loss of password reset token | Medium | Acceptable for MVP (user can retry) |
+| Scaling (single super-admin) | Low | Not a concern for MVP; roles added in MVP+1 |
+
+---
+
+## Rollout Plan
+
+### Phase 1: Database & Auth Library (Day 1)
+- [ ] Create `users` table with migrations
+- [ ] Write `lib/auth.ts` with bcrypt, token, session utilities
+- [ ] Write tests for password validation, hashing, token generation
+
+### Phase 2: Auth Endpoints (Day 2)
+- [ ] Implement `POST /api/auth/login`
+- [ ] Implement `POST /api/auth/logout`
+- [ ] Implement `POST /api/auth/password-reset`
+- [ ] Implement `POST /api/auth/password-reset-confirm`
+- [ ] Add rate limiting middleware
+
+### Phase 3: Middleware & Route Protection (Day 2)
+- [ ] Rewrite `src/middleware.ts` to use custom auth
+- [ ] Protect `/customer-dashboard/*` and `/admin/*` routes
+- [ ] Add user context to request (accessible in API routes)
+
+### Phase 4: UI Pages (Day 3)
+- [ ] Build `/installer-login` page
+- [ ] Build `/admin-login` page
+- [ ] Build `/password-reset` page
+- [ ] Build `/password-reset-confirm/[token]` page
+
+### Phase 5: Email Templates (Day 3)
+- [ ] Create password reset email template (Resend)
+- [ ] Create installer invitation email template
+- [ ] Test email delivery
+
+### Phase 6: Admin Invite Flow (Day 4)
+- [ ] Build admin endpoint to create installer + send invite
+- [ ] Add admin dashboard UI for inviting
+- [ ] Manual test: create 5 test installers
+
+### Phase 7: Clerk Removal (Day 4)
+- [ ] Remove `@clerk/nextjs` from package.json
+- [ ] Remove all Clerk environment variables from .env
+- [ ] Remove Clerk UI components (e.g., `/clerk/user-profile` link)
+- [ ] Verify no Clerk imports remain
+
+### Phase 8: Testing & Rollout (Day 5)
+- [ ] Manual smoke test: login, logout, password reset
+- [ ] E2E test critical flows (can wait for Day 5 or before MVP launch)
+- [ ] Deploy to Vercel
+- [ ] Send invite to 3 test installers, verify they can log in
+
+---
+
+## Open Questions
+
+1. **Session storage:** HTTP-only cookie (recommended) or JWT in Authorization header?
+   - **Answer:** HTTP-only cookie (simpler, more secure by default)
+
+2. **First-time password change:** Should installers be forced to change password on first login?
+   - **Answer:** Yes, redirect to password change page if temp password used
+
+3. **Admin self-setup:** How does Alex (admin) create their initial account?
+   - **Answer:** Manual database insert or one-time setup endpoint (secured by API key)
+
+4. **Email provider:** Resend already integrated, use it for password reset emails?
+   - **Answer:** Yes, Resend is already in package.json
+
+5. **Logout:** Clear session everywhere or allow multiple active sessions?
+   - **Answer:** Single active session per user (simpler for MVP)
+
+---
+
+## Success Criteria (MVP Launch)
+
+- ✅ All installers can log in with email + password
+- ✅ Admin can create and invite installers
+- ✅ Password reset works end-to-end
+- ✅ Clerk is completely removed
+- ✅ Zero Clerk-related errors in logs
+- ✅ 5+ test installers can log in successfully
+- ✅ Session lasts 7 days (or until logout)
+
+---
+
+## Appendix: Migration Plan from Clerk
+
+### Step 1: Dual-mode (Clerk + Email/Password)
+- Add new `users` table
+- Keep Clerk in place
+- Implement email+password login alongside Clerk
+- Redirect to either Clerk or email login based on role
+
+### Step 2: Switch Installers to Email/Password
+- Manually migrate installer records from Clerk to `users` table
+- Test installer logins work with email/password
+- Keep Clerk for admin temporarily
+
+### Step 3: Switch Admin to Email/Password
+- Create admin user in `users` table
+- Test admin login works
+- Deactivate Clerk
+
+### Step 4: Remove Clerk
+- Delete all Clerk imports and environment variables
+- Delete Clerk from package.json
+- Verify no Clerk references remain
+
+**Timeline:** 5 days (as per rollout plan above)
+
+---
+
+**Document Owner:** Alex Vaz  
+**Last Updated:** 2026-06-14  
+**Next Review:** Upon completion of Phase 8 (Testing & Rollout)

@@ -6,12 +6,15 @@ export default function Home() {
       <nav className="border-b bg-white">
         <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-blue-600">TRADEEV2</h1>
-          <div className="flex gap-4">
+          <div className="flex gap-6">
             <Link href="/installers" className="text-gray-600 hover:text-gray-900">
-              Browse
+              Browse Installers
             </Link>
-            <Link href="/clerk/user-profile" className="text-blue-600 hover:text-blue-700">
-              Sign In
+            <Link href="/installer-signup" className="text-blue-600 hover:text-blue-700 font-semibold">
+              Become a Partner
+            </Link>
+            <Link href="/admin-login" className="text-gray-600 hover:text-gray-900 text-sm">
+              Admin
             </Link>
           </div>
         </div>

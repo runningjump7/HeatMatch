@@ -7,10 +7,12 @@
     "build": "next build",
     "start": "next start",
     "db:init": "node -r dotenv/config -r ts-node/register scripts/init-db.ts",
-    "db:seed": "node -r dotenv/config -r ts-node/register scripts/seed-db.ts"
+    "db:seed": "node -r dotenv/config -r ts-node/register scripts/seed-db.ts",
+    "db:users": "node -r dotenv/config -r ts-node/register scripts/create-users-table.ts",
+    "db:test-users": "node -r dotenv/config -r ts-node/register scripts/create-test-users.ts"
   },
   "dependencies": {
-    "@clerk/nextjs": "^7.5.2",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^17.4.2",
     "next": "16.2.9",
     "pg": "^8.21.0",
@@ -22,6 +24,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/pg": "^8.20.0",
     "@types/react": "^19",

@@ -1,17 +1,20 @@
-import { auth } from '@clerk/nextjs/server';
-import { redirect } from 'next/navigation';
 import Link from 'next/link';
+import { cookies } from 'next/headers';
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { userId } = await auth();
+  const cookieStore = await cookies();
+  const session = cookieStore.get('tradeev2_session')?.value;
 
-  // Protect the entire admin section
-  if (!userId) {
-    redirect('/');
+  if (!session) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div>Not authenticated</div>
+      </div>
+    );
   }
 
   return (
@@ -43,7 +46,13 @@ export default async function AdminLayout({
           </Link>
         </nav>
 
-        <div className="absolute bottom-6 left-6 right-6">
+        <div className="absolute bottom-6 left-6 right-6 space-y-2">
+          <Link
+            href="/api/auth/logout"
+            className="block px-4 py-2 rounded-lg bg-red-700 hover:bg-red-600 transition text-center text-sm"
+          >
+            Logout
+          </Link>
           <Link
             href="/"
             className="block px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 transition text-center text-sm"
@@ -57,7 +66,7 @@ export default async function AdminLayout({
       <main className="flex-1">
         <header className="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center">
           <h2 className="text-lg font-semibold text-gray-900">Admin Panel</h2>
-          <div className="text-sm text-gray-600">Logged in as: {userId}</div>
+          <div className="text-sm text-gray-600">Admin User</div>
         </header>
 
         <div className="p-8">{children}</div>
