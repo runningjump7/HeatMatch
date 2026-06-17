@@ -125,7 +125,7 @@ export default function InstallerAccountPage() {
               type="text"
               value={account.business_name}
               onChange={(e) => setAccount({ ...account, business_name: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-600"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-600"
               placeholder="Your username"
             />
           </div>
@@ -137,7 +137,7 @@ export default function InstallerAccountPage() {
               type="tel"
               value={account.phone}
               onChange={(e) => setAccount({ ...account, phone: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-600"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-600"
               placeholder="+64 9 234 5678"
             />
           </div>
@@ -155,7 +155,7 @@ export default function InstallerAccountPage() {
               type="password"
               value={password.current}
               onChange={(e) => setPassword({ ...password, current: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-600"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-600"
               placeholder="••••••••"
             />
           </div>
@@ -166,7 +166,7 @@ export default function InstallerAccountPage() {
               type="password"
               value={password.new}
               onChange={(e) => setPassword({ ...password, new: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-600"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-600"
               placeholder="••••••••"
             />
             <p className="text-xs text-gray-500 mt-1">Min 8 characters, 1 uppercase, 1 number</p>
@@ -178,7 +178,7 @@ export default function InstallerAccountPage() {
               type="password"
               value={password.confirm}
               onChange={(e) => setPassword({ ...password, confirm: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-600"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-600"
               placeholder="••••••••"
             />
           </div>

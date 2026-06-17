@@ -24,10 +24,22 @@ export default function InstallerLeadsPage() {
   const [actionModal, setActionModal] = useState<{ lead: Lead; action: 'accept' | 'reject' | 'complete' } | null>(null);
   const [reason, setReason] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [approvalStatus, setApprovalStatus] = useState<string>('unverified');
 
   useEffect(() => {
     fetchLeads();
+    fetchApprovalStatus();
   }, [filter]);
+
+  const fetchApprovalStatus = async () => {
+    try {
+      const res = await fetch('/api/installer/profile');
+      const data = await res.json();
+      setApprovalStatus(data.profile?.approval_status || 'unverified');
+    } catch (err) {
+      console.error('Failed to fetch approval status:', err);
+    }
+  };
 
   const fetchLeads = async () => {
     setLoading(true);
@@ -56,7 +68,7 @@ export default function InstallerLeadsPage() {
           ? JSON.stringify({ reason })
           : actionModal.action === 'complete'
             ? JSON.stringify({ notes: reason })
-            : {};
+            : undefined;
 
       const res = await fetch(endpoint, {
         method: 'POST',
@@ -190,17 +202,25 @@ export default function InstallerLeadsPage() {
 
                   {/* Action Buttons */}
                   <div className="flex flex-wrap gap-3 pt-4">
+                    {approvalStatus !== 'verified' && (
+                      <p className="text-sm text-yellow-700 bg-yellow-50 px-3 py-2 rounded-lg w-full">
+                        Your account must be verified before accepting leads.
+                      </p>
+                    )}
+
                     {lead.status === 'new' && (
                       <>
                         <button
                           onClick={() => setActionModal({ lead, action: 'accept' })}
-                          className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium text-sm"
+                          disabled={approvalStatus !== 'verified'}
+                          className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           Accept Lead
                         </button>
                         <button
                           onClick={() => setActionModal({ lead, action: 'reject' })}
-                          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium text-sm"
+                          disabled={approvalStatus !== 'verified'}
+                          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           Reject
                         </button>
@@ -210,7 +230,8 @@ export default function InstallerLeadsPage() {
                     {lead.status === 'accepted' && (
                       <button
                         onClick={() => setActionModal({ lead, action: 'complete' })}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium text-sm"
+                        disabled={approvalStatus !== 'verified'}
+                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         Mark Complete
                       </button>

@@ -7,8 +7,8 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-blue-600">TRADEEV2</h1>
           <div className="flex gap-6">
-            <Link href="/installers" className="text-gray-600 hover:text-gray-900">
-              Browse Installers
+            <Link href="/search" className="text-gray-600 hover:text-gray-900">
+              Find a Tradee
             </Link>
             <Link href="/installer-signup" className="text-blue-600 hover:text-blue-700 font-semibold">
               Become a Partner
@@ -31,16 +31,16 @@ export default function Home() {
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link
-              href="/installers"
+              href="/search"
               className="px-8 py-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition"
             >
-              Browse Installers
+              Find a Tradee
             </Link>
             <Link
-              href="/get-quotes"
+              href="/search"
               className="px-8 py-4 border-2 border-blue-600 text-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition"
             >
-              Get Free Quotes
+              Get a Quote
             </Link>
           </div>
         </section>
@@ -54,7 +54,7 @@ export default function Home() {
             {['Takapuna', 'Devonport', 'Birkenhead', 'Milford', 'Northcote', 'Long Bay', 'Unsworth Heights', 'Glenfield'].map((suburb) => (
               <Link
                 key={suburb}
-                href={`/installers?suburb=${suburb.toLowerCase()}`}
+                href={`/search?suburb=${encodeURIComponent(suburb)}`}
                 className="p-4 border rounded-lg hover:border-blue-600 hover:bg-blue-50 transition text-center"
               >
                 {suburb}

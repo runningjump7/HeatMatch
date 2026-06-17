@@ -2,12 +2,20 @@
 
 import { useState, useEffect } from 'react';
 
+type ProfileState = {
+  business_name: string;
+  years_in_business: number | '';
+  bio: string;
+  images: string[];
+  profile_active: boolean;
+};
+
 export default function InstallerProfilePage() {
-  const [profile, setProfile] = useState({
+  const [profile, setProfile] = useState<ProfileState>({
     business_name: '',
     years_in_business: '',
     bio: '',
-    images: [] as string[],
+    images: [],
     profile_active: false,
   });
   const [loading, setLoading] = useState(true);
@@ -107,7 +115,7 @@ export default function InstallerProfilePage() {
             type="text"
             value={profile.business_name}
             onChange={(e) => setProfile({ ...profile, business_name: e.target.value })}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-600"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-600"
             placeholder="Your business name"
           />
         </div>
@@ -119,7 +127,7 @@ export default function InstallerProfilePage() {
             type="number"
             value={profile.years_in_business}
             onChange={(e) => setProfile({ ...profile, years_in_business: parseInt(e.target.value) || '' })}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-600"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-600"
             placeholder="e.g., 5"
           />
         </div>
@@ -131,7 +139,7 @@ export default function InstallerProfilePage() {
             value={profile.bio}
             onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
             rows={4}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-600"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-600"
             placeholder="Tell customers about your business..."
           />
         </div>
@@ -145,7 +153,7 @@ export default function InstallerProfilePage() {
               value={imageInput}
               onChange={(e) => setImageInput(e.target.value)}
               placeholder="Paste image URL"
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm placeholder-gray-600"
+              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm text-gray-900 placeholder-gray-600"
             />
             <button
               onClick={addImage}

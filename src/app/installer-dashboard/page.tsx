@@ -2,6 +2,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { query } from '@/lib/db';
+import SetupGuide from '@/src/components/SetupGuide';
 
 export default async function InstallerDashboard() {
   const cookieStore = await cookies();
@@ -25,6 +26,16 @@ export default async function InstallerDashboard() {
     }
 
     const installerId = userResult.rows[0].installer_id;
+
+    // Fetch installer approval status
+    const installerResult = await query(
+      `SELECT approval_status FROM installers WHERE id = $1`,
+      [installerId]
+    );
+
+    const approvalStatus = installerResult.rows.length > 0
+      ? installerResult.rows[0].approval_status
+      : 'unverified';
 
     // Fetch metrics
     const metricsResult = await query(
@@ -52,6 +63,22 @@ export default async function InstallerDashboard() {
           <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
           <p className="text-gray-600 mt-2">Welcome back! Here's your performance at a glance.</p>
         </div>
+
+        {approvalStatus === 'unverified' && (
+          <div className="space-y-6">
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 flex items-start gap-3">
+              <div className="text-2xl">⚠️</div>
+              <div>
+                <p className="font-semibold text-yellow-900">Your account is pending approval</p>
+                <p className="text-sm text-yellow-800 mt-1">
+                  Complete your profile below to help us verify your account faster. You can come back and edit anytime.
+                </p>
+              </div>
+            </div>
+
+            <SetupGuide />
+          </div>
+        )}
 
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

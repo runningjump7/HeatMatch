@@ -28,6 +28,23 @@ export async function POST(
 
     const installerId = userResult.rows[0].installer_id;
 
+    // Check if installer is verified
+    const installerResult = await query(
+      `SELECT approval_status FROM installers WHERE id = $1`,
+      [installerId]
+    );
+
+    if (!installerResult.rows.length) {
+      return NextResponse.json({ error: 'Installer not found' }, { status: 404 });
+    }
+
+    if (installerResult.rows[0].approval_status !== 'verified') {
+      return NextResponse.json(
+        { error: 'Your account must be verified before accepting leads' },
+        { status: 403 }
+      );
+    }
+
     // Update lead status to "accepted"
     await query(
       `UPDATE leads SET status = 'accepted' WHERE id = $1 AND installer_id = $2`,

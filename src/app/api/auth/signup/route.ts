@@ -44,23 +44,47 @@ export async function POST(request: NextRequest) {
     }
 
     const hashedPassword = await hashPassword(password);
+
+    // Create installer first
+    const installerResult = await query(
+      `INSERT INTO installers (approval_status)
+       VALUES ('unverified')
+       RETURNING id`,
+      []
+    );
+
+    const installerId = installerResult.rows[0].id;
+
+    // Create user with installer_id
     const result = await query(
-      `INSERT INTO users (email, password_hash, role)
-       VALUES ($1, $2, $3)
+      `INSERT INTO users (email, password_hash, role, installer_id)
+       VALUES ($1, $2, $3, $4)
        RETURNING id, email`,
-      [emailLower, hashedPassword, 'installer']
+      [emailLower, hashedPassword, 'installer', installerId]
     );
 
     const userId = result.rows[0].id;
 
-    return NextResponse.json(
+    // Auto-login by setting session cookie
+    const response = NextResponse.json(
       {
         success: true,
-        message: 'Account created. Please verify your email.',
+        message: 'Account created successfully!',
         userId,
+        installerId,
       },
       { status: 201 }
     );
+
+    response.cookies.set('tradeev2_session', userId, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 7 * 24 * 60 * 60,
+      path: '/',
+    });
+
+    return response;
   } catch (error) {
     console.error('Signup error:', error);
     return NextResponse.json(

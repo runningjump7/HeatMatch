@@ -118,6 +118,12 @@ export default async function AdminDashboard() {
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
         <div className="flex gap-4 flex-wrap">
           <a
+            href="/admin/create-business"
+            className="px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition"
+          >
+            Create Business
+          </a>
+          <a
             href="/admin/installers/pending"
             className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
           >

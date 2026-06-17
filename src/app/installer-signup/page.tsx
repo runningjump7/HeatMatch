@@ -33,7 +33,7 @@ export default function InstallerSignupPage() {
       }
 
       setSuccess(true);
-      setTimeout(() => router.push('/customer-signup/verify'), 2000);
+      setTimeout(() => router.push('/installer-dashboard'), 2000);
     } catch (err) {
       setError('An error occurred. Please try again.');
       console.error(err);
@@ -71,7 +71,7 @@ export default function InstallerSignupPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 placeholder-gray-600"
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-600"
                   placeholder="business@example.com"
                   required
                 />
@@ -83,8 +83,8 @@ export default function InstallerSignupPage() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 placeholder-gray-600"
-                  placeholder="••••••••"
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-600"
+                  placeholder="Enter password"
                   required
                 />
                 <p className="text-xs text-gray-500 mt-1">Min 8 chars, 1 uppercase, 1 number</p>
@@ -96,8 +96,8 @@ export default function InstallerSignupPage() {
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 placeholder-gray-600"
-                  placeholder="••••••••"
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-600"
+                  placeholder="Confirm password"
                   required
                 />
               </div>

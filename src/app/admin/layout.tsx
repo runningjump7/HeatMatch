@@ -33,6 +33,12 @@ export default async function AdminLayout({
             📊 Dashboard
           </Link>
           <Link
+            href="/admin/create-business"
+            className="block px-4 py-2 rounded-lg hover:bg-gray-800 transition"
+          >
+            ➕ Create Business
+          </Link>
+          <Link
             href="/admin/installers/pending"
             className="block px-4 py-2 rounded-lg hover:bg-gray-800 transition"
           >

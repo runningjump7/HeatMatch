@@ -3,7 +3,7 @@ import { query } from '@/lib/db';
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = request.cookies.get('tradeev2_session')?.value;
@@ -13,15 +13,16 @@ export async function POST(
 
     const body = await request.json();
     const { action } = body;
+    const { id } = await params;
 
     if (action === 'approve') {
       await query(
         `UPDATE installers SET approved = true, approved_at = CURRENT_TIMESTAMP WHERE id = $1`,
-        [params.id]
+        [id]
       );
       return NextResponse.json({ success: true, message: 'Installer approved' });
     } else if (action === 'reject') {
-      await query(`DELETE FROM installers WHERE id = $1`, [params.id]);
+      await query(`DELETE FROM installers WHERE id = $1`, [id]);
       return NextResponse.json({ success: true, message: 'Installer rejected' });
     } else {
       return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
