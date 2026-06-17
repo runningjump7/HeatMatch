@@ -1,10 +1,10 @@
-# TRADEEV2 Next Session Handoff (2026-06-16)
+# TRADEEV2 Next Session Handoff (2026-06-17 → 2026-06-18)
 
 ## Status Summary
-- **Phase:** MVP Implementation
-- **Completion:** ~60% (Phase 1A done, Phase 1B/1C pending)
-- **Last Session:** Built complete installer UX (login, dashboard, leads, profile, account)
-- **App URL:** http://localhost:3003 (when dev server running)
+- **Phase:** MVP Implementation - Phase 1A Enhanced ✅
+- **Completion:** ~70% (Phase 1A + Onboarding done, Phase 1B/1C pending)
+- **Last Session:** Enhanced signup with progressive disclosure, added approval status system, built 4-step setup guide
+- **App URL:** http://localhost:3000 (when dev server running)
 
 ---
 
@@ -19,12 +19,22 @@
 - ✅ Installer account settings page (phone, username, password change, 2FA/notifications stubs)
 - ✅ All supporting API endpoints
 - ✅ Database migrations (schema updates, suburbs table, analytics table)
-- ✅ Fixed placeholder text color (darker grey for readability)
+- ✅ Fixed placeholder text color (darker grey for readability) + all input text colors (text-gray-900)
+
+### Enhanced Signup & Onboarding (DONE - Session 2026-06-17)
+- ✅ Signup now auto-logs in and redirects to dashboard (progressive disclosure)
+- ✅ Added approval_status column to installers (unverified/verified/rejected)
+- ✅ Built SetupGuide component (4-step interactive onboarding with progress bar)
+- ✅ Four modal forms: Business Info, Experience, Service Areas, Portfolio Images
+- ✅ Each step saves independently, can be completed asynchronously
+- ✅ Dashboard shows "⚠️ Your account is pending approval" banner for unverified users
+- ✅ Unverified installers blocked from accepting leads (403 error + disabled UI)
 
 ### Authentication & Foundation
 - ✅ Email+password auth (signup/login/logout)
 - ✅ Session middleware protecting installer/admin routes
 - ✅ Admin approval workflow for installer signups
+- ✅ Approval status tracking prevents unverified installers from accepting leads
 
 ---
 
@@ -35,44 +45,73 @@
    - Search bar: "Looking for Heat Pump Installers in [suburb]"
    - Results: Grid/list of installer cards (name, years, photo)
    - Click card → view full profile
+   - Only shows **verified + active** installer profiles
    - API: GET /api/search?suburb=[suburb]
 
 2. **Public installer profile page** (/search/installer/[id])
    - Display: name, photo, years, bio, images, rating placeholder
    - Buttons: Call, Email, Get a Quote
-   - Track profile views in analytics
+   - Track profile views in analytics (increment daily analytics counter)
    - API: GET /api/search/installer/[id]
 
-3. **Get a Quote form** (single installer lead)
-   - Fields: name, email, phone, address, description, urgency, budget, property type, system type
-   - Submit → creates lead with status="new" (confirmed)
-   - API: POST /api/leads (update to mark as confirmed vs. unconfirmed)
+3. **Get a Quote form** (/search/installer/[id]/quote)
+   - Fields: name, email, phone, suburb, description
+   - Submit → creates lead with status="new" + installer_id
+   - Increments analytics search_impressions counter
+   - API: POST /api/leads (already built)
 
 ### Phase 1C: Admin Tools (~2-3 hours)
 1. **Admin create business page** (/admin/create-business)
-   - Full form: email, password, phone, business name, ABN, address, photo, bio, years, images, status toggle
-   - Submit → creates installer record (auto-approved)
-   - API: POST /api/admin/create-business
+   - Full form: email, password, phone, business name, ABN, address, photo, bio, years, images
+   - Submit → creates installer record + user (transactional)
+   - Auto-approves new business (approval_status='verified')
+   - API: POST /api/admin/create-business (mostly built, needs final wiring)
 
-### Phase 1D: Homepage & Final Polish
+2. **Admin approval/rejection UI** (in /admin dashboard)
+   - List pending (unverified) installers
+   - Approve button → sets approval_status='verified'
+   - Reject button → sets approval_status='rejected' + optional reason
+
+### Phase 1D: Homepage & Final Polish (~1-2 hours)
 1. **Update homepage** (src/app/page.tsx)
    - Add "Find a Tradee" CTA (links to /search)
-   - Add "Get a Quote" CTA (MVP+1 - for now just link to homepage, will route to /search eventually)
+   - Add "Get a Quote" CTA (links to /search)
    - Update nav with links to both flows
 
 ---
 
-## Database Changes Done
+## Database Changes Done (Sessions 2026-06-16 and 2026-06-17)
 ```sql
--- installers table
-ALTER TABLE installers ADD COLUMN years_in_business INTEGER, profile_active BOOLEAN, images TEXT[], created_at TIMESTAMP, updated_at TIMESTAMP;
+-- installers table (Phase 1A)
+ALTER TABLE installers 
+  ADD COLUMN years_in_business INTEGER, 
+  ADD COLUMN profile_active BOOLEAN, 
+  ADD COLUMN images TEXT[], 
+  ADD COLUMN created_at TIMESTAMP, 
+  ADD COLUMN updated_at TIMESTAMP;
+
+-- installers table (Session 2026-06-17)
+ALTER TABLE installers 
+  ADD COLUMN approval_status VARCHAR(20) DEFAULT 'unverified',
+  ADD COLUMN bio TEXT,
+  ADD COLUMN business_name TEXT,
+  ADD COLUMN phone TEXT,
+  ADD COLUMN primary_suburb TEXT,
+  ADD COLUMN service_suburbs TEXT[];
 
 -- leads table
-ALTER TABLE leads ADD COLUMN installer_id UUID REFERENCES installers(id), status VARCHAR(50) DEFAULT 'new', rejection_reason TEXT, completed_notes TEXT, created_at TIMESTAMP;
+ALTER TABLE leads 
+  ADD COLUMN installer_id UUID REFERENCES installers(id), 
+  ADD COLUMN status VARCHAR(50) DEFAULT 'new', 
+  ADD COLUMN rejection_reason TEXT, 
+  ADD COLUMN completed_notes TEXT, 
+  ADD COLUMN created_at TIMESTAMP;
 
 -- New tables
 CREATE TABLE suburbs (id SERIAL PRIMARY KEY, name VARCHAR(100) UNIQUE, postcode VARCHAR(10), region VARCHAR(100));
 CREATE TABLE analytics (id UUID PRIMARY KEY, installer_id UUID, date DATE, search_impressions INTEGER, profile_views INTEGER, leads_received_count INTEGER, leads_accepted_count INTEGER, UNIQUE(installer_id, date));
+
+-- Suburbs seeded: Takapuna, Devonport, Birkenhead, Milford, Long Bay, Northcote, Beach Haven, Glenfield, Unsworth Heights
 ```
 
 ---
@@ -96,78 +135,122 @@ CREATE TABLE analytics (id UUID PRIMARY KEY, installer_id UUID, date DATE, searc
 
 ---
 
-## Testing Checklist (For Tomorrow)
+## Testing Checklist for Next Session
 
-### Installer Flow
-- [ ] Sign up installer at /installer-signup
+### Installer Signup & Setup (Already working)
+- [x] Sign up at /installer-signup (auto-logs in + redirects to dashboard)
+- [x] See "⚠️ Your account is pending approval" banner
+- [x] See "Get Verified in 4 Steps" guide with progress bar
+- [x] Click each step to open modal and fill details
+- [x] Progress bar updates as steps complete
+- [x] Can logout/login and resume setup where left off
+
+### Installer Flow (Once approved)
 - [ ] Log in as admin at /admin-login (alex@alexvaz.org / Testing123)
-- [ ] Approve the installer
+- [ ] Find pending installer in admin dashboard
+- [ ] Approve the installer (sets approval_status='verified')
 - [ ] Log in as installer at /installer-login
-- [ ] Verify dashboard shows metrics
-- [ ] Edit profile (add bio, years, images)
-- [ ] Toggle profile on/off
-- [ ] Update account (phone, username, password)
+- [ ] Check dashboard - banner should be gone
+- [ ] Navigate to Leads page
+- [ ] Verify action buttons are now enabled (can accept/reject/complete)
+- [ ] Edit profile in dashboard (should still work for verified users)
 
 ### Public Search (Once built)
-- [ ] Search "Heat Pump Installers in [suburb]"
+- [ ] Go to /search
+- [ ] Search by suburb (e.g., "Takapuna")
+- [ ] See only verified + active installer cards
 - [ ] Click installer card
-- [ ] View profile
-- [ ] Submit Get a Quote form
-- [ ] Verify lead appears in installer dashboard
+- [ ] View full profile (profile views should increment in analytics)
+- [ ] Click "Get a Quote" button
+- [ ] Submit quote form
+- [ ] Log in as installer and verify lead appears in dashboard
+- [ ] Accept the lead
 
 ### Admin Create Business (Once built)
 - [ ] Go to /admin/create-business
-- [ ] Fill form and submit
-- [ ] Verify new installer can log in immediately
+- [ ] Fill form with business details
+- [ ] Submit
+- [ ] Verify new installer is created with approval_status='verified'
+- [ ] Try logging in with new installer credentials
+- [ ] Verify they can immediately accept leads (no setup required)
 
 ---
 
 ## Important Notes
 
-### Files to Touch Next Session
-- src/app/search/page.tsx (NEW)
-- src/app/search/installer/[id]/page.tsx (NEW)
-- src/app/search/installer/[id]/quote/page.tsx (NEW)
-- src/app/api/search/route.ts (NEW)
-- src/app/api/search/installer/[id]/route.ts (NEW)
-- src/app/api/leads/route.ts (UPDATE - mark confirmed vs unconfirmed)
-- src/app/admin/create-business/page.tsx (NEW)
-- src/app/api/admin/create-business/route.ts (NEW)
-- src/app/page.tsx (UPDATE - add CTAs)
+### Files Already Built (Session 2026-06-17)
+- ✅ src/app/installer-signup/page.tsx (UPDATED - auto-login)
+- ✅ src/app/installer-dashboard/page.tsx (UPDATED - SetupGuide)
+- ✅ src/app/installer-dashboard/leads/page.tsx (UPDATED - approval check)
+- ✅ src/app/api/auth/signup/route.ts (UPDATED - creates installer, sets session)
+- ✅ src/app/api/installer/leads/[id]/accept/route.ts (UPDATED - checks approval_status)
+- ✅ src/components/SetupGuide.tsx (NEW - main guide component)
+- ✅ src/components/setup/BasicInfoModal.tsx (NEW - step 1)
+- ✅ src/components/setup/ExperienceModal.tsx (NEW - step 2)
+- ✅ src/components/setup/ServiceAreasModal.tsx (NEW - step 3)
+- ✅ src/components/setup/ImagesModal.tsx (NEW - step 4)
+- ✅ scripts/add-approval-status.ts (NEW - migration script)
 
-### Git Status
-- Check uncommitted changes: `git status`
-- If needed, commit: `git commit -m "Phase 1A complete: Installer UX (login, dashboard, leads, profile, account)"`
+### Files Still to Build (Phase 1B/1C)
+- [ ] src/app/search/page.tsx (PARTIALLY BUILT - stub exists, needs completion)
+- [ ] src/app/search/installer/[id]/page.tsx (PARTIALLY BUILT - stub exists, needs completion)
+- [ ] src/app/search/installer/[id]/quote/page.tsx (PARTIALLY BUILT - stub exists, needs completion)
+- [ ] src/app/api/search/route.ts (PARTIALLY BUILT - stub exists, needs completion)
+- [ ] src/app/api/search/installer/[id]/route.ts (PARTIALLY BUILT - stub exists, needs completion)
+- [ ] src/app/admin/create-business/page.tsx (PARTIALLY BUILT - needs testing + wiring)
+- [ ] src/app/api/admin/create-business/route.ts (PARTIALLY BUILT - needs testing)
+- [ ] src/app/page.tsx (NEEDS CTA updates)
+- [ ] src/app/admin/page.tsx (NEEDS approval/rejection UI)
 
 ### Running Dev Server
 ```bash
 cd "/Users/alexvaz/Desktop/Legacy Apps/TRADEEV2"
 npm run dev
-# Opens on http://localhost:3003
+# Opens on http://localhost:3000 (not 3003!)
 ```
 
-### Known Issues Fixed
-- ✅ Placeholder text color (too light) - Fixed with placeholder-gray-600
+### Known Issues Fixed (Session 2026-06-17)
+- ✅ Input text color (too light) - Fixed with text-gray-900 on all inputs
+- ✅ Password placeholder (looked pre-filled) - Changed to "Enter password" / "Confirm password"
+- ✅ Long upfront onboarding form - Replaced with progressive disclosure + async setup guide
 
 ### MVP Requirements Recap
 - No email verification (Resend integration deferred)
 - No Stripe (manual payment testing for now)
-- No multi-business lead routing (Flow 2 stubbed as "unconfirmed" status)
+- No multi-business lead routing (Flow 1: single installer per lead)
 - Heat pump installers only (category fixed, hidden from UI)
 - North Shore Auckland MVP launch area
+- Approval workflow: unverified → cannot accept leads → admin approves → verified → can accept
 
 ---
 
 ## Success Criteria (End of Next Session)
 - [ ] Phase 1B complete (public search + Get a Quote working)
-- [ ] Phase 1C complete (admin create business working)
+- [ ] Phase 1C complete (admin create business + approval UI working)
 - [ ] Homepage updated with both CTAs
-- [ ] Full end-to-end flow testable (installer signup → profile → search → quote → lead)
+- [ ] Full end-to-end flow testable:
+  - Installer: signup → 4-step setup (async) → wait for approval → see banner gone → accept leads
+  - Public: search → view profile → submit quote → lead created
+  - Admin: create business (auto-approved) → login immediately works
+- [ ] Analytics incrementing (search impressions, profile views)
 - [ ] Ready for deployment to Vercel
 
 ---
 
-## Questions for Tomorrow
-- Should we test the current installer flow before building Phase 1B?
-- Do you want to deploy to Vercel between phases?
-- Any UI/UX feedback on the installer dashboard that needs adjustment?
+## Quick Start (Next Session)
+1. **Dev server:** `npm run dev` (http://localhost:3000)
+2. **Test signup:** Go to /installer-signup, create account (auto-logs in)
+3. **See setup guide:** Dashboard shows 4-step guide + unverified banner
+4. **Build Phase 1B:** Complete /search pages and APIs
+5. **Build Phase 1C:** Complete /admin/create-business flow + admin approval UI
+6. **Test end-to-end:** Full installer + public + admin flows
+7. **Deploy:** `vercel` when ready
+
+---
+
+## Context for Tomorrow
+- **Approval system:** Installers start as `approval_status='unverified'`, cannot accept leads until admin approves
+- **Progressive disclosure:** Quick signup → slow onboarding → psychological momentum
+- **4-step setup:** Each step independent, saves separately, shows progress bar
+- **Public flow:** Only shows verified + active installers, leads route to installer_id
+- **Admin flow:** Can create businesses (auto-verified) or approve pending signups
