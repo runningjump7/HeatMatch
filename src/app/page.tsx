@@ -78,15 +78,7 @@ export default function Home() {
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <svg width="32" height="32" viewBox="0 0 50 50" className="w-8 h-8">
-              <path d="M10 22 L28 8 L46 22" fill="none" stroke="#10B981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M15 20 V38 H41 V20" fill="none" stroke="#10B981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-              <circle cx="28" cy="23" r="4" fill="none" stroke="#10B981" strokeWidth="1.5"/>
-              <path d="M28 17 V29 M22 23 H34" stroke="#10B981" strokeWidth="1.5"/>
-            </svg>
-            <span className="font-bold text-lg text-gray-900">HeatMatch</span>
-          </div>
+          <img src="/icons/heatmatch-logo.svg" alt="HeatMatch" className="h-10" />
           <div className="hidden md:flex items-center gap-8">
             <a href="#how-it-works" className="text-gray-600 hover:text-gray-900 text-sm">How It Works</a>
             <a href="#coverage" className="text-gray-600 hover:text-gray-900 text-sm">Areas We Service</a>
@@ -476,8 +468,12 @@ export default function Home() {
             </div>
 
             {/* Right: Heat Pump Image */}
-            <div className="hidden md:block bg-gray-700 rounded-lg h-64 flex items-center justify-center text-gray-500">
-              [Heat Pump Image]
+            <div className="hidden md:block rounded-lg h-64 overflow-hidden">
+              <img
+                src="/images/final-cta-heatpump.jpg"
+                alt="Heat Pump Installation"
+                className="w-full h-full object-cover rounded-lg"
+              />
             </div>
           </div>
         </div>
@@ -488,15 +484,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <svg width="24" height="24" viewBox="0 0 50 50" className="w-6 h-6">
-                  <path d="M10 22 L28 8 L46 22" fill="none" stroke="#10B981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M15 20 V38 H41 V20" fill="none" stroke="#10B981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  <circle cx="28" cy="23" r="4" fill="none" stroke="#10B981" strokeWidth="1.5"/>
-                  <path d="M28 17 V29 M22 23 H34" stroke="#10B981" strokeWidth="1.5"/>
-                </svg>
-                <span className="font-bold text-white">HeatMatch</span>
-              </div>
+              <img src="/icons/heatmatch-logo.svg" alt="HeatMatch" className="h-8 mb-4" />
               <p className="text-sm">Connecting North Shore homeowners with trusted heat pump installers.</p>
             </div>
             <div>
