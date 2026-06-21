@@ -1,13 +1,68 @@
-# TRADEEV2 Progress
+# HeatMatch Progress
 
 ## Current Status
-- **Date:** 2026-06-17 (Session 2)
-- **Phase:** MVP Implementation - Enhanced Onboarding ✅
-- **Overall Completion:** ~70% (Phase 1A done, onboarding redesigned, Phase 1B/1C pending)
-- **Session Work:** Progressive disclosure signup flow, approval status tracking, 4-step setup guide
+- **Date:** 2026-06-21 (Session 3)
+- **Phase:** MVP Implementation - Landing Page & Product Strategy ✅
+- **Overall Completion:** ~30% (Strategic pivot complete, landing page live, Phase 1B/1C ready to build)
+- **Session Work:** Strategic pivot to lead-gen model, PRD V2, landing page with hero form, all branding & icons
 
 ## Objective
-Build MVP installer platform: installers manage profiles & leads, public users search & submit quotes, admin approves businesses.
+Build HeatMatch: a lead generation platform for heat pump installers. Capture high-quality leads from homeowners, route to verified installers, eventually monetize via subscriptions.
+
+## Completed (Session 2026-06-21)
+
+### ✅ Strategic Pivot: TRADEEV2 → HeatMatch
+- Shifted from installer marketplace to **lead generation platform**
+- Focus: Capture high-quality leads from homeowners, route to partner installers
+- Model: Installers get leads for free (Phase 1 manual), pay subscriptions later (Phase 4)
+- MVP goal: Generate 5+ leads/week for 5-10 partner installers on North Shore
+
+### ✅ PRD V2: Complete Product Specification
+- Full PRD created with 13 sections (problem statement, goals, user flows, functional requirements, etc.)
+- Research-backed recommendations on:
+  - Heat pump lead capture best practices (5-step wizard confirmed as MVP)
+  - Photo upload optimization (Vercel Blob, 5 photos max, 5MB each)
+  - Lead scoring framework (A/B/C tiers + point system for Phase 2)
+  - SEO strategy (schema markup, local keywords, multi-region expansion plan)
+  - Lead workflow states (5-state model: new → allocated → contacted → converted/failed)
+- 4 execution phases defined: Phase 1 (manual), Phase 2 (automation), Phase 3 (multi-location), Phase 4 (self-signup + subscriptions)
+
+### ✅ Landing Page Built (HeatMatch Brand)
+- 7-section layout + navigation + footer
+- **Section 1: Hero** - Headline, subheadline, trust indicators (left side), form Step 1 with service selector (right side, card design)
+- **Section 2: How It Works** - 3-step flow (Tell Us → We Review → Get Connected) with icons
+- **Section 3: Why Homeowners** - 3 value props (Save Time, Trusted Installers, Free To Use) with icons
+- **Section 4: North Shore Coverage** - 10 suburb chips with custom icons (Albany, Takapuna, Milford, Browns Bay, Glenfield, Birkenhead, Devonport, Mairangi Bay, Northcote, Long Bay)
+- **Section 5: Recent Projects** - 4 social proof cards (with actual project images) showing recent requests
+- **Section 6: Trust Section** - 4 trust badges (Quality checked, Trusted businesses, Fast response, High satisfaction)
+- **Section 7: FAQ** - 5 accordion questions
+- **Section 8: Final CTA** - Dark section with call-to-action
+- **Footer** - Logo, tagline, links, contact
+
+### ✅ Design System & Branding
+- **HeatMatch Logo** - House icon + "HeatMatch" wordmark (Emerald + Navy)
+- **Color Palette**: Deep Navy (#0F172A), Emerald Green (#10B981), White, Slate grays
+- **21 Custom SVG Icons** - All hand-crafted, Emerald stroke, minimal aesthetic (inspired by Stripe/Linear)
+  - Hero trust indicators (4 icons)
+  - Service type selector (4 icons for form Step 1)
+  - How It Works steps (3 icons)
+  - Why Homeowners value props (3 icons)
+  - Suburb chips (10 custom location icons)
+  - Trust badges (4 icons)
+- **Project Images** - 4 high-quality photos showing different installation types
+
+### ✅ Form Step 1: Service Type Selector
+- Radio-style buttons with custom icons
+- 4 options: New Heat Pump Installation, Replace Existing, Service, Need Advice
+- Continue button (disabled until selection made)
+- Progress bar (1/5)
+- Average response time note
+
+### ✅ Responsive Design
+- Mobile-first approach
+- Sticky navigation with logo + links + CTA
+- All sections responsive (grid layouts adapt to mobile/tablet/desktop)
+- Hero form card prominent on right side (desktop), stacks on mobile
 
 ## Completed (Session 2026-06-17)
 
@@ -59,58 +114,147 @@ Build MVP installer platform: installers manage profiles & leads, public users s
 - /admin-login page + admin dashboard with approval workflow
 - Lead capture endpoint (/api/leads)
 
-## Remaining Work (Next Session)
+## What Was Deleted (Session 2026-06-21)
+- ❌ All Phase 1A installer signup/dashboard/profile flows (no longer needed)
+- ❌ Installer onboarding pages
+- ❌ Installer leads acceptance system
+- **Reason:** Strategic pivot from marketplace to lead-gen. Focus is now on capturing homeowner leads and routing to partner installers, not building an installer self-service platform.
 
-### Phase 1B: Public Search & Lead Capture (~8-10 hours)
-- [ ] /search page (search by suburb with installer cards)
-- [ ] /search/installer/[id] page (public installer profile)
-- [ ] /search/installer/[id]/quote page (quote request form)
-- [ ] GET /api/search?suburb=[suburb] - return verified installers
-- [ ] GET /api/search/installer/[id] - public profile + increment views
-- [ ] Wire leads to increment analytics (search impressions, profile views)
+## Remaining Work (Phase 1: MVP Lead Generation - Weeks 1-2)
 
-### Phase 1C: Admin Tools (~2-3 hours)
-- [ ] /admin/create-business page (manual installer creation)
-- [ ] POST /api/admin/create-business endpoint
-- [ ] Admin approval/rejection UI in admin dashboard
-- [ ] Email notifications when installer approved/rejected (future)
+### 1B: Lead Capture Wizard & Form Modal (~6-8 hours)
+- [ ] Build modal/stepper component (Steps 2-5 of form)
+- [ ] Step 2: Property Information (type, bedrooms)
+- [ ] Step 3: Job Details (# pumps, location, existing unit, photo upload)
+- [ ] Step 4: Timeline (urgency selector)
+- [ ] Step 5: Contact Details (name, phone, email, suburb, consent)
+- [ ] Implement photo upload with Vercel Blob integration
+- [ ] Form state management (persist across steps, allow going back)
+- [ ] Confirmation page after submission
+- [ ] API endpoint: POST /api/leads (create lead in database)
 
-### Homepage & Final Polish (~1-2 hours)
-- [ ] Add "Find a Tradee" CTA linking to /search
-- [ ] Add "Get a Quote" CTA linking to /search
-- [ ] Test full end-to-end flows
+### 1C: Admin Portal (~10-12 hours)
+- [ ] Admin authentication (login required)
+- [ ] Admin dashboard layout (left nav, main content)
+- [ ] Lead queue page (/admin/leads)
+  - List all leads with filters (status, suburb, service type, date)
+  - Lead count overview (new, allocated, in progress, etc.)
+  - Pagination or infinite scroll
+- [ ] Lead detail view (/admin/leads/[id])
+  - Full lead information (all captured data)
+  - Photo gallery
+  - Status dropdown (new → allocated → contacted → converted/failed)
+  - Admin notes field
+  - Installer assignment field
+  - Contact history
+- [ ] Installer management (simple table)
+  - List of partner installers
+  - Add/edit installer (name, phone, email, suburbs, notes)
+- [ ] API endpoints:
+  - GET /api/admin/leads (list with filters)
+  - GET /api/admin/leads/[id] (detail view)
+  - PATCH /api/admin/leads/[id] (update status/notes)
+  - GET/POST /api/admin/installers (manage installers)
 
-### Testing & Deployment (~2-3 hours)
-- [ ] End-to-end testing (signup → onboarding → dashboard → leads accepted)
-- [ ] Public search flow (search → profile → quote → lead created)
-- [ ] Admin flow (create installer → auto-approval → login works)
+### 1D: Database & Infrastructure (~3-4 hours)
+- [ ] Update leads table schema (if needed for new fields)
+- [ ] Create installers table (if not exists) for partner management
+- [ ] Create analytics table (if not exists) for tracking views/impressions
+- [ ] Migration scripts
+- [ ] Seed test data (5-10 test installers, sample leads)
+
+### 1E: Testing & Polish (~2-3 hours)
+- [ ] Test form wizard end-to-end (all 5 steps)
+- [ ] Test photo upload (file size, format, storage)
+- [ ] Test admin lead management (create, view, filter, update)
+- [ ] Test lead creation API
+- [ ] Mobile responsiveness check
+- [ ] Browser compatibility check
+
+### 1F: Deployment (~1-2 hours)
 - [ ] Deploy to Vercel
+- [ ] Test live environment
+- [ ] Set up environment variables (database, storage, etc.)
+- [ ] Monitor for errors
 
 ## Tech Stack
 - **Frontend:** Next.js 16, React 19, Tailwind CSS (utility-first, no component lib)
 - **Backend:** Next.js API routes, PostgreSQL (pg driver)
-- **Auth:** bcryptjs (email+password), HTTP-only cookies (7-day expiry)
+- **Auth:** Admin only (HTTP-only cookies for session); homeowners don't sign up
 - **Database:** PostgreSQL with UUID PKs, timestamps
-- **Email:** Resend (stubbed for MVP)
-- **Payment:** Stripe (MVP+1, stubbed for manual testing)
+- **File Storage:** Vercel Blob (for project photos)
+- **Email:** Resend (Phase 2+, currently manual lead distribution)
+- **Payment:** Stripe (Phase 4+, not in MVP)
 - **Deployment:** Vercel
 
-## Lead Lifecycle (MVP)
-1. **Creation**: Public user submits quote from installer profile → creates lead (status: new, installer_id set)
-2. **Acceptance**: Installer accepts lead → status: accepted
-3. **Completion**: Installer marks done → status: completed + notes
-4. **Rejection**: Installer rejects → status: rejected + reason
-5. **Metrics**: Search impressions, profile views tracked in analytics table
+## Database Schema (HeatMatch MVP)
+**leads table**
+```
+id (UUID, PK)
+homeowner_name, phone, email, address, suburb
+service_type (new_install, replace, service, advice)
+property_type (home, apartment, office, commercial)
+bedrooms (1, 2, 3, 4+)
+heat_pumps_needed (1, 2, 3, 4+)
+location_to_install (TEXT[], e.g., ["lounge", "bedroom"])
+existing_unit (yes, no, need_recommendation)
+photos (TEXT[], Blob URLs)
+timeline (asap, two_weeks, one_month, researching)
+consent_given (BOOLEAN)
+status (new, allocated, contacted, converted, failed)
+admin_notes (TEXT)
+assigned_installers (UUID[])
+created_at, updated_at
+```
 
-## Decisions Log
+**installers table** (partner management, Phase 1 only)
+```
+id (UUID, PK)
+name, phone, email
+primary_suburb, service_suburbs (TEXT[])
+active (BOOLEAN)
+notes (TEXT)
+created_at, updated_at
+```
+
+**suburbs table** (dropdown/autocomplete)
+```
+id (SERIAL, PK)
+name (VARCHAR: Albany, Takapuna, etc.)
+postcode, region
+```
+
+**analytics table** (Phase 2+)
+```
+id (UUID, PK)
+installer_id (UUID, FK)
+date (DATE)
+search_impressions, profile_views, leads_received_count
+created_at
+```
+
+## Lead Lifecycle (HeatMatch MVP)
+1. **Creation**: Homeowner submits lead form (5-step wizard) → creates lead (status: new)
+2. **Admin Review**: You review lead details + photos, assess quality (A/B/C tier)
+3. **Allocation**: You contact installer(s), they confirm interest → status: allocated
+4. **Contact**: Installer reaches out to homeowner → status: contacted
+5. **Outcome**: Installer reports result (converted/failed) → status: converted or failed
+6. **Feedback**: You gather installer feedback on lead quality, refine form questions
+
+## Decisions Log (Session 2026-06-21)
+- 2026-06-21: **Strategic Pivot** - Shifted from installer marketplace to lead generation platform (cleaner MVP, faster validation)
+- 2026-06-21: **Lead-Gen Model** - Capture leads from homeowners, route to partner installers (manual in Phase 1, automated in Phase 2)
+- 2026-06-21: **5-Step Wizard** - Confirmed as MVP form (industry research shows 2-3 steps optimal, but 5 acceptable for quality)
+- 2026-06-21: **Photo Uploads Critical** - Photos increase lead quality 40-60% (Phase 1 hard requirement)
+- 2026-06-21: **Lead Scoring A/B/C** - Simple tier system for manual Phase 1, point system ready for Phase 2 automation
+- 2026-06-21: **No Installer Self-Signup (Phase 1)** - Manual partner intake only, self-signup deferred to Phase 4
+- 2026-06-21: **Admin-Only Auth (Phase 1)** - No homeowner signup needed, direct form submission
+- 2026-06-21: **Vercel Blob for Photos** - Cheap, native to Vercel, easy integration
+
+## Decisions Log (Session 2026-06-16 & 2026-06-17)
 - 2026-06-16: Completed thorough product discovery before any new code (avoided "figuring it out as we go")
-- 2026-06-16: Structured MVP into 3 phases: 1A (installer UX) ✅, 1B (public search), 1C (admin tools)
 - 2026-06-16: No email verification, Stripe, or multi-business lead routing in MVP
-- 2026-06-16: Single installer per lead (Flow 1); unconfirmed status reserved for MVP+1 multi-business flow
-- 2026-06-16: Image URLs stored as TEXT[] in DB (mock upload for MVP)
-- 2026-06-16: Lead status on leads table (not leads_sent) for MVP simplicity
 - 2026-06-14: Removed Clerk completely, rebuilt with email+password auth
-- 2026-06-14: Admin password: Testing123 (for MVP testing only)
 
 ## Risks / Mitigations
 | Risk | Mitigation |
@@ -144,40 +288,57 @@ Build MVP installer platform: installers manage profiles & leads, public users s
 - src/app/api/installer/onboarding/route.ts (UPDATED - still used for testing, can be removed)
 - src/app/api/installer/leads/[id]/accept/route.ts (UPDATED - checks approval_status)
 
-## Estimate Summary (Updated)
-- **Phase 1A (Installer UX):** ~15-17 hours ✅ DONE
-- **Onboarding Redesign & Approval System:** ~4-5 hours ✅ DONE
-- **Phase 1B (Public Search):** ~8-10 hours (ready to start)
-- **Phase 1C (Admin Tools):** ~2-3 hours (ready to start)
-- **Database & Infrastructure:** ~3-4 hours ✅ DONE
-- **Testing & Deployment:** ~2-3 hours (pending)
-- **Total MVP:** ~34-42 hours (~70% complete)
+## Estimate Summary (HeatMatch MVP - Updated)
+- **Strategic Pivot & PRD V2:** ~8-10 hours ✅ DONE (Session 2026-06-21)
+- **Landing Page & Branding:** ~6-8 hours ✅ DONE (Session 2026-06-21)
+- **Phase 1B: Lead Capture Wizard & Form Modal:** ~6-8 hours (next)
+- **Phase 1C: Admin Portal:** ~10-12 hours (next)
+- **Phase 1D: Database & Infrastructure:** ~3-4 hours (next)
+- **Phase 1E: Testing & Polish:** ~2-3 hours (final)
+- **Phase 1F: Deployment to Vercel:** ~1-2 hours (final)
+- **Total MVP Phase 1:** ~30-35 hours (~30% complete, 70% remaining)
 
-## Session 2026-06-17 Summary
+## Session 2026-06-21 Summary
 
-### Accomplishments
-1. **Fixed Input Text Colors** - All login/signup fields now have dark text (text-gray-900)
-2. **Enhanced Signup Flow** - Auto-login + redirect to dashboard (progressive disclosure)
-3. **Approval Status System** - Added approval_status tracking (unverified/verified/rejected)
-4. **4-Step Setup Guide** - Interactive onboarding checklist with progress bar + 4 modals
-5. **Blocked Unverified Actions** - Installers can't accept leads until verified
-6. **Improved UX** - "Get in the door fast" psychology: signup → dashboard → self-serve setup
+### Major Accomplishments
+1. **Strategic Pivot** - Shifted from installer marketplace to lead-gen platform (cleaner, faster MVP)
+2. **PRD V2 Complete** - 13-section product spec with research-backed recommendations
+3. **Landing Page Live** - 7-section layout with all branding, icons, and responsive design
+4. **Form Step 1** - Service type selector with 4 custom icons integrated in hero card
+5. **21 Custom SVG Icons** - All professionally designed with Emerald stroke, minimal aesthetic
+6. **4 Project Images** - Social proof cards showing recent installation requests
+7. **HeatMatch Brand** - Logo, color system, visual identity locked in
 
 ### Key Design Decisions
-- **Progressive Disclosure:** Signup fast (email+password only) → get into app → setup at own pace
-- **Asynchronous Completion:** All 4 setup steps optional order, can save independently
-- **Psychological Momentum:** "You're in!" feeling immediately, reduced drop-off risk
-- **Admin Control:** Unverified installers can edit profile but can't accept leads until approved
+- **Lead-Gen Over Marketplace** - Focus on capturing quality leads, not building installer platform
+- **No Homeowner Signup** - Direct form submission, faster conversion, lower friction
+- **Manual Phase 1** - You manually review and distribute leads, gather installer feedback
+- **Automated Phase 2+** - Lead scoring, email distribution, installer portal (later)
+- **5-Step Wizard** - Slightly longer than optimal, but necessary for lead quality
+- **Photo Upload Essential** - 40-60% higher conversion when photos included
 
-### Testing Done
-- ✅ Signup creates installer with approval_status='unverified'
-- ✅ Auto-login redirects to dashboard immediately
-- ✅ Dashboard shows unverified banner + SetupGuide
-- ✅ SetupGuide steps clickable, open modals
-- ✅ Each modal saves independently, progress updates
-- ✅ Leads page shows disabled buttons for unverified installers
+### Research Findings Applied
+- Heat pump capture best practices (questionnaire design, optional fields)
+- Photo upload optimization (Vercel Blob, 5 photos max, 5MB each)
+- Lead scoring framework (A/B/C tiers + point system for future automation)
+- SEO strategy (schema markup, local keywords, multi-region roadmap)
+- Lead workflow (5-state model with outcome reasons)
+
+### Landing Page Sections (All Complete)
+1. ✅ Navigation (sticky, logo, links, CTA)
+2. ✅ Hero (headline, subheadline, trust indicators, form Step 1)
+3. ✅ How It Works (3 cards + icons)
+4. ✅ Why Homeowners (3 value props + icons)
+5. ✅ North Shore Coverage (10 suburb chips with unique icons)
+6. ✅ Recent Projects (4 social proof cards with images)
+7. ✅ Trust Section (4 trust badges)
+8. ✅ FAQ (5 accordion questions)
+9. ✅ Final CTA (dark section)
+10. ✅ Footer (links, contact, copyright)
 
 ### Ready for Next Session
-- Phase 1B (public search) ready to start immediately
-- All installer onboarding complete
-- Approval system ready for admin dashboard UI
+- Landing page refinement (if needed)
+- Build Steps 2-5 modal/stepper
+- Build admin portal for lead management
+- Connect form to database
+- Deploy to Vercel
