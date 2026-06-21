@@ -1,10 +1,10 @@
 # HeatMatch Progress
 
 ## Current Status
-- **Date:** 2026-06-21 (Session 3)
-- **Phase:** MVP Implementation - Landing Page & Product Strategy ✅
-- **Overall Completion:** ~30% (Strategic pivot complete, landing page live, Phase 1B/1C ready to build)
-- **Session Work:** Strategic pivot to lead-gen model, PRD V2, landing page with hero form, all branding & icons
+- **Date:** 2026-06-21 (Session 3 - Complete)
+- **Phase:** MVP Implementation - Landing Page Complete ✅
+- **Overall Completion:** ~35% (Strategic pivot complete, landing page fully polished, Phase 1B next)
+- **Session Work:** Strategic pivot, PRD V2, complete landing page, 21 SVG icons, professional branding, form Step 1 integrated
 
 ## Objective
 Build HeatMatch: a lead generation platform for heat pump installers. Capture high-quality leads from homeowners, route to verified installers, eventually monetize via subscriptions.
@@ -120,7 +120,25 @@ Build HeatMatch: a lead generation platform for heat pump installers. Capture hi
 - ❌ Installer leads acceptance system
 - **Reason:** Strategic pivot from marketplace to lead-gen. Focus is now on capturing homeowner leads and routing to partner installers, not building an installer self-service platform.
 
-## Remaining Work (Phase 1: MVP Lead Generation - Weeks 1-2)
+## Next Session (2026-06-22)
+
+### Primary Goal: Build Form Stepper Modal (Steps 2-5)
+- [ ] Modal/stepper component (opens when "Continue" clicked on Step 1)
+- [ ] Step 2: Property Information (type, bedrooms)
+- [ ] Step 3: Job Details (# pumps, location, existing unit, photo upload)
+- [ ] Step 4: Timeline (urgency selector)
+- [ ] Step 5: Contact Details (name, phone, email, suburb, consent checkbox)
+- [ ] Form state management (persist across steps, allow navigation back)
+- [ ] Confirmation page after submission
+- [ ] Wire to POST /api/leads endpoint
+
+### Secondary: Begin Admin Portal Foundation
+- [ ] Admin auth/login page (if time permits)
+- [ ] Admin dashboard layout
+
+---
+
+## Remaining Work (Phase 1: MVP Lead Generation)
 
 ### 1B: Lead Capture Wizard & Form Modal (~6-8 hours)
 - [ ] Build modal/stepper component (Steps 2-5 of form)
@@ -300,14 +318,15 @@ created_at
 
 ## Session 2026-06-21 Summary
 
-### Major Accomplishments
-1. **Strategic Pivot** - Shifted from installer marketplace to lead-gen platform (cleaner, faster MVP)
-2. **PRD V2 Complete** - 13-section product spec with research-backed recommendations
-3. **Landing Page Live** - 7-section layout with all branding, icons, and responsive design
-4. **Form Step 1** - Service type selector with 4 custom icons integrated in hero card
-5. **21 Custom SVG Icons** - All professionally designed with Emerald stroke, minimal aesthetic
-6. **4 Project Images** - Social proof cards showing recent installation requests
-7. **HeatMatch Brand** - Logo, color system, visual identity locked in
+### Major Accomplishments ✅
+1. **Strategic Pivot Complete** - Shifted from installer marketplace to lead-gen platform
+2. **PRD V2 Comprehensive** - 13-section product spec with research findings on lead capture, photo uploads, scoring, SEO, workflow
+3. **Landing Page Fully Built & Polished** - 7 sections + nav + footer, all responsive
+4. **Professional Branding** - HeatMatch logo with gradient icon, color system (#10B981 Emerald, #0F172A Navy), typography
+5. **21 Custom SVG Icons** - All sections covered (hero, how-it-works, value props, trust badges, suburb icons, service selector)
+6. **Form Step 1 Live** - Service type selector with 4 custom icons, integrated in hero card, fully interactive
+7. **Social Proof Images** - 4 project cards + final CTA image (heat pump installation)
+8. **Mobile-First Responsive** - Tested on mobile/tablet/desktop, sticky nav, adaptive layouts
 
 ### Key Design Decisions
 - **Lead-Gen Over Marketplace** - Focus on capturing quality leads, not building installer platform
