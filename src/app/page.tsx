@@ -1,10 +1,11 @@
 'use client';
 
-import Image from 'next/image';
 import { useState } from 'react';
+import QuoteFormStepper from '@/components/QuoteFormStepper';
 
 export default function Home() {
   const [selectedService, setSelectedService] = useState<string | null>(null);
+  const [showStepper, setShowStepper] = useState(false);
 
   const services = [
     { id: 'new_install', label: 'New Heat Pump Installation', icon: '/icons/service-new-installation.svg' },
@@ -180,7 +181,11 @@ export default function Home() {
                 </div>
 
                 {/* Continue Button */}
-                <button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-lg font-semibold transition mb-4">
+                <button
+                  onClick={() => setShowStepper(true)}
+                  disabled={!selectedService}
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white py-3 rounded-lg font-semibold transition mb-4"
+                >
                   Continue →
                 </button>
 
@@ -512,6 +517,13 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Quote Form Stepper Modal */}
+      <QuoteFormStepper
+        isOpen={showStepper}
+        onClose={() => setShowStepper(false)}
+        initialServiceType={selectedService || undefined}
+      />
     </main>
   );
 }

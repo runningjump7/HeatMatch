@@ -1,81 +1,24 @@
 import Link from 'next/link';
-import { cookies } from 'next/headers';
+import { getAdminSession, isAdminAuthenticated } from '@/lib/adminAuth';
+import { redirect } from 'next/navigation';
+import AdminNav from '@/components/admin/AdminNav';
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = await cookies();
-  const session = cookieStore.get('tradeev2_session')?.value;
+  const session = await getAdminSession();
 
-  if (!session) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div>Not authenticated</div>
-      </div>
-    );
+  if (!isAdminAuthenticated(session)) {
+    redirect('/admin/login');
   }
 
   return (
-    <div className="min-h-screen flex bg-gray-50">
-      {/* Sidebar */}
-      <aside className="w-64 bg-gray-900 text-white">
-        <div className="p-6 border-b border-gray-700">
-          <h1 className="text-xl font-bold">TRADEEV2 Admin</h1>
-        </div>
-
-        <nav className="p-6 space-y-2">
-          <Link
-            href="/admin"
-            className="block px-4 py-2 rounded-lg hover:bg-gray-800 transition"
-          >
-            📊 Dashboard
-          </Link>
-          <Link
-            href="/admin/create-business"
-            className="block px-4 py-2 rounded-lg hover:bg-gray-800 transition"
-          >
-            ➕ Create Business
-          </Link>
-          <Link
-            href="/admin/installers/pending"
-            className="block px-4 py-2 rounded-lg hover:bg-gray-800 transition"
-          >
-            ✓ Approve Installers
-          </Link>
-          <Link
-            href="/admin/metrics"
-            className="block px-4 py-2 rounded-lg hover:bg-gray-800 transition"
-          >
-            📈 Analytics
-          </Link>
-        </nav>
-
-        <div className="absolute bottom-6 left-6 right-6 space-y-2">
-          <Link
-            href="/api/auth/logout"
-            className="block px-4 py-2 rounded-lg bg-red-700 hover:bg-red-600 transition text-center text-sm"
-          >
-            Logout
-          </Link>
-          <Link
-            href="/"
-            className="block px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 transition text-center text-sm"
-          >
-            ← Back to Site
-          </Link>
-        </div>
-      </aside>
-
-      {/* Main Content */}
-      <main className="flex-1">
-        <header className="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center">
-          <h2 className="text-lg font-semibold text-gray-900">Admin Panel</h2>
-          <div className="text-sm text-gray-600">Admin User</div>
-        </header>
-
-        <div className="p-8">{children}</div>
+    <div className="min-h-screen bg-gray-50">
+      <AdminNav />
+      <main className="lg:ml-64 pt-16 lg:pt-0">
+        <div className="p-6 lg:p-8">{children}</div>
       </main>
     </div>
   );

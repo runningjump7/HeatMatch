@@ -30,7 +30,7 @@ export default function AdminLogin() {
       }
 
       // Success — redirect to dashboard
-      router.replace('/admin');
+      router.push('/admin');
     } catch (err) {
       setError('An error occurred');
       setIsLoading(false);

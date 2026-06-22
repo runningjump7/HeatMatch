@@ -1,145 +1,132 @@
-import { query } from '@/lib/db';
+'use client';
 
-export default async function AdminDashboard() {
-  const approvedResult = await query(
-    'SELECT COUNT(*) as count FROM installers WHERE approved = true'
-  );
-  const approvedCount = parseInt(approvedResult.rows[0].count);
+import { useEffect, useState } from 'react';
 
-  const leadsResult = await query(
-    'SELECT COUNT(*) as count FROM leads WHERE created_at >= DATE_TRUNC(\'month\', CURRENT_DATE)'
-  );
-  const leadsCount = parseInt(leadsResult.rows[0].count);
+interface Metrics {
+  total: number;
+  new: number;
+  allocated: number;
+  contacted: number;
+  converted: number;
+  failed: number;
+  conversionRate: number;
+}
 
-  const leadssentResult = await query(
-    'SELECT COUNT(*) as count FROM leads_sent'
-  );
-  const leadsSentCount = parseInt(leadssentResult.rows[0].count);
+export default function AdminDashboard() {
+  const [metrics, setMetrics] = useState<Metrics | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const interestedResult = await query(
-    'SELECT COUNT(*) as count FROM leads_sent WHERE installer_response = \'interested\''
-  );
-  const interestedCount = parseInt(interestedResult.rows[0].count);
+  useEffect(() => {
+    const fetchMetrics = async () => {
+      try {
+        const res = await fetch('/api/admin/leads?limit=9999');
+        const data = await res.json();
 
-  const conversionRate = leadsSentCount > 0
-    ? ((interestedCount / leadsSentCount) * 100).toFixed(1)
-    : 0;
+        const leads = data.leads || [];
+        const stats: Metrics = {
+          total: data.total || 0,
+          new: leads.filter((l: any) => l.status === 'new').length,
+          allocated: leads.filter((l: any) => l.status === 'allocated').length,
+          contacted: leads.filter((l: any) => l.status === 'contacted').length,
+          converted: leads.filter((l: any) => l.status === 'converted').length,
+          failed: leads.filter((l: any) => l.status === 'failed').length,
+          conversionRate: data.total > 0 ? Math.round((leads.filter((l: any) => l.status === 'converted').length / data.total) * 100) : 0,
+        };
 
-  const newInstallersResult = await query(
-    'SELECT COUNT(*) as count FROM installers WHERE created_at >= CURRENT_DATE - INTERVAL \'7 days\''
-  );
-  const newInstallersCount = parseInt(newInstallersResult.rows[0].count);
+        setMetrics(stats);
+      } catch (error) {
+        console.error('Error fetching metrics:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  const pendingResult = await query(
-    'SELECT COUNT(*) as count FROM installers WHERE approved = false'
-  );
-  const pendingCount = parseInt(pendingResult.rows[0].count);
+    fetchMetrics();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-gray-600">Loading metrics...</div>
+      </div>
+    );
+  }
+
+  if (!metrics) {
+    return <div className="text-red-600">Failed to load metrics</div>;
+  }
 
   return (
     <div>
       <h1 className="text-3xl font-bold text-gray-900 mb-8">Dashboard</h1>
 
+      {/* Metrics Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Approved Installers</p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">{approvedCount}</p>
-            </div>
-            <div className="text-4xl">✓</div>
-          </div>
+        {/* Total Leads */}
+        <div className="bg-white rounded-lg shadow p-6">
+          <div className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Total Leads</div>
+          <div className="text-3xl font-bold text-gray-900 mt-2">{metrics.total}</div>
+          <p className="text-xs text-gray-500 mt-1">All time</p>
         </div>
 
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Leads This Month</p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">{leadsCount}</p>
-            </div>
-            <div className="text-4xl">📧</div>
-          </div>
+        {/* New */}
+        <div className="bg-white rounded-lg shadow p-6 border-l-4 border-blue-500">
+          <div className="text-sm font-semibold text-gray-600 uppercase tracking-wide">New</div>
+          <div className="text-3xl font-bold text-blue-600 mt-2">{metrics.new}</div>
+          <p className="text-xs text-gray-500 mt-1">Awaiting review</p>
         </div>
 
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Total Leads Sent</p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">{leadsSentCount}</p>
-            </div>
-            <div className="text-4xl">📬</div>
-          </div>
+        {/* Allocated */}
+        <div className="bg-white rounded-lg shadow p-6 border-l-4 border-yellow-500">
+          <div className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Allocated</div>
+          <div className="text-3xl font-bold text-yellow-600 mt-2">{metrics.allocated}</div>
+          <p className="text-xs text-gray-500 mt-1">Sent to installers</p>
         </div>
 
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Lead Interest Rate</p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">{conversionRate}%</p>
-              <p className="text-xs text-gray-500 mt-1">
-                {interestedCount} of {leadsSentCount} interested
-              </p>
-            </div>
-            <div className="text-4xl">📈</div>
-          </div>
+        {/* Contacted */}
+        <div className="bg-white rounded-lg shadow p-6 border-l-4 border-purple-500">
+          <div className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Contacted</div>
+          <div className="text-3xl font-bold text-purple-600 mt-2">{metrics.contacted}</div>
+          <p className="text-xs text-gray-500 mt-1">Installer reached customer</p>
         </div>
 
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">New Installers (Week)</p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">{newInstallersCount}</p>
-            </div>
-            <div className="text-4xl">🆕</div>
-          </div>
+        {/* Converted */}
+        <div className="bg-white rounded-lg shadow p-6 border-l-4 border-emerald-500">
+          <div className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Converted</div>
+          <div className="text-3xl font-bold text-emerald-600 mt-2">{metrics.converted}</div>
+          <p className="text-xs text-gray-500 mt-1">Customer accepted</p>
         </div>
 
-        <div className={`bg-white rounded-lg border-2 p-6 ${pendingCount > 0 ? 'border-yellow-300 bg-yellow-50' : 'border-gray-200'}`}>
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Pending Approvals</p>
-              <p className={`text-3xl font-bold mt-2 ${pendingCount > 0 ? 'text-yellow-600' : 'text-gray-900'}`}>
-                {pendingCount}
-              </p>
-            </div>
-            <div className="text-4xl">⏳</div>
-          </div>
-          {pendingCount > 0 && (
-            <a
-              href="/admin/installers/pending"
-              className="mt-4 inline-block text-sm font-semibold text-yellow-600 hover:text-yellow-700"
-            >
-              Review pending →
-            </a>
-          )}
+        {/* Failed */}
+        <div className="bg-white rounded-lg shadow p-6 border-l-4 border-red-500">
+          <div className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Failed</div>
+          <div className="text-3xl font-bold text-red-600 mt-2">{metrics.failed}</div>
+          <p className="text-xs text-gray-500 mt-1">Rejected or declined</p>
+        </div>
+
+        {/* Conversion Rate */}
+        <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-lg shadow p-6 border border-emerald-200">
+          <div className="text-sm font-semibold text-emerald-700 uppercase tracking-wide">Conversion Rate</div>
+          <div className="text-3xl font-bold text-emerald-700 mt-2">{metrics.conversionRate}%</div>
+          <p className="text-xs text-emerald-600 mt-1">Converted / Total</p>
         </div>
       </div>
 
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
-        <div className="flex gap-4 flex-wrap">
+      {/* Quick Actions */}
+      <div className="bg-white rounded-lg shadow p-6">
+        <h2 className="text-lg font-bold text-gray-900 mb-4">Quick Actions</h2>
+        <div className="flex flex-col sm:flex-row gap-3">
           <a
-            href="/admin/create-business"
-            className="px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition"
+            href="/admin/leads"
+            className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition"
           >
-            Create Business
+            View All Leads
           </a>
           <a
-            href="/admin/installers/pending"
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            href="/admin/installers"
+            className="px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-medium transition"
           >
-            Review Installer Applications
-          </a>
-          <a
-            href="/admin/metrics"
-            className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition"
-          >
-            View Detailed Analytics
-          </a>
-          <a
-            href="/"
-            className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition"
-          >
-            View Public Site
+            Manage Installers
           </a>
         </div>
       </div>

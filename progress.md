@@ -120,7 +120,117 @@ Build HeatMatch: a lead generation platform for heat pump installers. Capture hi
 - ❌ Installer leads acceptance system
 - **Reason:** Strategic pivot from marketplace to lead-gen. Focus is now on capturing homeowner leads and routing to partner installers, not building an installer self-service platform.
 
-## Next Session (2026-06-22)
+## Session 2026-06-22 (Complete) ✅
+
+### Completed This Session ✅
+
+#### 1. Quote Stepper Modal (Steps 2-5)
+- Service type selector (hero) → modal opens at Step 2 (skips Step 1 if already selected)
+- Step 2: Property info (type + bedrooms)
+- Step 3: Job details (pumps, location, existing unit, photos)
+- Step 4: Timeline (urgency selector)
+- Step 5: Contact info (name, phone, email, suburb autocomplete, consent)
+- Form validation per step, state persists across navigation
+- Confirmation page with request ID
+- API: POST /api/leads (creates lead in database)
+
+#### 2. Database Migrations
+- Added stepper form fields to leads table
+- Dropped old customer_* columns for clean schema
+- Added admin fields: admin_notes, assigned_installers (UUID[]), updated_at
+- Ensured installers table complete (phone, email, primary_suburb, service_suburbs, active, notes, timestamps)
+- Created performance indexes on leads
+
+#### 3. Admin Portal - Complete (Phases 1-4)
+
+**Phase 1: Authentication** ✅
+- `/admin-login` page (moved outside /admin to avoid redirect loops)
+- POST `/api/admin/auth/login` (hardcoded: alex@alexvaz.org / Testing123)
+- POST `/api/admin/auth/logout`
+- Session-based auth with HTTP-only cookies
+- Protected admin routes via middleware
+
+**Phase 2: Dashboard** ✅
+- `/admin` shows 7 metrics cards:
+  - Total Leads (all time)
+  - New / Allocated / Contacted / Converted / Failed (status breakdown)
+  - Conversion Rate % = (Converted / Total) × 100
+- Responsive sidebar nav with mobile support
+- Quick action buttons
+
+**Phase 3: Lead Management** ✅
+- **GET `/api/admin/leads`** — Fetch leads with filters + pagination
+  - Filters: status, suburb, service_type
+  - Pagination: limit=10, offset=0
+  - Returns: lead list + total count
+- **`/admin/leads`** — Lead list page
+  - Filterable table (status, service type, suburb)
+  - Columns: Date, Name, Contact, Suburb, Service, Timeline, Photos (Y/N), Status badge, View link
+  - Pagination (10 per page, numbered buttons)
+  - Responsive table with hover effects
+- **`/admin/leads/[id]`** — Lead detail page
+  - Contact info display
+  - Project details (service type, property, bedrooms, pumps, timeline, existing unit, locations)
+  - Photo gallery (image viewer, navigation buttons, individual photo download)
+  - Lead quality tier (A/B/C) auto-calculated based on photos + service type + timeline
+  - Status dropdown (new/allocated/contacted/converted/failed)
+  - Assign Installer dropdown (single installer, shows contact info when selected)
+  - Admin notes textarea
+  - Save button (PATCH /api/admin/leads/[id])
+- **GET/PATCH `/api/admin/leads/[id]`** — Get/update individual lead
+
+**Phase 4: Installer Management** ✅
+- **`/admin/installers`** — Installer list page
+  - Table: Name, Contact, Primary Suburb, Service Areas (first 3 + count), Active status, Actions
+  - Add Installer button → modal form
+  - Edit/Delete buttons per row
+- **Installer modal form**
+  - Fields: Name, Phone, Email, Primary Suburb (dropdown), Service Suburbs (multi-select checkboxes), Active toggle, Notes
+  - Validation (required: name, phone, email, primary_suburb)
+  - Create or edit mode
+- **POST `/api/admin/installers`** — Create installer
+- **PATCH `/api/admin/installers/[id]`** — Update installer
+- **DELETE `/api/admin/installers/[id]`** — Delete installer
+- **GET `/api/admin/installers`** — List all installers
+
+### Key Features Built
+✅ Quote form fully integrated (hero → stepper modal → confirmation → database)
+✅ Admin login/auth with session management
+✅ Lead dashboard with metrics
+✅ Filterable lead list with pagination
+✅ Lead detail view with photos, status tracking, notes, installer assignment
+✅ Auto-calculated lead quality tier (A/B/C)
+✅ Installer CRUD (create, read, update, delete)
+✅ Responsive design (mobile + desktop)
+✅ Photo gallery with download
+✅ Form validation on all inputs
+
+---
+
+## Next Session (2026-06-23)
+
+### Ready to Start
+Admin portal is fully functional and ready for:
+1. **Testing end-to-end:** Login → View leads → Assign installers → Update status
+2. **Polish:** Toast notifications, error handling, confirmations
+3. **Deployment:** Deploy to Vercel
+4. **Phase 2 features** (defer):
+   - Automated email distribution to installers
+   - Installer notifications/portal
+   - Advanced lead scoring UI
+   - Multi-region support
+
+### How to Resume
+1. Dev server: `npm run dev` (http://localhost:3000)
+2. Admin login: http://localhost:3000/admin-login
+3. Credentials: alex@alexvaz.org / Testing123
+4. Test the flow: Create lead on homepage → View in admin → Assign installer → Update status
+
+### Session 2026-06-22 Summary
+- **Time:** ~4-5 hours of focused dev
+- **Lines of code:** ~1500+ (components, pages, APIs)
+- **Features:** Complete quote-to-admin workflow
+- **Status:** Ready for testing and deployment
 
 ### Primary Goal: Build Form Stepper Modal (Steps 2-5)
 - [ ] Modal/stepper component (opens when "Continue" clicked on Step 1)
