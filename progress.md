@@ -1,10 +1,10 @@
 # HeatMatch Progress
 
 ## Current Status
-- **Date:** 2026-06-24 (Session 4 - Modal Refactor Complete)
-- **Phase:** MVP Implementation - Admin Portal UX Polish ✅
-- **Overall Completion:** ~90% (Quote form + admin portal fully functional, all UI modals now professionally styled)
-- **Session Work:** Replaced all raw JavaScript alerts with 3 professional modal components (Success/Error/Confirm), applied across entire admin portal
+- **Date:** 2026-06-24 (Session 4 - Complete)
+- **Phase:** MVP Implementation - Landing Page & Form Polish ✅
+- **Overall Completion:** ~95% (Quote form, admin portal, landing page all polished and ready for testing)
+- **Session Work:** Admin portal modals, photo uploads, landing page redesign, quote form UX improvements, conditional form fields
 
 ## Objective
 Build HeatMatch: a lead generation platform for heat pump installers. Capture high-quality leads from homeowners, route to verified installers, eventually monetize via subscriptions.
@@ -124,7 +124,7 @@ Build HeatMatch: a lead generation platform for heat pump installers. Capture hi
 
 ### Completed This Session ✅
 
-#### 🎨 Professional Modal Components (3 New Components)
+#### 🎨 Admin Portal Modal Components (3 New Components)
 1. **SuccessModal.tsx**
    - Emerald checkmark icon with pulsing background
    - Title + subtitle
@@ -171,13 +171,62 @@ Replaced all `alert()` and `confirm()` calls in admin portal:
 - Responsive design (works on mobile)
 - Smooth close/open transitions
 
+#### 📸 Photo Upload Fixes
+- Fixed `/api/upload` endpoint to actually save files to disk (not mock URLs)
+- Photos now stored in `public/uploads/` and accessible via HTTP
+- Download button now includes proper file extensions (.jpg/.png)
+- All uploaded photos now downloadable from lead detail page
+
+#### 🎯 Landing Page Redesign
+1. **Hero Heading Updated**
+   - "Get Matched With Trusted Local Installers Without Calling Around"
+   - Better value proposition messaging
+
+2. **Trust Section Layout Fix**
+   - Shield icon now inline with title/text (flex layout)
+   - No longer stacked above heading
+
+3. **"Why Homeowners" Section Expanded (3 → 6 columns)**
+   - Stop Calling Around
+   - Trusted Local Installers
+   - Free To Use
+   - No Obligation
+   - North Shore Experts
+   - Multiple Options
+   - Longer copy per card for better conversion
+   - All 6 new icons integrated
+
+#### 🎯 Quote Form Improvements
+1. **Step 1: Service Selector**
+   - Larger text (text-lg, font-semibold)
+   - Bigger icons (w-8 h-8)
+   - Better padding (p-5) and rounded corners (rounded-xl)
+   - Enhanced hover states with emerald accent
+   - Removed "Step X of 5" text from stepper header
+
+2. **Step 2: Conditional Property Questions**
+   - House/Apartment → "Number of Bedrooms" (4 options)
+   - Office/Commercial → "Approximate Space Size" in m² (4 size ranges)
+   - Proper state management in QuoteFormStepper
+
+3. **CTA Button Copy**
+   - Changed to "Select an option to continue"
+   - Better UX messaging throughout form
+
+4. **Navigation**
+   - "Get Quote" button in nav now opens stepper from Step 1
+   - Users can start form from anywhere on page
+
 ### Key Features
-✅ Professionally styled modals (not browser alerts)
+✅ Professionally styled admin modals (not browser alerts)
 ✅ Consistent emerald (#10B981) accent colors throughout
 ✅ Clear visual hierarchy (icon → title → message → buttons)
 ✅ Proper destructive action warning (amber icon for deletes)
-✅ Accessibility ready (semantic HTML, clear labels)
 ✅ All admin portal flows covered (create, update, delete, error handling)
+✅ Photo uploads working end-to-end
+✅ Landing page redesigned with better copy and layout
+✅ Quote form significantly improved UX with conditional fields
+✅ Ready for user testing and Vercel deployment
 
 ## Session 2026-06-22 (Complete) ✅
 
