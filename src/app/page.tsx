@@ -204,54 +204,82 @@ export default function Home() {
       </section>
 
       {/* SECTION 2: HOW IT WORKS */}
-      <section id="how-it-works" className="py-16 md:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-16">
-            How It Works
-          </h2>
+      <section id="how-it-works" className="py-16 md:py-24 bg-gray-50">
+        <div className="px-4">
+          {/* Header */}
+          <div className="max-w-4xl mx-auto text-center mb-16">
+            <span className="text-emerald-600 font-bold text-sm uppercase tracking-widest">How HeatMatch Works</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-3 mb-6 leading-tight">
+              Finding a heat pump installer doesn't need to be complicated.
+            </h2>
+            <p className="text-lg text-gray-600">From request to installer in three simple steps.</p>
+          </div>
 
-          <div className="grid md:grid-cols-3 gap-8 md:gap-12">
-            {/* Step 1 */}
-            <div className="text-center">
-              <div className="mb-6 flex justify-center">
-                <svg width="80" height="80" viewBox="0 0 64 64" className="w-16 h-16">
-                  <circle cx="32" cy="32" r="26" fill="#ECFDF5" stroke="#10B981" strokeWidth="2"/>
-                  <rect x="20" y="16" width="24" height="32" rx="3" fill="none" stroke="#10B981" strokeWidth="3"/>
-                  <line x1="25" y1="26" x2="39" y2="26" stroke="#10B981" strokeWidth="3"/>
-                  <line x1="25" y1="34" x2="39" y2="34" stroke="#10B981" strokeWidth="3"/>
+          {/* Steps */}
+          <div className="mb-16">
+            <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 mb-12">
+              {/* Step 1 */}
+              <div className="flex flex-col items-center flex-1 min-w-0">
+                <div className="mb-6 flex justify-center">
+                  <svg width="80" height="80" viewBox="0 0 64 64" className="w-20 h-20">
+                    <circle cx="32" cy="32" r="28" fill="#ECFDF5"/>
+                    <rect x="20" y="16" width="24" height="32" rx="4" fill="none" stroke="#10B981" strokeWidth="3"/>
+                    <path d="M26 26h12M26 34h12M26 42h8" fill="none" stroke="#10B981" strokeWidth="3" strokeLinecap="round"/>
+                    <path d="M24 22h4M24 30h4M24 38h4" fill="none" stroke="#10B981" strokeWidth="3" strokeLinecap="round"/>
+                  </svg>
+                </div>
+                <div className="mb-3 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">1</div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">Tell Us About Your Project</h3>
+                <p className="text-gray-600 text-center text-sm">Answer a few quick questions about your home and requirements.</p>
+              </div>
+
+              {/* Arrow */}
+              <div className="hidden md:flex items-center gap-2 text-gray-400 mb-8">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Tell Us About Your Project</h3>
-              <p className="text-gray-600">Answer a few quick questions about your property and requirements.</p>
-            </div>
 
-            {/* Step 2 */}
-            <div className="text-center">
-              <div className="mb-6 flex justify-center">
-                <svg width="80" height="80" viewBox="0 0 64 64" className="w-16 h-16">
-                  <circle cx="32" cy="32" r="26" fill="#ECFDF5" stroke="#10B981" strokeWidth="2"/>
-                  <circle cx="28" cy="28" r="10" fill="none" stroke="#10B981" strokeWidth="3"/>
-                  <line x1="36" y1="36" x2="46" y2="46" stroke="#10B981" strokeWidth="4" strokeLinecap="round"/>
+              {/* Step 2 */}
+              <div className="flex flex-col items-center flex-1 min-w-0">
+                <div className="mb-6 flex justify-center">
+                  <svg width="80" height="80" viewBox="0 0 64 64" className="w-20 h-20">
+                    <circle cx="32" cy="32" r="28" fill="#ECFDF5"/>
+                    <circle cx="29" cy="29" r="11" fill="none" stroke="#10B981" strokeWidth="3"/>
+                    <path d="M37 37l9 9" fill="none" stroke="#10B981" strokeWidth="3.5" strokeLinecap="round"/>
+                    <path d="M29 22v14M22 29h14" fill="none" stroke="#10B981" strokeWidth="3" strokeLinecap="round"/>
+                    <path d="M26 44l6-6 6 6" fill="none" stroke="#10B981" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <div className="mb-3 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">2</div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">We Match You With<br/><span className="font-bold">The Right Installer</span></h3>
+                <p className="text-gray-600 text-center text-sm">We review your project and connect you with trusted local professionals.</p>
+              </div>
+
+              {/* Arrow */}
+              <div className="hidden md:flex items-center gap-2 text-gray-400 mb-8">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">We Review Your Request</h3>
-              <p className="text-gray-600">We assess your project and match it with the right installer.</p>
-            </div>
 
-            {/* Step 3 */}
-            <div className="text-center">
-              <div className="mb-6 flex justify-center">
-                <svg width="80" height="80" viewBox="0 0 64 64" className="w-16 h-16">
-                  <circle cx="32" cy="32" r="26" fill="#ECFDF5" stroke="#10B981" strokeWidth="2"/>
-                  <circle cx="24" cy="26" r="6" fill="none" stroke="#10B981" strokeWidth="3"/>
-                  <circle cx="40" cy="26" r="6" fill="none" stroke="#10B981" strokeWidth="3"/>
-                  <path d="M16 46c2-6 7-10 16-10s14 4 16 10" fill="none" stroke="#10B981" strokeWidth="3"/>
-                </svg>
+              {/* Step 3 */}
+              <div className="flex flex-col items-center flex-1 min-w-0">
+                <div className="mb-6 flex justify-center">
+                  <svg width="80" height="80" viewBox="0 0 64 64" className="w-20 h-20">
+                    <circle cx="32" cy="32" r="28" fill="#ECFDF5"/>
+                    <circle cx="24" cy="26" r="7" fill="none" stroke="#10B981" strokeWidth="3"/>
+                    <circle cx="40" cy="26" r="7" fill="none" stroke="#10B981" strokeWidth="3"/>
+                    <path d="M16 47c2-8 8-12 16-12s14 4 16 12" fill="none" stroke="#10B981" strokeWidth="3" strokeLinecap="round"/>
+                  </svg>
+                </div>
+                <div className="mb-3 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">3</div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">Get Your Quote</h3>
+                <p className="text-gray-600 text-center text-sm">Your installer gets in touch to discuss your project and next steps.</p>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Get Connected</h3>
-              <p className="text-gray-600">A trusted local installer contacts you to discuss your options.</p>
             </div>
           </div>
+
         </div>
       </section>
 
@@ -344,30 +372,66 @@ export default function Home() {
       {/* SECTION 4: COVERAGE */}
       <section id="coverage" className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-4">
-            Proudly Serving Auckland's North Shore
-          </h2>
-          <p className="text-center text-gray-600 mb-12">Specialists who know your local area</p>
-
-          {/* Suburb Chips */}
-          <div className="flex flex-wrap justify-center gap-3 mb-8">
-            {suburbs.map((suburb) => (
-              <div
-                key={suburb}
-                className="flex items-center gap-2 px-4 py-2 bg-emerald-50 border border-emerald-200 rounded-full text-sm text-emerald-900 font-medium"
-              >
-                <svg width="16" height="16" viewBox="0 0 64 64" className="w-4 h-4 flex-shrink-0">
-                  <path d="M32 54s14-14 14-24a14 14 0 10-28 0c0 10 14 24 14 24z" fill="none" stroke="#10B981" strokeWidth="3"/>
-                  <circle cx="32" cy="30" r="4.5" fill="#10B981"/>
-                </svg>
-                {suburb}
-              </div>
-            ))}
+          {/* Header */}
+          <div className="text-center mb-16">
+            <span className="text-emerald-600 font-bold text-sm uppercase tracking-widest">Local Installers, Local Knowledge</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-4 mb-6 leading-tight">
+              Local Installers Across<br/>Auckland's North Shore
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              We connect homeowners with trusted installers<br/>who service their local area.
+            </p>
           </div>
 
-          <p className="text-center text-gray-600 text-sm">
-            Expanding across Auckland soon.
-          </p>
+          {/* Suburb Chips - 2 Rows */}
+          <div className="max-w-4xl mx-auto mb-16">
+            {/* Row 1 */}
+            <div className="flex flex-wrap justify-center gap-4 mb-4">
+              {suburbs.slice(0, 5).map((suburb) => (
+                <div
+                  key={suburb}
+                  className="flex items-center gap-2 px-5 py-3 bg-emerald-50 border border-emerald-200 rounded-full text-sm text-emerald-900 font-medium hover:bg-emerald-100 transition"
+                >
+                  <svg width="18" height="18" viewBox="0 0 64 64" className="w-4 h-4 flex-shrink-0">
+                    <path d="M32 54s14-14 14-24a14 14 0 10-28 0c0 10 14 24 14 24z" fill="none" stroke="#10B981" strokeWidth="3"/>
+                    <circle cx="32" cy="30" r="4.5" fill="#10B981"/>
+                  </svg>
+                  {suburb}
+                </div>
+              ))}
+            </div>
+
+            {/* Row 2 */}
+            <div className="flex flex-wrap justify-center gap-4">
+              {suburbs.slice(5, 10).map((suburb) => (
+                <div
+                  key={suburb}
+                  className="flex items-center gap-2 px-5 py-3 bg-emerald-50 border border-emerald-200 rounded-full text-sm text-emerald-900 font-medium hover:bg-emerald-100 transition"
+                >
+                  <svg width="18" height="18" viewBox="0 0 64 64" className="w-4 h-4 flex-shrink-0">
+                    <path d="M32 54s14-14 14-24a14 14 0 10-28 0c0 10 14 24 14 24z" fill="none" stroke="#10B981" strokeWidth="3"/>
+                    <circle cx="32" cy="30" r="4.5" fill="#10B981"/>
+                  </svg>
+                  {suburb}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Expansion Notice */}
+          <div className="bg-gray-50 rounded-lg p-8 flex items-start gap-6">
+            <div className="flex-shrink-0">
+              <svg width="64" height="64" viewBox="0 0 64 64" className="w-12 h-12">
+                <circle cx="32" cy="32" r="28" fill="#ECFDF5"/>
+                <path d="M16 20l12-4 8 4 12-4v28l-12 4-8-4-12 4z" fill="none" stroke="#10B981" strokeWidth="3.5" strokeLinejoin="round"/>
+                <path d="M28 16v28M36 20v28" fill="none" stroke="#10B981" strokeWidth="3" strokeLinecap="round"/>
+              </svg>
+            </div>
+            <div className="flex-1">
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Expanding Across Auckland Soon</h3>
+              <p className="text-gray-600">We're growing our network to help more homeowners across Auckland find the right heat pump installer.</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -424,16 +488,16 @@ export default function Home() {
 
               {/* Right: 4 Trust Points */}
               <div className="grid grid-cols-2 gap-4">
-                <div className="flex items-start gap-3">
-                  <svg width="32" height="32" viewBox="0 0 64 64" className="w-8 h-8 flex-shrink-0 mt-1">
+                <div className="flex items-center gap-3">
+                  <svg width="32" height="32" viewBox="0 0 64 64" className="w-8 h-8 flex-shrink-0">
                     <circle cx="32" cy="32" r="28" fill="#ECFDF5"/>
                     <path d="M32 10l16 6v12c0 10-6 18-16 24-10-6-16-14-16-24V16z" fill="none" stroke="#10B981" strokeWidth="3.5"/>
                     <path d="M24 31l5 5 11-12" fill="none" stroke="#10B981" strokeWidth="3.5" strokeLinecap="round"/>
                   </svg>
                   <span className="text-sm font-semibold text-gray-900">Quality checked leads</span>
                 </div>
-                <div className="flex items-start gap-3">
-                  <svg width="32" height="32" viewBox="0 0 64 64" className="w-8 h-8 flex-shrink-0 mt-1">
+                <div className="flex items-center gap-3">
+                  <svg width="32" height="32" viewBox="0 0 64 64" className="w-8 h-8 flex-shrink-0">
                     <circle cx="32" cy="32" r="28" fill="#ECFDF5"/>
                     <path d="M18 28h28v18H18z" fill="none" stroke="#10B981" strokeWidth="3"/>
                     <path d="M16 28l4-10h24l4 10" fill="none" stroke="#10B981" strokeWidth="3"/>
@@ -441,8 +505,8 @@ export default function Home() {
                   </svg>
                   <span className="text-sm font-semibold text-gray-900">Trusted local businesses</span>
                 </div>
-                <div className="flex items-start gap-3">
-                  <svg width="32" height="32" viewBox="0 0 64 64" className="w-8 h-8 flex-shrink-0 mt-1">
+                <div className="flex items-center gap-3">
+                  <svg width="32" height="32" viewBox="0 0 64 64" className="w-8 h-8 flex-shrink-0">
                     <circle cx="32" cy="32" r="28" fill="#ECFDF5"/>
                     <circle cx="32" cy="32" r="16" fill="none" stroke="#10B981" strokeWidth="3"/>
                     <path d="M32 24v8l6 3" fill="none" stroke="#10B981" strokeWidth="3.5" strokeLinecap="round"/>
@@ -450,8 +514,8 @@ export default function Home() {
                   </svg>
                   <span className="text-sm font-semibold text-gray-900">Fast response times</span>
                 </div>
-                <div className="flex items-start gap-3">
-                  <svg width="32" height="32" viewBox="0 0 64 64" className="w-8 h-8 flex-shrink-0 mt-1">
+                <div className="flex items-center gap-3">
+                  <svg width="32" height="32" viewBox="0 0 64 64" className="w-8 h-8 flex-shrink-0">
                     <circle cx="32" cy="32" r="28" fill="#ECFDF5"/>
                     <circle cx="32" cy="32" r="16" fill="none" stroke="#10B981" strokeWidth="3.5"/>
                     <path d="M24 33l6 6 10-12" fill="none" stroke="#10B981" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -527,7 +591,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <img src="/icons/heatmatch-logo.svg" alt="HeatMatch" className="h-8 mb-4" />
+              <img src="/icons/heatmatch-logo-white.svg" alt="HeatMatch" className="h-8 mb-4" />
               <p className="text-sm">Connecting North Shore homeowners with trusted heat pump installers.</p>
             </div>
             <div>
