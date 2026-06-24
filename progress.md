@@ -1,10 +1,10 @@
 # HeatMatch Progress
 
 ## Current Status
-- **Date:** 2026-06-24 (Session 4 - Complete)
+- **Date:** 2026-06-24 (Session 4 - In Progress)
 - **Phase:** MVP Implementation - Landing Page & Form Polish ✅
-- **Overall Completion:** ~95% (Quote form, admin portal, landing page all polished and ready for testing)
-- **Session Work:** Admin portal modals, photo uploads, landing page redesign, quote form UX improvements, conditional form fields
+- **Overall Completion:** ~97% (Quote form, admin portal, landing page fully polished - ready for Vercel deployment)
+- **Session Work:** Admin portal modals, photo uploads, landing page complete redesign, quote form UX improvements, conditional form fields, "How It Works" and "Coverage" section updates
 
 ## Objective
 Build HeatMatch: a lead generation platform for heat pump installers. Capture high-quality leads from homeowners, route to verified installers, eventually monetize via subscriptions.
@@ -177,7 +177,7 @@ Replaced all `alert()` and `confirm()` calls in admin portal:
 - Download button now includes proper file extensions (.jpg/.png)
 - All uploaded photos now downloadable from lead detail page
 
-#### 🎯 Landing Page Redesign
+#### 🎯 Landing Page Complete Redesign
 1. **Hero Heading Updated**
    - "Get Matched With Trusted Local Installers Without Calling Around"
    - Better value proposition messaging
@@ -185,6 +185,7 @@ Replaced all `alert()` and `confirm()` calls in admin portal:
 2. **Trust Section Layout Fix**
    - Shield icon now inline with title/text (flex layout)
    - No longer stacked above heading
+   - Icon/text alignment fixed (items-center)
 
 3. **"Why Homeowners" Section Expanded (3 → 6 columns)**
    - Stop Calling Around
@@ -195,6 +196,26 @@ Replaced all `alert()` and `confirm()` calls in admin portal:
    - Multiple Options
    - Longer copy per card for better conversion
    - All 6 new icons integrated
+
+4. **"How It Works" Section Completely Redesigned**
+   - Green label: "HOW HEATMATCH WORKS"
+   - Bold headline: "Finding a heat pump installer doesn't need to be complicated"
+   - 3 numbered steps with full-width layout
+   - Arrow connectors between steps
+   - Better spacing and visual hierarchy
+   - Removed benefit boxes (privacy/free)
+
+5. **"Coverage" Section Completely Redesigned**
+   - Green label: "LOCAL INSTALLERS, LOCAL KNOWLEDGE"
+   - Bold title: "Local Installers Across Auckland's North Shore"
+   - Better subtitle explaining value proposition
+   - Suburb chips in 2 rows (5 per row) instead of wrapping
+   - Added expansion notice with map icon
+   - Improved copy for expansion messaging
+
+6. **Footer Logo Update**
+   - New white/gradient HeatMatch logo for visibility on dark footer
+   - Replaces the original logo that was hard to see
 
 #### 🎯 Quote Form Improvements
 1. **Step 1: Service Selector**
