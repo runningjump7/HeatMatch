@@ -30,7 +30,7 @@ interface Lead {
 
 interface Installer {
   id: string;
-  name: string;
+  business_name: string;
   email: string;
   phone: string;
   primary_suburb: string;
@@ -118,7 +118,9 @@ export default function LeadDetailPage() {
   const handleDownloadPhoto = (photoUrl: string) => {
     const a = document.createElement('a');
     a.href = photoUrl;
-    a.download = `lead-${leadId}-photo-${photoIndex + 1}`;
+    // Determine file extension based on URL or default to .jpg
+    const extension = photoUrl.includes('.png') ? '.png' : '.jpg';
+    a.download = `lead-${leadId}-photo-${photoIndex + 1}${extension}`;
     a.click();
   };
 
@@ -315,14 +317,14 @@ export default function LeadDetailPage() {
               <option value="">— Unassigned —</option>
               {installers.map((installer) => (
                 <option key={installer.id} value={installer.id}>
-                  {installer.name}
+                  {installer.business_name}
                 </option>
               ))}
             </select>
             {selectedInstaller && installers.find((i) => i.id === selectedInstaller) && (
               <div className="mt-3 text-sm text-gray-600">
                 <p>
-                  <strong>{installers.find((i) => i.id === selectedInstaller)?.name}</strong>
+                  <strong>{installers.find((i) => i.id === selectedInstaller)?.business_name}</strong>
                 </p>
                 <p>{installers.find((i) => i.id === selectedInstaller)?.phone}</p>
                 <p>{installers.find((i) => i.id === selectedInstaller)?.email}</p>

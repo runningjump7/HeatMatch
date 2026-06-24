@@ -15,6 +15,7 @@ export interface FormData {
   // Step 2: Property Information
   property_type: 'home' | 'apartment' | 'office' | 'commercial' | null;
   bedrooms: string | null;
+  square_meters: string | null;
 
   // Step 3: Job Details
   heat_pumps_needed: string | null;
@@ -53,6 +54,7 @@ export default function QuoteFormStepper({ isOpen, onClose, initialServiceType }
     service_type: validServiceType,
     property_type: null,
     bedrooms: null,
+    square_meters: null,
     heat_pumps_needed: null,
     location_to_install: [],
     existing_unit: null,
@@ -172,18 +174,13 @@ export default function QuoteFormStepper({ isOpen, onClose, initialServiceType }
   return (
     <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        {/* Close Button */}
+        {/* Progress Bar */}
         <div className="sticky top-0 z-10 bg-white border-b border-gray-200 p-4 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-emerald-600 transition-all duration-300"
-                style={{ width: `${(currentStep / 5) * 100}%` }}
-              />
-            </div>
-            <span className="text-sm font-semibold text-gray-600 whitespace-nowrap">
-              Step {currentStep} of 5
-            </span>
+          <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-emerald-600 transition-all duration-300"
+              style={{ width: `${(currentStep / 5) * 100}%` }}
+            />
           </div>
           <button
             onClick={onClose}
@@ -207,7 +204,7 @@ export default function QuoteFormStepper({ isOpen, onClose, initialServiceType }
 
           {currentStep === 2 && (
             <Step2PropertyInfo
-              value={{ property_type: formData.property_type, bedrooms: formData.bedrooms }}
+              value={{ property_type: formData.property_type, bedrooms: formData.bedrooms, square_meters: formData.square_meters }}
               onChange={(updates) => handleFieldChange(updates)}
               onNext={handleNext}
               onBack={handleBack}

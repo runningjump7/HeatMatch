@@ -85,7 +85,9 @@ export default function Home() {
             <a href="#coverage" className="text-gray-600 hover:text-gray-900 text-sm">Areas We Service</a>
             <a href="#faq" className="text-gray-600 hover:text-gray-900 text-sm">FAQ</a>
           </div>
-          <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-medium text-sm transition">
+          <button
+            onClick={() => { setSelectedService(null); setShowStepper(true); }}
+            className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-medium text-sm transition">
             Get Quote
           </button>
         </div>
@@ -106,7 +108,7 @@ export default function Home() {
               </div>
 
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                Find The Right<br/>Heat Pump Installer<br/><span className="text-emerald-600">In Minutes</span>
+                Get Matched With<br/>Trusted Local Installers<br/><span className="text-emerald-600">Without Calling Around</span>
               </h1>
 
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
@@ -149,13 +151,12 @@ export default function Home() {
             <div>
               <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
                 {/* Progress Bar */}
-                <div className="flex items-center gap-2 mb-6">
-                  <div className="flex-1 h-2 bg-emerald-200 rounded-full"></div>
-                  <span className="text-xs font-semibold text-gray-600">Step 1 of 5</span>
+                <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden mb-6">
+                  <div className="h-full bg-emerald-600" style={{ width: '20%' }} />
                 </div>
 
                 {/* Form Title */}
-                <h2 className="text-xl font-bold text-gray-900 mb-6">What do you need help with?</h2>
+                <h2 className="text-3xl font-bold text-gray-900 mb-6">What do you need help with?</h2>
 
                 {/* Service Options */}
                 <div className="space-y-3 mb-8">
@@ -163,17 +164,17 @@ export default function Home() {
                     <button
                       key={service.id}
                       onClick={() => setSelectedService(service.id)}
-                      className={`w-full flex items-center gap-4 p-4 rounded-lg border-2 transition ${
+                      className={`w-full flex items-center gap-4 p-5 rounded-xl border-2 transition ${
                         selectedService === service.id
                           ? 'border-emerald-600 bg-emerald-50'
-                          : 'border-gray-200 bg-white hover:border-gray-300'
+                          : 'border-gray-200 bg-white hover:border-emerald-200 hover:bg-gray-50'
                       }`}
                     >
-                      <img src={service.icon} alt="" className="w-6 h-6 flex-shrink-0" />
-                      <span className={`text-left font-medium ${selectedService === service.id ? 'text-gray-900' : 'text-gray-700'}`}>
+                      <img src={service.icon} alt="" className="w-8 h-8 flex-shrink-0" />
+                      <span className={`text-left font-semibold text-lg ${selectedService === service.id ? 'text-gray-900' : 'text-gray-700'}`}>
                         {service.label}
                       </span>
-                      <svg className="w-5 h-5 ml-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className={`w-6 h-6 ml-auto ${selectedService === service.id ? 'text-emerald-600' : 'text-gray-300'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </button>
@@ -186,7 +187,7 @@ export default function Home() {
                   disabled={!selectedService}
                   className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white py-3 rounded-lg font-semibold transition mb-4"
                 >
-                  Continue →
+                  Select an option to continue
                 </button>
 
                 {/* Average Response Time */}
@@ -255,51 +256,86 @@ export default function Home() {
       </section>
 
       {/* SECTION 3: WHY HEATMATCH */}
-      <section className="py-16 md:py-24 bg-gray-50">
+      <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-16">
             Why Homeowners Use HeatMatch
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Save Time */}
-            <div className="bg-white rounded-lg p-8">
-              <div className="mb-4 flex justify-center">
-                <svg width="56" height="56" viewBox="0 0 64 64" className="w-12 h-12">
-                  <circle cx="32" cy="32" r="28" fill="#ECFDF5"/>
+          <div className="grid md:grid-cols-6 gap-6">
+            {/* Stop Calling Around */}
+            <div className="text-center">
+              <div className="mb-6 flex justify-center">
+                <svg width="48" height="48" viewBox="0 0 64 64" className="w-12 h-12">
                   <circle cx="32" cy="32" r="18" fill="none" stroke="#10B981" strokeWidth="3"/>
-                  <path d="M32 22v12l8 5" fill="none" stroke="#10B981" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M32 20v12l8 8" fill="none" stroke="#10B981" strokeWidth="3" strokeLinecap="round"/>
                 </svg>
               </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2 text-center">Save Time</h3>
-              <p className="text-gray-600 text-center">No need to call multiple businesses.</p>
+              <h3 className="text-sm font-bold text-gray-900 mb-2">Stop Calling Around</h3>
+              <p className="text-xs text-gray-600 leading-relaxed">Tell us about your project once and we'll do the rest.</p>
             </div>
 
-            {/* Trusted Installers */}
-            <div className="bg-white rounded-lg p-8">
-              <div className="mb-4 flex justify-center">
-                <svg width="56" height="56" viewBox="0 0 64 64" className="w-12 h-12">
-                  <circle cx="32" cy="32" r="28" fill="#ECFDF5"/>
-                  <path d="M32 10l18 6v14c0 11-7 20-18 24-11-4-18-13-18-24V16z" fill="none" stroke="#10B981" strokeWidth="3.5" strokeLinejoin="round"/>
-                  <path d="M24 32l6 6 12-14" fill="none" stroke="#10B981" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/>
+            {/* Trusted Local Installers */}
+            <div className="text-center">
+              <div className="mb-6 flex justify-center">
+                <svg width="48" height="48" viewBox="0 0 64 64" className="w-12 h-12">
+                  <path d="M32 10l16 6v12c0 10-6 18-16 24-10-6-16-14-16-24V16z" fill="none" stroke="#10B981" strokeWidth="3"/>
+                  <path d="M24 31l6 6 10-12" fill="none" stroke="#10B981" strokeWidth="3" strokeLinecap="round"/>
                 </svg>
               </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2 text-center">Trusted Installers</h3>
-              <p className="text-gray-600 text-center">We only work with reputable local providers.</p>
+              <h3 className="text-sm font-bold text-gray-900 mb-2">Trusted Local Installers</h3>
+              <p className="text-xs text-gray-600 leading-relaxed">We work with reputable North Shore businesses experienced in heat pump installation.</p>
             </div>
 
             {/* Free To Use */}
-            <div className="bg-white rounded-lg p-8">
-              <div className="mb-4 flex justify-center">
-                <svg width="56" height="56" viewBox="0 0 64 64" className="w-12 h-12">
-                  <circle cx="32" cy="32" r="28" fill="#ECFDF5"/>
-                  <circle cx="32" cy="32" r="16" fill="none" stroke="#10B981" strokeWidth="3.5"/>
-                  <path d="M24 32h16" fill="none" stroke="#10B981" strokeWidth="3.5" strokeLinecap="round"/>
-                  <path d="M28 28l-4 4 4 4" fill="none" stroke="#10B981" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <div className="text-center">
+              <div className="mb-6 flex justify-center">
+                <svg width="48" height="48" viewBox="0 0 64 64" className="w-12 h-12">
+                  <circle cx="32" cy="32" r="18" fill="none" stroke="#10B981" strokeWidth="3"/>
+                  <path d="M32 20v24" stroke="#10B981" strokeWidth="3"/>
+                  <path d="M26 24c0-3 3-5 6-5s6 2 6 5-2 4-6 5-6 2-6 5 3 5 6 5 6-2 6-5" fill="none" stroke="#10B981" strokeWidth="3"/>
                 </svg>
               </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2 text-center">Free To Use</h3>
-              <p className="text-gray-600 text-center">No fees. No obligations.</p>
+              <h3 className="text-sm font-bold text-gray-900 mb-2">Free To Use</h3>
+              <p className="text-xs text-gray-600 leading-relaxed">Our service is completely free for homeowners.</p>
+            </div>
+
+            {/* No Obligation */}
+            <div className="text-center">
+              <div className="mb-6 flex justify-center">
+                <svg width="48" height="48" viewBox="0 0 64 64" className="w-12 h-12">
+                  <rect x="20" y="14" width="24" height="36" rx="2" fill="none" stroke="#10B981" strokeWidth="3"/>
+                  <path d="M25 24h14M25 32h14M25 40h10" stroke="#10B981" strokeWidth="3" strokeLinecap="round"/>
+                </svg>
+              </div>
+              <h3 className="text-sm font-bold text-gray-900 mb-2">No Obligation</h3>
+              <p className="text-xs text-gray-600 leading-relaxed">Get connected with installers at no cost and decide if you'd like to proceed.</p>
+            </div>
+
+            {/* North Shore Experts */}
+            <div className="text-center">
+              <div className="mb-6 flex justify-center">
+                <svg width="48" height="48" viewBox="0 0 64 64" className="w-12 h-12">
+                  <path d="M32 52s12-12 12-22a12 12 0 10-24 0c0 10 12 22 12 22z" fill="none" stroke="#10B981" strokeWidth="3"/>
+                  <circle cx="32" cy="30" r="4" fill="#10B981"/>
+                </svg>
+              </div>
+              <h3 className="text-sm font-bold text-gray-900 mb-2">North Shore Experts</h3>
+              <p className="text-xs text-gray-600 leading-relaxed">We only work with installers who service Auckland's North Shore.</p>
+            </div>
+
+            {/* One Request Multiple Options */}
+            <div className="text-center">
+              <div className="mb-6 flex justify-center">
+                <svg width="48" height="48" viewBox="0 0 64 64" className="w-12 h-12">
+                  <circle cx="24" cy="24" r="8" fill="none" stroke="#10B981" strokeWidth="3"/>
+                  <circle cx="42" cy="24" r="8" fill="none" stroke="#10B981" strokeWidth="3"/>
+                  <path d="M12 48c2-8 8-12 12-12s10 4 12 12" fill="none" stroke="#10B981" strokeWidth="3"/>
+                  <path d="M30 48c2-8 8-12 12-12s10 4 12 12" fill="none" stroke="#10B981" strokeWidth="3"/>
+                </svg>
+              </div>
+              <h3 className="text-sm font-bold text-gray-900 mb-2">Multiple Options</h3>
+              <p className="text-xs text-gray-600 leading-relaxed">Receive multiple quotes to compare and choose from.</p>
             </div>
           </div>
         </div>
@@ -371,17 +407,19 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="bg-gradient-to-r from-emerald-50 to-blue-50 rounded-2xl p-8 md:p-12 border border-emerald-200">
             <div className="grid md:grid-cols-2 gap-12 items-center">
-              {/* Left: Trust Badge */}
-              <div>
-                <svg width="56" height="56" viewBox="0 0 64 64" className="w-12 h-12 mb-6">
+              {/* Left: Trust Badge + Text */}
+              <div className="flex gap-6 items-start">
+                <svg width="56" height="56" viewBox="0 0 64 64" className="w-14 h-14 flex-shrink-0">
                   <circle cx="32" cy="32" r="28" fill="#ECFDF5"/>
                   <path d="M32 10l16 6v12c0 10-6 18-16 24-10-6-16-14-16-24V16z" fill="none" stroke="#10B981" strokeWidth="3.5"/>
                   <path d="M24 31l5 5 11-12" fill="none" stroke="#10B981" strokeWidth="3.5" strokeLinecap="round"/>
                 </svg>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Local Installers You Can Trust</h3>
-                <p className="text-gray-700 leading-relaxed">
-                  HeatMatch works with experienced installers serving Auckland's North Shore. Every enquiry is reviewed before being passed on, helping ensure businesses receive high-quality opportunities and homeowners receive the right support.
-                </p>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3">Local Installers You Can Trust</h3>
+                  <p className="text-gray-700 leading-relaxed">
+                    HeatMatch works with experienced installers serving Auckland's North Shore. Every enquiry is reviewed before being passed on, helping ensure businesses receive high-quality opportunities and homeowners receive the right support.
+                  </p>
+                </div>
               </div>
 
               {/* Right: 4 Trust Points */}

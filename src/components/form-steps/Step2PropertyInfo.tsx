@@ -1,8 +1,8 @@
 'use client';
 
 interface Step2PropertyInfoProps {
-  value: { property_type: string | null; bedrooms: string | null };
-  onChange: (updates: { property_type?: string; bedrooms?: string }) => void;
+  value: { property_type: string | null; bedrooms: string | null; square_meters?: string | null };
+  onChange: (updates: { property_type?: string; bedrooms?: string; square_meters?: string }) => void;
   onNext: () => void;
   onBack: () => void;
 }
@@ -22,7 +22,16 @@ export default function Step2PropertyInfo({ value, onChange, onNext, onBack }: S
     { id: '4', label: '4+ Bedrooms' },
   ];
 
-  const isComplete = value.property_type && value.bedrooms;
+  const squareMeterOptions = [
+    { id: 'small', label: 'Up to 50 m²' },
+    { id: 'medium', label: '50-200 m²' },
+    { id: 'large', label: '200-500 m²' },
+    { id: 'xlarge', label: '500+ m²' },
+  ];
+
+  const isResidential = ['home', 'apartment'].includes(value.property_type || '');
+  const isCommercial = ['office', 'commercial'].includes(value.property_type || '');
+  const isComplete = value.property_type && (isResidential ? value.bedrooms : value.square_meters);
 
   return (
     <div>
@@ -49,25 +58,49 @@ export default function Step2PropertyInfo({ value, onChange, onNext, onBack }: S
         </div>
       </div>
 
-      {/* Bedrooms */}
-      <div className="mb-8">
-        <label className="block text-sm font-semibold text-gray-900 mb-3">Number of Bedrooms</label>
-        <div className="grid grid-cols-2 gap-3">
-          {bedroomOptions.map((option) => (
-            <button
-              key={option.id}
-              onClick={() => onChange({ bedrooms: option.id })}
-              className={`p-3 rounded-lg border-2 font-medium transition text-center ${
-                value.bedrooms === option.id
-                  ? 'border-emerald-600 bg-emerald-50 text-gray-900'
-                  : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
-              }`}
-            >
-              {option.label}
-            </button>
-          ))}
+      {/* Bedrooms (for residential) */}
+      {isResidential && (
+        <div className="mb-8">
+          <label className="block text-sm font-semibold text-gray-900 mb-3">Number of Bedrooms</label>
+          <div className="grid grid-cols-2 gap-3">
+            {bedroomOptions.map((option) => (
+              <button
+                key={option.id}
+                onClick={() => onChange({ bedrooms: option.id })}
+                className={`p-3 rounded-lg border-2 font-medium transition text-center ${
+                  value.bedrooms === option.id
+                    ? 'border-emerald-600 bg-emerald-50 text-gray-900'
+                    : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
+
+      {/* Square Meters (for commercial) */}
+      {isCommercial && (
+        <div className="mb-8">
+          <label className="block text-sm font-semibold text-gray-900 mb-3">Approximate Space Size</label>
+          <div className="grid grid-cols-2 gap-3">
+            {squareMeterOptions.map((option) => (
+              <button
+                key={option.id}
+                onClick={() => onChange({ square_meters: option.id })}
+                className={`p-3 rounded-lg border-2 font-medium transition text-center ${
+                  value.square_meters === option.id
+                    ? 'border-emerald-600 bg-emerald-50 text-gray-900'
+                    : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Buttons */}
       <div className="flex gap-3">
