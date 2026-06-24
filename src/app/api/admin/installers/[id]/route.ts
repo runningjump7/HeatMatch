@@ -4,7 +4,7 @@ import { getAdminSession, isAdminAuthenticated } from '@/lib/adminAuth';
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getAdminSession();
@@ -12,6 +12,7 @@ export async function PATCH(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const { id } = await params;
     const {
       name,
       phone,
@@ -24,12 +25,12 @@ export async function PATCH(
 
     await query(
       `UPDATE installers
-       SET name = $1, phone = $2, email = $3, primary_suburb = $4, service_suburbs = $5, active = $6, notes = $7, updated_at = NOW()
+       SET business_name = $1, phone = $2, email = $3, primary_suburb = $4, service_suburbs = $5, active = $6, notes = $7, updated_at = NOW()
        WHERE id = $8`,
-      [name, phone, email, primary_suburb, service_suburbs || [], active, notes || '', params.id]
+      [name, phone, email, primary_suburb, service_suburbs || [], active, notes || '', id]
     );
 
-    const result = await query('SELECT * FROM installers WHERE id = $1', [params.id]);
+    const result = await query('SELECT * FROM installers WHERE id = $1', [id]);
 
     return NextResponse.json(result.rows[0]);
   } catch (error) {
@@ -43,7 +44,7 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getAdminSession();
@@ -51,7 +52,8 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    await query('DELETE FROM installers WHERE id = $1', [params.id]);
+    const { id } = await params;
+    await query('DELETE FROM installers WHERE id = $1', [id]);
 
     return NextResponse.json({ success: true });
   } catch (error) {

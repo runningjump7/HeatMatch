@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import SuccessModal from '@/components/SuccessModal';
+import ErrorModal from '@/components/ErrorModal';
+import ConfirmModal from '@/components/ConfirmModal';
 
 interface Installer {
   id: string;
@@ -21,6 +24,9 @@ export default function AdminInstallersPage() {
   const [showModal, setShowModal] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [successModal, setSuccessModal] = useState<{ show: boolean; message: string; action?: string } | null>(null);
+  const [errorModal, setErrorModal] = useState<{ show: boolean; title: string; message: string } | null>(null);
+  const [confirmModal, setConfirmModal] = useState<{ show: boolean; message: string; onConfirm: () => void } | null>(null);
 
   const [form, setForm] = useState({
     name: '',
@@ -92,7 +98,11 @@ export default function AdminInstallersPage() {
 
   const handleSave = async () => {
     if (!form.name || !form.phone || !form.email || !form.primary_suburb) {
-      alert('Please fill in all required fields');
+      setErrorModal({
+        show: true,
+        title: 'Missing Information',
+        message: 'Please fill in all required fields',
+      });
       return;
     }
 
@@ -107,7 +117,11 @@ export default function AdminInstallersPage() {
         });
 
         if (res.ok) {
-          alert('Installer updated successfully');
+          setSuccessModal({
+            show: true,
+            message: 'Installer updated successfully',
+            action: 'updated',
+          });
           fetchInstallers();
           setShowModal(false);
         }
@@ -120,30 +134,51 @@ export default function AdminInstallersPage() {
         });
 
         if (res.ok) {
-          alert('Installer created successfully');
+          setSuccessModal({
+            show: true,
+            message: 'Installer created successfully',
+            action: 'created',
+          });
           fetchInstallers();
           setShowModal(false);
         }
       }
     } catch (error) {
       console.error('Error saving installer:', error);
-      alert('Failed to save installer');
+      setErrorModal({
+        show: true,
+        title: 'Save Failed',
+        message: 'There was an error saving the installer. Please try again.',
+      });
     } finally {
       setIsSaving(false);
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this installer?')) return;
-
-    try {
-      await fetch(`/api/admin/installers/${id}`, { method: 'DELETE' });
-      alert('Installer deleted');
-      fetchInstallers();
-    } catch (error) {
-      console.error('Error deleting installer:', error);
-      alert('Failed to delete installer');
-    }
+  const handleDelete = (id: string) => {
+    setConfirmModal({
+      show: true,
+      message: 'Are you sure you want to delete this installer? This action cannot be undone.',
+      onConfirm: async () => {
+        try {
+          await fetch(`/api/admin/installers/${id}`, { method: 'DELETE' });
+          setSuccessModal({
+            show: true,
+            message: 'Installer deleted successfully',
+            action: 'deleted',
+          });
+          fetchInstallers();
+          setConfirmModal(null);
+        } catch (error) {
+          console.error('Error deleting installer:', error);
+          setErrorModal({
+            show: true,
+            title: 'Delete Failed',
+            message: 'There was an error deleting the installer. Please try again.',
+          });
+        }
+      },
+    });
   };
 
   return (
@@ -230,7 +265,38 @@ export default function AdminInstallersPage() {
         )}
       </div>
 
-      {/* Modal */}
+      {/* Success Modal */}
+      {successModal?.show && (
+        <SuccessModal
+          title={successModal.action === 'created' ? 'Installer Added' : successModal.action === 'updated' ? 'Installer Updated' : 'Success'}
+          subtitle={successModal.message}
+          onClose={() => setSuccessModal(null)}
+        />
+      )}
+
+      {/* Error Modal */}
+      {errorModal?.show && (
+        <ErrorModal
+          title={errorModal.title}
+          message={errorModal.message}
+          onClose={() => setErrorModal(null)}
+        />
+      )}
+
+      {/* Confirm Modal */}
+      {confirmModal?.show && (
+        <ConfirmModal
+          title="Delete Installer"
+          message={confirmModal.message}
+          confirmText="Delete"
+          cancelText="Cancel"
+          isDestructive={true}
+          onConfirm={confirmModal.onConfirm}
+          onCancel={() => setConfirmModal(null)}
+        />
+      )}
+
+      {/* Form Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full p-8 max-h-[90vh] overflow-y-auto">

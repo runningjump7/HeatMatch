@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import SuccessModal from '@/components/SuccessModal';
+import ErrorModal from '@/components/ErrorModal';
 
 interface Lead {
   id: string;
@@ -47,6 +49,8 @@ export default function LeadDetailPage() {
   const [status, setStatus] = useState('');
   const [selectedInstaller, setSelectedInstaller] = useState('');
   const [photoIndex, setPhotoIndex] = useState(0);
+  const [successModal, setSuccessModal] = useState(false);
+  const [errorModal, setErrorModal] = useState<{ show: boolean; title: string; message: string } | null>(null);
 
   useEffect(() => {
     const fetchLead = async () => {
@@ -96,12 +100,16 @@ export default function LeadDetailPage() {
       });
 
       if (res.ok) {
-        alert('Lead updated successfully');
+        setSuccessModal(true);
         router.refresh();
       }
     } catch (error) {
       console.error('Error saving lead:', error);
-      alert('Failed to save lead');
+      setErrorModal({
+        show: true,
+        title: 'Save Failed',
+        message: 'There was an error saving the lead. Please try again.',
+      });
     } finally {
       setIsSaving(false);
     }
@@ -343,6 +351,24 @@ export default function LeadDetailPage() {
           </button>
         </div>
       </div>
+
+      {/* Success Modal */}
+      {successModal && (
+        <SuccessModal
+          title="Lead Updated"
+          subtitle="The lead has been updated successfully"
+          onClose={() => setSuccessModal(false)}
+        />
+      )}
+
+      {/* Error Modal */}
+      {errorModal?.show && (
+        <ErrorModal
+          title={errorModal.title}
+          message={errorModal.message}
+          onClose={() => setErrorModal(null)}
+        />
+      )}
     </div>
   );
 }

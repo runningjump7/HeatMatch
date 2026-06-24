@@ -1,6 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import SuccessModal from '@/components/SuccessModal';
+import ErrorModal from '@/components/ErrorModal';
+import ConfirmModal from '@/components/ConfirmModal';
 
 interface PendingInstaller {
   id: string;
@@ -15,7 +18,9 @@ export default function PendingInstallersPage() {
   const [installers, setInstallers] = useState<PendingInstaller[]>([]);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
-  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [successModal, setSuccessModal] = useState<{ show: boolean; message: string } | null>(null);
+  const [errorModal, setErrorModal] = useState<{ show: boolean; title: string; message: string } | null>(null);
+  const [confirmModal, setConfirmModal] = useState<{ show: boolean; installerId: string; onConfirm: () => void } | null>(null);
 
   useEffect(() => {
     fetchPendingInstallers();
@@ -29,7 +34,7 @@ export default function PendingInstallersPage() {
       setInstallers(data);
     } catch (error) {
       console.error('Error fetching installers:', error);
-      setMessage({ type: 'error', text: 'Failed to load installers' });
+      setErrorModal({ show: true, title: 'Load Failed', message: 'Failed to load pending installers' });
     } finally {
       setLoading(false);
     }
@@ -46,47 +51,77 @@ export default function PendingInstallersPage() {
 
       if (!res.ok) throw new Error('Failed to approve');
 
-      setMessage({ type: 'success', text: 'Installer approved!' });
+      setSuccessModal({ show: true, message: 'Installer approved successfully' });
       setInstallers(installers.filter(i => i.id !== id));
     } catch (error) {
       console.error('Error approving installer:', error);
-      setMessage({ type: 'error', text: 'Failed to approve installer' });
+      setErrorModal({ show: true, title: 'Approval Failed', message: 'Failed to approve installer' });
     } finally {
       setActionLoading(null);
     }
   };
 
-  const handleReject = async (id: string) => {
-    if (!confirm('Are you sure you want to reject this installer?')) return;
+  const handleReject = (id: string) => {
+    setConfirmModal({
+      show: true,
+      installerId: id,
+      onConfirm: async () => {
+        setActionLoading(id);
+        try {
+          const res = await fetch(`/api/admin/installers/${id}/approve`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'reject' }),
+          });
 
-    setActionLoading(id);
-    try {
-      const res = await fetch(`/api/admin/installers/${id}/approve`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'reject' }),
-      });
+          if (!res.ok) throw new Error('Failed to reject');
 
-      if (!res.ok) throw new Error('Failed to reject');
-
-      setMessage({ type: 'success', text: 'Installer rejected' });
-      setInstallers(installers.filter(i => i.id !== id));
-    } catch (error) {
-      console.error('Error rejecting installer:', error);
-      setMessage({ type: 'error', text: 'Failed to reject installer' });
-    } finally {
-      setActionLoading(null);
-    }
+          setSuccessModal({ show: true, message: 'Installer rejected' });
+          setInstallers(installers.filter(i => i.id !== id));
+          setConfirmModal(null);
+        } catch (error) {
+          console.error('Error rejecting installer:', error);
+          setErrorModal({ show: true, title: 'Rejection Failed', message: 'Failed to reject installer' });
+        } finally {
+          setActionLoading(null);
+        }
+      },
+    });
   };
 
   return (
     <div>
       <h1 className="text-3xl font-bold text-gray-900 mb-8">Installer Applications</h1>
 
-      {message && (
-        <div className={`mb-6 p-4 rounded-lg ${message.type === 'success' ? 'bg-green-50 border border-green-200 text-green-800' : 'bg-red-50 border border-red-200 text-red-800'}`}>
-          {message.text}
-        </div>
+      {/* Success Modal */}
+      {successModal?.show && (
+        <SuccessModal
+          title="Success"
+          subtitle={successModal.message}
+          onClose={() => setSuccessModal(null)}
+        />
+      )}
+
+      {/* Error Modal */}
+      {errorModal?.show && (
+        <ErrorModal
+          title={errorModal.title}
+          message={errorModal.message}
+          onClose={() => setErrorModal(null)}
+        />
+      )}
+
+      {/* Confirm Modal */}
+      {confirmModal?.show && (
+        <ConfirmModal
+          title="Reject Installer"
+          message="Are you sure you want to reject this installer application? This action cannot be undone."
+          confirmText="Reject"
+          cancelText="Cancel"
+          isDestructive={true}
+          onConfirm={confirmModal.onConfirm}
+          onCancel={() => setConfirmModal(null)}
+        />
       )}
 
       {loading ? (

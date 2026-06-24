@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const result = await query('SELECT * FROM installers ORDER BY name');
+    const result = await query('SELECT * FROM installers ORDER BY business_name');
 
     return NextResponse.json({ installers: result.rows });
   } catch (error) {
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
     const id = uuidv4();
 
     await query(
-      `INSERT INTO installers (id, name, phone, email, primary_suburb, service_suburbs, active, notes, created_at, updated_at)
+      `INSERT INTO installers (id, business_name, phone, email, primary_suburb, service_suburbs, active, notes, created_at, updated_at)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW())`,
       [id, name, phone, email, primary_suburb, service_suburbs || [], active !== false, notes || '']
     );
