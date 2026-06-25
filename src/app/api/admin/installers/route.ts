@@ -35,8 +35,8 @@ export async function POST(request: NextRequest) {
       email,
       primary_suburb,
       service_suburbs,
-      active,
-      notes,
+      approved,
+      bio,
     } = await request.json();
 
     if (!name || !phone || !email || !primary_suburb) {
@@ -49,9 +49,9 @@ export async function POST(request: NextRequest) {
     const id = uuidv4();
 
     await query(
-      `INSERT INTO installers (id, business_name, phone, email, primary_suburb, service_suburbs, active, notes, created_at, updated_at)
+      `INSERT INTO installers (id, business_name, phone, email, suburb_primary, service_suburbs, approved, bio, created_at, updated_at)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW())`,
-      [id, name, phone, email, primary_suburb, service_suburbs || [], active !== false, notes || '']
+      [id, name, phone, email, primary_suburb, service_suburbs || [], approved !== false, bio || '']
     );
 
     return NextResponse.json({ id, success: true });

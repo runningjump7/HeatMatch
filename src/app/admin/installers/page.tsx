@@ -8,13 +8,13 @@ import ConfirmModal from '@/components/ConfirmModal';
 
 interface Installer {
   id: string;
-  name: string;
+  business_name: string;
   phone: string;
   email: string;
-  primary_suburb: string;
+  suburb_primary: string;
   service_suburbs: string[];
-  active: boolean;
-  notes: string;
+  approved: boolean;
+  bio: string;
   created_at: string;
 }
 
@@ -34,8 +34,8 @@ export default function AdminInstallersPage() {
     email: '',
     primary_suburb: '',
     service_suburbs: [] as string[],
-    active: true,
-    notes: '',
+    approved: false,
+    bio: '',
   });
 
   const suburbs = [
@@ -64,13 +64,13 @@ export default function AdminInstallersPage() {
     if (installer) {
       setEditingId(installer.id);
       setForm({
-        name: installer.name,
+        name: installer.business_name,
         phone: installer.phone,
         email: installer.email,
-        primary_suburb: installer.primary_suburb,
+        primary_suburb: installer.suburb_primary,
         service_suburbs: installer.service_suburbs,
-        active: installer.active,
-        notes: installer.notes,
+        approved: installer.approved,
+        bio: installer.bio,
       });
     } else {
       setEditingId(null);
@@ -80,8 +80,8 @@ export default function AdminInstallersPage() {
         email: '',
         primary_suburb: '',
         service_suburbs: [],
-        active: true,
-        notes: '',
+        approved: false,
+        bio: '',
       });
     }
     setShowModal(true);
@@ -218,12 +218,12 @@ export default function AdminInstallersPage() {
               <tbody className="divide-y divide-gray-200">
                 {installers.map((installer) => (
                   <tr key={installer.id} className="hover:bg-gray-50 transition">
-                    <td className="px-6 py-4 text-sm font-medium text-gray-900">{installer.name}</td>
+                    <td className="px-6 py-4 text-sm font-medium text-gray-900">{installer.business_name}</td>
                     <td className="px-6 py-4 text-sm text-gray-600">
                       <div className="text-xs">{installer.phone}</div>
                       <div className="text-xs">{installer.email}</div>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{installer.primary_suburb}</td>
+                    <td className="px-6 py-4 text-sm text-gray-900">{installer.suburb_primary}</td>
                     <td className="px-6 py-4 text-sm">
                       <div className="flex flex-wrap gap-1">
                         {installer.service_suburbs?.slice(0, 3).map((suburb) => (
@@ -239,8 +239,8 @@ export default function AdminInstallersPage() {
                       </div>
                     </td>
                     <td className="px-6 py-4 text-sm">
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${installer.active ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-800'}`}>
-                        {installer.active ? 'Active' : 'Inactive'}
+                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${installer.approved ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-800'}`}>
+                        {installer.approved ? 'Approved' : 'Pending'}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-sm space-x-2">
@@ -376,25 +376,25 @@ export default function AdminInstallersPage() {
                 </div>
               </div>
 
-              {/* Active */}
+              {/* Approved */}
               <div>
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="checkbox"
-                    checked={form.active}
-                    onChange={(e) => setForm({ ...form, active: e.target.checked })}
+                    checked={form.approved}
+                    onChange={(e) => setForm({ ...form, approved: e.target.checked })}
                     className="w-4 h-4 rounded border-gray-300"
                   />
                   <span className="text-sm font-semibold text-gray-900">Active</span>
                 </label>
               </div>
 
-              {/* Notes */}
+              {/* Bio */}
               <div>
                 <label className="block text-sm font-semibold text-gray-900 mb-2">Notes</label>
                 <textarea
-                  value={form.notes}
-                  onChange={(e) => setForm({ ...form, notes: e.target.value })}
+                  value={form.bio}
+                  onChange={(e) => setForm({ ...form, bio: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-900 h-20 resize-none"
                   placeholder="Any notes about this installer..."
                 />
