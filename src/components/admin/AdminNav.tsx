@@ -42,10 +42,9 @@ export default function AdminNav() {
         } lg:translate-x-0`}
       >
         {/* Logo */}
-        <div className="p-6 border-b border-gray-700">
+        <div className="p-6 border-b border-gray-700 flex justify-center">
           <Link href="/" className="flex items-center gap-2">
-            <img src="/icons/heatmatch-logo-white.svg" alt="HeatMatch" className="h-8" />
-            <span className="font-bold">Lead Admin</span>
+            <img src="/icons/heatmatch-logo-white.svg" alt="HeatMatch" className="h-16" />
           </Link>
         </div>
 
