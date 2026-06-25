@@ -9,6 +9,7 @@ interface Step3JobDetailsProps {
     existing_unit: 'yes' | 'no' | 'need_recommendation' | null;
     photos: File[];
   };
+  propertyType: 'home' | 'apartment' | 'office' | 'commercial' | null;
   onChange: (updates: Partial<{
     heat_pumps_needed: string;
     location_to_install: string[];
@@ -19,7 +20,7 @@ interface Step3JobDetailsProps {
   onBack: () => void;
 }
 
-export default function Step3JobDetails({ value, onChange, onNext, onBack }: Step3JobDetailsProps) {
+export default function Step3JobDetails({ value, propertyType, onChange, onNext, onBack }: Step3JobDetailsProps) {
   const [uploadError, setUploadError] = useState<string | null>(null);
 
   const pumpOptions = [
@@ -29,7 +30,7 @@ export default function Step3JobDetails({ value, onChange, onNext, onBack }: Ste
     { id: '4', label: '4+ Heat Pumps' },
   ];
 
-  const locationOptions = [
+  const residentialLocations = [
     'Lounge',
     'Main Bedroom',
     'Bedroom 2',
@@ -39,6 +40,21 @@ export default function Step3JobDetails({ value, onChange, onNext, onBack }: Ste
     'Laundry',
     'Office',
   ];
+
+  const commercialLocations = [
+    'Reception Area',
+    'Conference Room',
+    'Warehouse/Storage',
+    'Showroom',
+    'Server Room',
+    'Corridor/Common Area',
+    'Kitchen/Break Room',
+    'Other (specify in notes)',
+  ];
+
+  const locationOptions = ['office', 'commercial'].includes(propertyType || '')
+    ? commercialLocations
+    : residentialLocations;
 
   const existingUnitOptions: Array<{
     id: 'yes' | 'no' | 'need_recommendation';
