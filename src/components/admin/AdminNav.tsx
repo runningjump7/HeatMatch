@@ -1,12 +1,19 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 export default function AdminNav() {
   const router = useRouter();
+  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const isActive = (path: string) => {
+    if (path === '/admin' && pathname === '/admin') return true;
+    if (path !== '/admin' && pathname.startsWith(path)) return true;
+    return false;
+  };
 
   const handleLogout = async () => {
     await fetch('/api/admin/auth/logout', { method: 'POST' });
@@ -46,42 +53,84 @@ export default function AdminNav() {
         <nav className="p-6 space-y-1">
           <Link
             href="/admin"
-            className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition text-sm font-medium"
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition text-sm font-medium ${
+              isActive('/admin')
+                ? 'bg-gray-800 text-white'
+                : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+            }`}
             onClick={() => setMobileMenuOpen(false)}
           >
-            <img src="/icons/admin-dashboard.svg" alt="Dashboard" className="w-5 h-5" />
+            <svg className={`w-5 h-5 ${isActive('/admin') ? 'text-emerald-500' : 'text-gray-400'}`} viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="3.5">
+              <path d="M10 28L32 10l22 18" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M16 26v28h32V26" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M26 54V38h12v16" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
             Dashboard
           </Link>
           <Link
             href="/admin/leads"
-            className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition text-sm font-medium"
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition text-sm font-medium ${
+              isActive('/admin/leads')
+                ? 'bg-gray-800 text-white'
+                : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+            }`}
             onClick={() => setMobileMenuOpen(false)}
           >
-            <img src="/icons/admin-leads.svg" alt="Leads" className="w-5 h-5" />
+            <svg className={`w-5 h-5 ${isActive('/admin/leads') ? 'text-emerald-500' : 'text-gray-400'}`} viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="3.5">
+              <rect x="16" y="12" width="32" height="40" rx="4" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M22 22h20M22 30h20M22 38h12" strokeLinecap="round"/>
+              <path d="M22 12v8h20v-8" strokeLinecap="round" strokeLinejoin="round"/>
+              <circle cx="40" cy="38" r="2" fill="currentColor"/>
+            </svg>
             Leads
           </Link>
           <Link
             href="/admin/installers"
-            className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition text-sm font-medium"
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition text-sm font-medium ${
+              isActive('/admin/installers')
+                ? 'bg-gray-800 text-white'
+                : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+            }`}
             onClick={() => setMobileMenuOpen(false)}
           >
-            <img src="/icons/admin-installers.svg" alt="Installers" className="w-5 h-5" />
+            <svg className={`w-5 h-5 ${isActive('/admin/installers') ? 'text-emerald-500' : 'text-gray-400'}`} viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="3.5">
+              <circle cx="24" cy="24" r="7" strokeLinecap="round"/>
+              <circle cx="42" cy="28" r="6" strokeLinecap="round"/>
+              <path d="M14 50c2-8 8-12 16-12s14 4 16 12" strokeLinecap="round"/>
+            </svg>
             Installers
           </Link>
           <Link
-            href="/admin/leads"
-            className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition text-sm font-medium"
+            href="/admin/reports"
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition text-sm font-medium ${
+              isActive('/admin/reports')
+                ? 'bg-gray-800 text-white'
+                : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+            }`}
             onClick={() => setMobileMenuOpen(false)}
           >
-            <img src="/icons/admin-reports.svg" alt="Reports" className="w-5 h-5" />
+            <svg className={`w-5 h-5 ${isActive('/admin/reports') ? 'text-emerald-500' : 'text-gray-400'}`} viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="3.5">
+              <path d="M14 50h36" strokeLinecap="round"/>
+              <rect x="18" y="34" width="5" height="16" rx="1.5"/>
+              <rect x="29" y="26" width="5" height="24" rx="1.5"/>
+              <rect x="40" y="18" width="5" height="32" rx="1.5"/>
+            </svg>
             Reports
           </Link>
           <Link
-            href="/admin/leads"
-            className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition text-sm font-medium"
+            href="/admin/settings"
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition text-sm font-medium ${
+              isActive('/admin/settings')
+                ? 'bg-gray-800 text-white'
+                : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+            }`}
             onClick={() => setMobileMenuOpen(false)}
           >
-            <img src="/icons/admin-settings.svg" alt="Settings" className="w-5 h-5" />
+            <svg className={`w-5 h-5 ${isActive('/admin/settings') ? 'text-emerald-500' : 'text-gray-400'}`} viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="3.5">
+              <circle cx="32" cy="32" r="7" strokeLinecap="round"/>
+              <path d="M32 14v6M32 44v6M14 32h6M44 32h6M20 20l4 4M40 40l4 4M44 20l-4 4M20 44l4-4" strokeLinecap="round"/>
+              <circle cx="32" cy="32" r="18" strokeWidth="3"/>
+            </svg>
             Settings
           </Link>
         </nav>
