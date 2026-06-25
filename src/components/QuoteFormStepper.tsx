@@ -102,8 +102,11 @@ export default function QuoteFormStepper({ isOpen, onClose, initialServiceType }
     try {
       // Upload photos to Vercel Blob
       const uploadedPhotoUrls: string[] = [];
+      console.log(`Starting photo upload: ${formData.photos.length} photos to upload`);
       if (formData.photos.length > 0) {
-        for (const file of formData.photos) {
+        for (let i = 0; i < formData.photos.length; i++) {
+          const file = formData.photos[i];
+          console.log(`Uploading photo ${i + 1}/${formData.photos.length}:`, file.name);
           const formDataToUpload = new FormData();
           formDataToUpload.append('file', file);
 
@@ -122,9 +125,11 @@ export default function QuoteFormStepper({ isOpen, onClose, initialServiceType }
           if (uploadedData.error) {
             throw new Error(uploadedData.details || uploadedData.error);
           }
+          console.log(`Photo ${i + 1} uploaded successfully:`, uploadedData.url.substring(0, 100));
           uploadedPhotoUrls.push(uploadedData.url);
         }
       }
+      console.log(`Photo upload complete: ${uploadedPhotoUrls.length} URLs collected`);
 
       // Create lead
       const res = await fetch('/api/leads', {
