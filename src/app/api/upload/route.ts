@@ -37,8 +37,13 @@ export async function POST(request: NextRequest) {
 
     let blob;
     try {
-      blob = await put(blobName, file, {
+      // Convert File to Buffer for upload
+      const bytes = await file.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+
+      blob = await put(blobName, buffer, {
         access: 'public',
+        contentType: file.type || 'image/jpeg',
       });
       console.log('Blob upload successful:', { url: blob.url });
     } catch (blobError) {
