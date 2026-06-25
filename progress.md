@@ -1,14 +1,14 @@
 # HeatMatch Progress
 
 ## Current Status
-- **Date:** 2026-06-25 (Session 5, 6, 7 - In Progress) ✅
+- **Date:** 2026-06-25 (Session 5, 6, 7 - Complete) ✅
 - **Phase:** MVP Implementation - DEPLOYED TO VERCEL ✅ 🚀
 - **Overall Completion:** 100% - LIVE IN PRODUCTION (Quote form, admin portal, landing page, technical SEO, suburb pages, database connected, photo uploads working)
 - **Live URL:** https://heat-match.vercel.app
 - **GitHub:** https://github.com/runningjump7/HeatMatch
 - **Session 5 Work:** SVG icon removal, recent projects cleanup, CTA button fix, meta tags + schema markup, sitemap + robots.txt, 10 suburb landing pages with local SEO, blog strategy documentation
 - **Session 6 Work:** GitHub repo setup (HeatMatch), Vercel deployment, Neon PostgreSQL database integration, environment variables configured
-- **Session 7 Work:** Photo upload fix (Vercel Blob integration), tier system completion, admin portal polish
+- **Session 7 Work:** Photo upload fix (Vercel Blob integration), tier system completion, admin portal polish, Blob storage troubleshooting
 
 ## Objective
 Build HeatMatch: a lead generation platform for heat pump installers. Capture high-quality leads from homeowners, route to verified installers, eventually monetize via subscriptions.
@@ -253,30 +253,49 @@ Replaced all `alert()` and `confirm()` calls in admin portal:
 ✅ Quote form significantly improved UX with conditional fields
 ✅ Ready for user testing and Vercel deployment
 
-## Session 2026-06-26 (Complete) ✅ - PHOTO UPLOAD FIX & TIER SYSTEM
+## Session 2026-06-25 (Complete) ✅ - PHOTO UPLOAD & VERCEL BLOB INTEGRATION
 
-### Photo Upload Fix ✅
-- **Problem:** Form was failing when users tried to upload photos - error "Failed to upload photo"
-- **Root Cause:** Upload endpoint tried to save files to filesystem, which doesn't work on Vercel
+### Photo Upload Implementation ✅
+- **Problem:** Form was failing when users tried to upload photos to production
+- **Root Cause:** Upload endpoint tried to save files to filesystem, which doesn't work on Vercel (serverless)
 - **Solution:** Migrated to Vercel Blob cloud storage
   - Updated `/api/upload` to use `@vercel/blob/put()` for cloud storage
   - Installed `@vercel/blob` package
-  - Added fallback: returns placeholder URL when `BLOB_READ_WRITE_TOKEN` not set (local dev)
-  - Files now properly uploaded to Vercel's cloud storage on production
-- **Testing:** Verified end-to-end flow:
-  1. Photo upload → placeholder URL returned locally ✅
-  2. Lead creation with photo URL → stored in database ✅
-  3. Photo accessible in admin lead detail page ✅
+  - Local fallback: converts files to base64 data URLs for development testing
+  - Production: uploads to Vercel Blob with signed/public URLs
+
+### Vercel Blob Configuration ✅
+- **Initial Issue:** Store created with **private access** → images returned 403 Forbidden in admin portal
+- **Solution:** Deleted old private Blob store via CLI (`vercel blob delete-store`)
+- **New Store:** Created `heat-match-blob-public` with **public access**
+- **Result:** Photos now upload successfully and display in admin portal
+
+### Photo Upload Flow (Working) ✅
+1. User selects 1-5 photos on Step 3
+2. Form validates: max 5MB per photo, image format required
+3. On submission:
+   - Each photo uploaded individually via POST `/api/upload`
+   - Returns public URL (either data URL locally or Blob CDN URL on production)
+   - All URLs sent to `/api/leads` to create lead
+   - Photos stored in PostgreSQL and display in admin portal
+4. **Result:** 5 photos = 5 upload requests + 1 lead creation (expected behavior)
 
 ### Tier System (Job Size-Based) ✅
-- **Completed from prior session:** Tier logic fully implemented
-  - Tier A: Installation/Replace + 3+ units
-  - Tier B: Installation/Replace + 1-2 units, OR Service + 3+ units, OR Commercial Service
-  - Tier C: Service/Advice with 1-2 units residential
-- **Both files updated:** API (`/api/admin/leads`) and detail page use identical logic ✅
+- Tier A: Installation/Replace + 3+ units
+- Tier B: Installation/Replace + 1-2 units, OR Service + 3+ units, OR Commercial Service
+- Tier C: Service/Advice with 1-2 units residential
+- Implemented in both `/api/admin/leads` and lead detail page
 
 ### Commits Made ✅
 - `de02873` - Fix photo upload: use Vercel Blob instead of filesystem
+- `eb7c143` - Fix photo upload: return base64 data URLs for local development
+- `a7b2aa3` - Fix Vercel Blob upload: convert File to Buffer and add contentType
+- `806e59a` - Fix TypeScript error: use access: 'private' for Vercel Blob uploads
+- `1167278` - Fix Vercel Blob upload: remove public access setting for private store
+- `cc84be5` - Improve Vercel Blob error logging: return actual error message
+- `7f3560e` - Fix photo upload errors: proper error handling and don't return huge base64 URLs
+- `bfb3241` - Add debug logging to photo upload process
+- `3f67ede` - Update Blob storage to use public access
 
 ---
 
