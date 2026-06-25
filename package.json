@@ -14,6 +14,7 @@
     "db:update": "node -r dotenv/config -r ts-node/register scripts/update-schema.ts"
   },
   "dependencies": {
+    "@vercel/blob": "^2.4.1",
     "bcryptjs": "^2.4.3",
     "dotenv": "^17.4.2",
     "next": "16.2.9",
