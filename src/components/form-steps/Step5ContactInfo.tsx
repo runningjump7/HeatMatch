@@ -27,44 +27,41 @@ export default function Step5ContactInfo({
   isSubmitting,
   error,
 }: Step5ContactInfoProps) {
-  const [suburbs, setSuburbs] = useState<string[]>([]);
-  const [showSuburbDropdown, setShowSuburbDropdown] = useState(false);
-  const [suburbInput, setSuburbInput] = useState(value.suburb);
+  const [customSuburb, setCustomSuburb] = useState<string>('');
+
+  const northShoreSuburbs = [
+    'Albany',
+    'Takapuna',
+    'Milford',
+    'Browns Bay',
+    'Glenfield',
+    'Birkenhead',
+    'Devonport',
+    'Mairangi Bay',
+    'Northcote',
+    'Long Bay',
+  ];
+
+  const isOther = value.suburb === 'Other';
 
   const isComplete =
     value.homeowner_name.trim() &&
     value.phone.trim() &&
     value.email.trim() &&
     value.suburb.trim() &&
+    (!isOther || customSuburb.trim()) &&
     value.consent_given;
 
-  const handleSuburbChange = (input: string) => {
-    setSuburbInput(input);
-    if (input.length > 0) {
-      // Fetch suburbs matching the input
-      fetchSuburbs(input);
-      setShowSuburbDropdown(true);
-    } else {
-      setShowSuburbDropdown(false);
-    }
-  };
-
-  const fetchSuburbs = async (query: string) => {
-    try {
-      const res = await fetch(`/api/suburbs?q=${encodeURIComponent(query)}`);
-      if (res.ok) {
-        const data = await res.json();
-        setSuburbs(data.suburbs || []);
-      }
-    } catch (error) {
-      console.error('Error fetching suburbs:', error);
-    }
-  };
-
-  const handleSuburbSelect = (suburb: string) => {
-    setSuburbInput(suburb);
+  const handleSuburbChange = (suburb: string) => {
     onChange({ suburb });
-    setShowSuburbDropdown(false);
+    if (suburb === 'Other') {
+      setCustomSuburb('');
+    }
+  };
+
+  const handleCustomSuburbChange = (customValue: string) => {
+    setCustomSuburb(customValue);
+    onChange({ suburb: customValue });
   };
 
   return (
@@ -109,34 +106,32 @@ export default function Step5ContactInfo({
       </div>
 
       {/* Suburb */}
-      <div className="mb-6 relative">
-        <label className="block text-sm font-semibold text-gray-900 mb-2">Suburb</label>
-        <div className="relative">
+      <div className="mb-6">
+        <label className="block text-sm font-semibold text-gray-900 mb-2">Suburb / Area</label>
+        <select
+          value={isOther ? 'Other' : value.suburb}
+          onChange={(e) => handleSuburbChange(e.target.value)}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none text-gray-900"
+        >
+          <option value="">Select a suburb...</option>
+          {northShoreSuburbs.map((suburb) => (
+            <option key={suburb} value={suburb}>
+              {suburb}
+            </option>
+          ))}
+          <option value="Other">Other (please specify)</option>
+        </select>
+
+        {/* Custom suburb input for "Other" */}
+        {isOther && (
           <input
             type="text"
-            value={suburbInput}
-            onChange={(e) => handleSuburbChange(e.target.value)}
-            onFocus={() => suburbInput.length > 0 && setShowSuburbDropdown(true)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none text-gray-900"
-            placeholder="e.g., Takapuna, Albany"
-            autoComplete="off"
+            value={customSuburb}
+            onChange={(e) => handleCustomSuburbChange(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none text-gray-900 mt-3"
+            placeholder="e.g., Wellington, Auckland CBD"
           />
-
-          {/* Dropdown */}
-          {showSuburbDropdown && suburbs.length > 0 && (
-            <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
-              {suburbs.map((suburb) => (
-                <button
-                  key={suburb}
-                  onClick={() => handleSuburbSelect(suburb)}
-                  className="w-full text-left px-4 py-2 hover:bg-emerald-50 text-gray-900 border-b border-gray-200 last:border-b-0"
-                >
-                  {suburb}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+        )}
       </div>
 
       {/* Consent Checkbox */}
