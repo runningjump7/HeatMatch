@@ -6,7 +6,9 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div>
-            <img src="/icons/heatmatch-logo-white.svg" alt="HeatMatch" className="h-8 mb-4" />
+            <Link href="/">
+              <img src="/icons/heatmatch-logo-white.svg" alt="HeatMatch" className="h-8 mb-4 cursor-pointer hover:opacity-80 transition" />
+            </Link>
             <p className="text-sm">Connecting North Shore homeowners with trusted heat pump installers.</p>
           </div>
           <div>
