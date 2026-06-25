@@ -28,6 +28,7 @@ export default function Step5ContactInfo({
   error,
 }: Step5ContactInfoProps) {
   const [customSuburb, setCustomSuburb] = useState<string>('');
+  const [isOtherSelected, setIsOtherSelected] = useState<boolean>(value.suburb === 'Other' || !['Albany', 'Takapuna', 'Milford', 'Browns Bay', 'Glenfield', 'Birkenhead', 'Devonport', 'Mairangi Bay', 'Northcote', 'Long Bay'].includes(value.suburb));
 
   const northShoreSuburbs = [
     'Albany',
@@ -42,7 +43,7 @@ export default function Step5ContactInfo({
     'Long Bay',
   ];
 
-  const isOther = value.suburb === 'Other';
+  const isOther = isOtherSelected;
 
   const isComplete =
     value.homeowner_name.trim() &&
@@ -53,8 +54,13 @@ export default function Step5ContactInfo({
     value.consent_given;
 
   const handleSuburbChange = (suburb: string) => {
-    onChange({ suburb });
     if (suburb === 'Other') {
+      setIsOtherSelected(true);
+      onChange({ suburb: '' });
+      setCustomSuburb('');
+    } else {
+      setIsOtherSelected(false);
+      onChange({ suburb });
       setCustomSuburb('');
     }
   };
@@ -127,8 +133,9 @@ export default function Step5ContactInfo({
         {isOther && (
           <input
             type="text"
-            value={customSuburb}
+            value={value.suburb}
             onChange={(e) => handleCustomSuburbChange(e.target.value)}
+            autoFocus
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none text-gray-900 mt-3"
             placeholder="e.g., Wellington, Auckland CBD"
           />
