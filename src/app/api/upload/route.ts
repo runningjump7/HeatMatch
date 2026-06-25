@@ -47,12 +47,13 @@ export async function POST(request: NextRequest) {
       });
       console.log('Blob upload successful:', { url: blob.url });
     } catch (blobError) {
-      console.error('Vercel Blob upload failed:', blobError);
+      const blobErrorMsg = blobError instanceof Error ? blobError.message : String(blobError);
+      console.error('Vercel Blob upload failed:', blobErrorMsg, blobError);
       // On production, if Blob fails, return an error (don't use huge base64 URLs)
       return NextResponse.json(
         {
           error: 'Photo upload failed',
-          details: 'Unable to upload to cloud storage. Please try again.',
+          details: `Cloud storage error: ${blobErrorMsg}`,
         },
         { status: 500 }
       );
