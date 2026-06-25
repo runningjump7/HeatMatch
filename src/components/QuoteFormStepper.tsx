@@ -220,6 +220,7 @@ export default function QuoteFormStepper({ isOpen, onClose, initialServiceType }
                 photos: formData.photos,
               }}
               propertyType={formData.property_type}
+              serviceType={formData.service_type}
               onChange={(updates) => handleFieldChange(updates)}
               onNext={handleNext}
               onBack={handleBack}

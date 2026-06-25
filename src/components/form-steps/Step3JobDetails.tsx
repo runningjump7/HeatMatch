@@ -10,6 +10,7 @@ interface Step3JobDetailsProps {
     photos: File[];
   };
   propertyType: 'home' | 'apartment' | 'office' | 'commercial' | null;
+  serviceType: 'new_install' | 'replace' | 'service' | 'advice' | null;
   onChange: (updates: Partial<{
     heat_pumps_needed: string;
     location_to_install: string[];
@@ -20,7 +21,7 @@ interface Step3JobDetailsProps {
   onBack: () => void;
 }
 
-export default function Step3JobDetails({ value, propertyType, onChange, onNext, onBack }: Step3JobDetailsProps) {
+export default function Step3JobDetails({ value, propertyType, serviceType, onChange, onNext, onBack }: Step3JobDetailsProps) {
   const [uploadError, setUploadError] = useState<string | null>(null);
 
   const pumpOptions = [
@@ -105,6 +106,17 @@ export default function Step3JobDetails({ value, propertyType, onChange, onNext,
 
   const isComplete = value.heat_pumps_needed && value.location_to_install.length > 0 && value.existing_unit;
 
+  const getLocationLabel = () => {
+    switch (serviceType) {
+      case 'replace':
+        return 'Where would you like them replaced? (Select all that apply)';
+      case 'service':
+        return 'Where would you like them serviced? (Select all that apply)';
+      default:
+        return 'Where would you like them installed? (Select all that apply)';
+    }
+  };
+
   return (
     <div>
       <h2 className="text-2xl font-bold text-gray-900 mb-2">Tell us about the job</h2>
@@ -130,9 +142,9 @@ export default function Step3JobDetails({ value, propertyType, onChange, onNext,
         </div>
       </div>
 
-      {/* Location to Install */}
+      {/* Location to Install/Replace/Service */}
       <div className="mb-8">
-        <label className="block text-sm font-semibold text-gray-900 mb-3">Where would you like them installed? (Select all that apply)</label>
+        <label className="block text-sm font-semibold text-gray-900 mb-3">{getLocationLabel()}</label>
         <div className="grid grid-cols-2 gap-2">
           {locationOptions.map((location) => (
             <button
