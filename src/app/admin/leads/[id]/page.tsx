@@ -175,7 +175,7 @@ export default function LeadDetailPage() {
             ← Back to Leads
           </Link>
           <h1 className="text-3xl font-bold text-gray-900">{lead.homeowner_name}</h1>
-          <p className="text-gray-600 mt-2">Lead ID: {leadId.slice(0, 8)}...</p>
+          <p className="text-gray-600 mt-2">Lead ID: {leadId.slice(0, 8)}</p>
         </div>
         <div className={`text-2xl font-bold px-4 py-2 rounded-lg ${tierColor}`}>
           Tier {tierClass}
