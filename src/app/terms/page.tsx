@@ -1,6 +1,8 @@
+import Footer from '@/components/Footer';
+
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white flex flex-col">
       {/* Header */}
       <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 text-white py-16">
         <div className="max-w-4xl mx-auto px-4">
@@ -118,6 +120,8 @@ export default function TermsPage() {
           </section>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }

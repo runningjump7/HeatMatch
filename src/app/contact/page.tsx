@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Footer from '@/components/Footer';
 
 export default function ContactPage() {
   const [form, setForm] = useState({
@@ -271,6 +272,8 @@ export default function ContactPage() {
           </form>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }
