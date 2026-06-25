@@ -127,6 +127,7 @@ export default function QuoteFormStepper({ isOpen, onClose, initialServiceType }
           service_type: formData.service_type,
           property_type: formData.property_type,
           bedrooms: formData.bedrooms,
+          square_meters: formData.square_meters,
           heat_pumps_needed: formData.heat_pumps_needed,
           location_to_install: formData.location_to_install,
           existing_unit: formData.existing_unit,
