@@ -61,6 +61,8 @@ export async function GET(request: NextRequest) {
         phone,
         suburb,
         service_type,
+        property_type,
+        heat_pumps_needed,
         timeline,
         status,
         (photos IS NOT NULL AND array_length(photos, 1) > 0) as has_photos,
@@ -73,15 +75,30 @@ export async function GET(request: NextRequest) {
       params
     );
 
-    // Calculate tier for each lead
+    // Calculate tier for each lead based on job size
     const leadsWithTier = leadsResult.rows.map((lead: any) => {
-      const qualityScore =
-        (lead.has_photos ? 25 : 0) +
-        (lead.service_type === 'new_install' || lead.service_type === 'replace' ? 30 : 15) +
-        (lead.timeline === 'asap' ? 30 : lead.timeline === 'two_weeks' ? 20 : 10) +
-        10;
-      const tierClass = qualityScore >= 80 ? 'A' : qualityScore >= 50 ? 'B' : 'C';
-      return { ...lead, tier: tierClass, qualityScore };
+      const isCommercial = ['office', 'commercial'].includes(lead.property_type);
+      const heatsUnits = parseInt(lead.heat_pumps_needed) || 0;
+      const isInstallOrReplace = ['new_install', 'replace'].includes(lead.service_type);
+      const isService = lead.service_type === 'service';
+
+      let tierClass = 'C';
+
+      // Tier A: Installation/Replace + 3+ units
+      if (isInstallOrReplace && heatsUnits >= 3) {
+        tierClass = 'A';
+      }
+      // Tier B: Installation/Replace + 1-2 units, OR Service + 3+ units, OR Commercial Service
+      else if (
+        (isInstallOrReplace && heatsUnits >= 1 && heatsUnits <= 2) ||
+        (isService && heatsUnits >= 3) ||
+        (isService && isCommercial)
+      ) {
+        tierClass = 'B';
+      }
+      // Tier C: Service/Advice with 1-2 units residential (default)
+
+      return { ...lead, tier: tierClass };
     });
 
     // Filter by tier if specified

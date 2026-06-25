@@ -154,13 +154,27 @@ export default function LeadDetailPage() {
     researching: 'Still researching',
   };
 
-  const qualityScore =
-    (lead.photos?.length || 0) * 25 +
-    (lead.service_type === 'new_install' || lead.service_type === 'replace' ? 30 : 15) +
-    (lead.timeline === 'asap' ? 30 : lead.timeline === 'two_weeks' ? 20 : 10) +
-    10;
+  // Calculate tier based on job size
+  const isCommercial = ['office', 'commercial'].includes(lead.property_type);
+  const heatsUnits = parseInt(lead.heat_pumps_needed) || 0;
+  const isInstallOrReplace = ['new_install', 'replace'].includes(lead.service_type);
+  const isService = lead.service_type === 'service';
 
-  const tierClass = qualityScore >= 80 ? 'A' : qualityScore >= 50 ? 'B' : 'C';
+  let tierClass = 'C';
+
+  // Tier A: Installation/Replace + 3+ units
+  if (isInstallOrReplace && heatsUnits >= 3) {
+    tierClass = 'A';
+  }
+  // Tier B: Installation/Replace + 1-2 units, OR Service + 3+ units, OR Commercial Service
+  else if (
+    (isInstallOrReplace && heatsUnits >= 1 && heatsUnits <= 2) ||
+    (isService && heatsUnits >= 3) ||
+    (isService && isCommercial)
+  ) {
+    tierClass = 'B';
+  }
+  // Tier C: Service/Advice with 1-2 units residential (default)
   const tierColor =
     tierClass === 'A' ? 'bg-emerald-100 text-emerald-800' :
     tierClass === 'B' ? 'bg-yellow-100 text-yellow-800' :
