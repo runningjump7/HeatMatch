@@ -13,8 +13,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if Vercel Blob is configured
-    if (!process.env.BLOB_READ_WRITE_TOKEN) {
+    // Try to upload to Vercel Blob (auto-authenticates on Vercel)
+    // On local dev without BLOB_STORE_ID, fall back to base64
+    if (!process.env.BLOB_STORE_ID) {
       // Fallback for local development: convert file to base64 data URL
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
