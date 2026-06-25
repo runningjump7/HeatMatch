@@ -36,7 +36,10 @@ export async function PATCH(
   } catch (error) {
     console.error('Error updating installer:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      {
+        error: 'Internal server error',
+        details: error instanceof Error ? error.message : String(error),
+      },
       { status: 500 }
     );
   }
