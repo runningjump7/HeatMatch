@@ -9,7 +9,8 @@
     "db:init": "node -r dotenv/config -r ts-node/register scripts/init-db.ts",
     "db:seed": "node -r dotenv/config -r ts-node/register scripts/seed-db.ts",
     "db:users": "node -r dotenv/config -r ts-node/register scripts/create-users-table.ts",
-    "db:test-users": "node -r dotenv/config -r ts-node/register scripts/create-test-users.ts"
+    "db:test-users": "node -r dotenv/config -r ts-node/register scripts/create-test-users.ts",
+    "db:update": "node -r dotenv/config -r ts-node/register scripts/update-schema.ts"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
