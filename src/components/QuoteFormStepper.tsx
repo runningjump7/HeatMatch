@@ -113,10 +113,15 @@ export default function QuoteFormStepper({ isOpen, onClose, initialServiceType }
           });
 
           if (!uploadRes.ok) {
-            throw new Error('Failed to upload photo');
+            const errorData = await uploadRes.json();
+            console.error('Photo upload error:', errorData);
+            throw new Error(errorData.details || 'Failed to upload photo');
           }
 
           const uploadedData = await uploadRes.json();
+          if (uploadedData.error) {
+            throw new Error(uploadedData.details || uploadedData.error);
+          }
           uploadedPhotoUrls.push(uploadedData.url);
         }
       }

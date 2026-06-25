@@ -48,14 +48,14 @@ export async function POST(request: NextRequest) {
       console.log('Blob upload successful:', { url: blob.url });
     } catch (blobError) {
       console.error('Vercel Blob upload failed:', blobError);
-      // Fallback to base64 if Blob upload fails
-      console.log('Falling back to base64');
-      const bytes = await file.arrayBuffer();
-      const buffer = Buffer.from(bytes);
-      const base64 = buffer.toString('base64');
-      const mimeType = file.type || 'image/jpeg';
-      const dataUrl = `data:${mimeType};base64,${base64}`;
-      return NextResponse.json({ url: dataUrl });
+      // On production, if Blob fails, return an error (don't use huge base64 URLs)
+      return NextResponse.json(
+        {
+          error: 'Photo upload failed',
+          details: 'Unable to upload to cloud storage. Please try again.',
+        },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({ url: blob.url });
