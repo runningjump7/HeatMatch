@@ -6,13 +6,13 @@ interface Step3JobDetailsProps {
   value: {
     heat_pumps_needed: string | null;
     location_to_install: string[];
-    existing_unit: string | null;
+    existing_unit: 'yes' | 'no' | 'need_recommendation' | null;
     photos: File[];
   };
   onChange: (updates: Partial<{
     heat_pumps_needed: string;
     location_to_install: string[];
-    existing_unit: string;
+    existing_unit: 'yes' | 'no' | 'need_recommendation';
     photos: File[];
   }>) => void;
   onNext: () => void;
@@ -40,7 +40,10 @@ export default function Step3JobDetails({ value, onChange, onNext, onBack }: Ste
     'Office',
   ];
 
-  const existingUnitOptions = [
+  const existingUnitOptions: Array<{
+    id: 'yes' | 'no' | 'need_recommendation';
+    label: string;
+  }> = [
     { id: 'yes', label: 'Yes, I have an existing unit' },
     { id: 'no', label: 'No, this is a new installation' },
     { id: 'need_recommendation', label: 'Not sure, need advice' },

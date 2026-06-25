@@ -1,14 +1,18 @@
 'use client';
 
 interface Step4TimelineProps {
-  value: string | null;
-  onChange: (value: string) => void;
+  value: 'asap' | 'two_weeks' | 'one_month' | 'researching' | null;
+  onChange: (value: 'asap' | 'two_weeks' | 'one_month' | 'researching') => void;
   onNext: () => void;
   onBack: () => void;
 }
 
 export default function Step4Timeline({ value, onChange, onNext, onBack }: Step4TimelineProps) {
-  const timelineOptions = [
+  const timelineOptions: Array<{
+    id: 'asap' | 'two_weeks' | 'one_month' | 'researching';
+    label: string;
+    desc: string;
+  }> = [
     {
       id: 'asap',
       label: 'ASAP',

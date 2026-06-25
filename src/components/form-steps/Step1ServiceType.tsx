@@ -1,13 +1,13 @@
 'use client';
 
 interface Step1ServiceTypeProps {
-  value: string | null;
-  onChange: (value: string) => void;
+  value: 'new_install' | 'replace' | 'service' | 'advice' | null;
+  onChange: (value: 'new_install' | 'replace' | 'service' | 'advice') => void;
   onNext: () => void;
 }
 
 export default function Step1ServiceType({ value, onChange, onNext }: Step1ServiceTypeProps) {
-  const services = [
+  const services: Array<{ id: 'new_install' | 'replace' | 'service' | 'advice'; label: string; icon: string }> = [
     { id: 'new_install', label: 'New Heat Pump Installation', icon: '/icons/service-new-installation.svg' },
     { id: 'replace', label: 'Replace Existing Heat Pump', icon: '/icons/service-replace-existing.svg' },
     { id: 'service', label: 'Heat Pump Service', icon: '/icons/service-heat-pump-service.svg' },

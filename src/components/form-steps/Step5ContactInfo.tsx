@@ -2,15 +2,17 @@
 
 import { useState } from 'react';
 
+interface ContactInfoValue {
+  homeowner_name: string;
+  phone: string;
+  email: string;
+  suburb: string;
+  consent_given: boolean;
+}
+
 interface Step5ContactInfoProps {
-  value: {
-    homeowner_name: string;
-    phone: string;
-    email: string;
-    suburb: string;
-    consent_given: boolean;
-  };
-  onChange: (updates: Partial<typeof value>) => void;
+  value: ContactInfoValue;
+  onChange: (updates: Partial<ContactInfoValue>) => void;
   onSubmit: () => void;
   onBack: () => void;
   isSubmitting: boolean;

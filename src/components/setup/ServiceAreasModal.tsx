@@ -31,7 +31,7 @@ export default function ServiceAreasModal({ profile, onClose, onSave }: Props) {
           primary_suburb: primarySuburb,
           service_suburbs: serviceSuburbs
             .split(',')
-            .map((s) => s.trim())
+            .map((s: string) => s.trim())
             .filter(Boolean),
           images: profile.images,
           profile_active: profile.profile_active,

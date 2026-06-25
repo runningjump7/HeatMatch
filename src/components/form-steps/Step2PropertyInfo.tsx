@@ -1,14 +1,25 @@
 'use client';
 
 interface Step2PropertyInfoProps {
-  value: { property_type: string | null; bedrooms: string | null; square_meters?: string | null };
-  onChange: (updates: { property_type?: string; bedrooms?: string; square_meters?: string }) => void;
+  value: {
+    property_type: 'home' | 'apartment' | 'office' | 'commercial' | null;
+    bedrooms: string | null;
+    square_meters?: string | null;
+  };
+  onChange: (updates: {
+    property_type?: 'home' | 'apartment' | 'office' | 'commercial';
+    bedrooms?: string;
+    square_meters?: string;
+  }) => void;
   onNext: () => void;
   onBack: () => void;
 }
 
 export default function Step2PropertyInfo({ value, onChange, onNext, onBack }: Step2PropertyInfoProps) {
-  const propertyTypes = [
+  const propertyTypes: Array<{
+    id: 'home' | 'apartment' | 'office' | 'commercial';
+    label: string;
+  }> = [
     { id: 'home', label: 'House' },
     { id: 'apartment', label: 'Apartment/Unit' },
     { id: 'office', label: 'Office' },
