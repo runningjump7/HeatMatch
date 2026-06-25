@@ -37,7 +37,7 @@ export default function AdminNav() {
         {/* Logo */}
         <div className="p-6 border-b border-gray-700">
           <Link href="/" className="flex items-center gap-2">
-            <img src="/icons/heatmatch-logo.svg" alt="HeatMatch" className="h-8" />
+            <img src="/icons/heatmatch-logo-white.svg" alt="HeatMatch" className="h-8" />
             <span className="font-bold">Lead Admin</span>
           </Link>
         </div>
