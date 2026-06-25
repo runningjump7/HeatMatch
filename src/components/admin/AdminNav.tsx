@@ -46,24 +46,43 @@ export default function AdminNav() {
         <nav className="p-6 space-y-1">
           <Link
             href="/admin"
-            className="block px-4 py-2 rounded-lg hover:bg-gray-800 transition text-sm font-medium"
+            className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition text-sm font-medium"
             onClick={() => setMobileMenuOpen(false)}
           >
-            📊 Dashboard
+            <img src="/icons/admin-dashboard.svg" alt="Dashboard" className="w-5 h-5" />
+            Dashboard
           </Link>
           <Link
             href="/admin/leads"
-            className="block px-4 py-2 rounded-lg hover:bg-gray-800 transition text-sm font-medium"
+            className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition text-sm font-medium"
             onClick={() => setMobileMenuOpen(false)}
           >
-            📋 Leads
+            <img src="/icons/admin-leads.svg" alt="Leads" className="w-5 h-5" />
+            Leads
           </Link>
           <Link
             href="/admin/installers"
-            className="block px-4 py-2 rounded-lg hover:bg-gray-800 transition text-sm font-medium"
+            className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition text-sm font-medium"
             onClick={() => setMobileMenuOpen(false)}
           >
-            👷 Installers
+            <img src="/icons/admin-installers.svg" alt="Installers" className="w-5 h-5" />
+            Installers
+          </Link>
+          <Link
+            href="/admin/leads"
+            className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition text-sm font-medium"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <img src="/icons/admin-reports.svg" alt="Reports" className="w-5 h-5" />
+            Reports
+          </Link>
+          <Link
+            href="/admin/leads"
+            className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition text-sm font-medium"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <img src="/icons/admin-settings.svg" alt="Settings" className="w-5 h-5" />
+            Settings
           </Link>
         </nav>
 
