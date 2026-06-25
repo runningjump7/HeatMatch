@@ -19,15 +19,15 @@ export async function PATCH(
       email,
       primary_suburb,
       service_suburbs,
-      active,
-      notes,
+      approved,
+      bio,
     } = await request.json();
 
     await query(
       `UPDATE installers
-       SET business_name = $1, phone = $2, email = $3, primary_suburb = $4, service_suburbs = $5, active = $6, notes = $7, updated_at = NOW()
+       SET business_name = $1, phone = $2, email = $3, suburb_primary = $4, service_suburbs = $5, approved = $6, bio = $7, updated_at = NOW()
        WHERE id = $8`,
-      [name, phone, email, primary_suburb, service_suburbs || [], active, notes || '', id]
+      [name, phone, email, primary_suburb, service_suburbs || [], approved, bio || '', id]
     );
 
     const result = await query('SELECT * FROM installers WHERE id = $1', [id]);
