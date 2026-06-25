@@ -87,9 +87,10 @@ export default function Step5ContactInfo({
         <input
           type="tel"
           value={value.phone}
-          onChange={(e) => onChange({ phone: e.target.value })}
+          onChange={(e) => onChange({ phone: e.target.value.replace(/\D/g, '') })}
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none text-gray-900"
           placeholder="09 123 4567"
+          inputMode="numeric"
         />
       </div>
 
