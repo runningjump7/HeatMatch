@@ -15,6 +15,7 @@ interface Lead {
   has_photos: boolean;
   created_at: string;
   assigned_installers: string[];
+  tier: string;
 }
 
 export default function AdminLeadsPage() {
@@ -28,6 +29,7 @@ export default function AdminLeadsPage() {
   const [filterStatus, setFilterStatus] = useState('all');
   const [filterSuburb, setFilterSuburb] = useState('');
   const [filterServiceType, setFilterServiceType] = useState('all');
+  const [filterTier, setFilterTier] = useState('all');
 
   const fetchLeads = async () => {
     setIsLoading(true);
@@ -41,6 +43,7 @@ export default function AdminLeadsPage() {
       if (filterStatus !== 'all') params.append('status', filterStatus);
       if (filterSuburb) params.append('suburb', filterSuburb);
       if (filterServiceType !== 'all') params.append('service_type', filterServiceType);
+      if (filterTier !== 'all') params.append('tier', filterTier);
 
       const res = await fetch(`/api/admin/leads?${params}`);
       const data = await res.json();
@@ -56,11 +59,11 @@ export default function AdminLeadsPage() {
 
   useEffect(() => {
     setCurrentPage(1); // Reset to page 1 when filters change
-  }, [filterStatus, filterSuburb, filterServiceType]);
+  }, [filterStatus, filterSuburb, filterServiceType, filterTier]);
 
   useEffect(() => {
     fetchLeads();
-  }, [currentPage, filterStatus, filterSuburb, filterServiceType]);
+  }, [currentPage, filterStatus, filterSuburb, filterServiceType, filterTier]);
 
   const pages = Math.ceil(total / limit);
   const statusColors: Record<string, string> = {
@@ -141,6 +144,21 @@ export default function AdminLeadsPage() {
             />
           </div>
 
+          {/* Tier Filter */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Tier</label>
+            <select
+              value={filterTier}
+              onChange={(e) => setFilterTier(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
+            >
+              <option value="all">All Tiers</option>
+              <option value="A">Tier A</option>
+              <option value="B">Tier B</option>
+              <option value="C">Tier C</option>
+            </select>
+          </div>
+
           {/* Reset Filters */}
           <div className="flex items-end">
             <button
@@ -148,6 +166,7 @@ export default function AdminLeadsPage() {
                 setFilterStatus('all');
                 setFilterSuburb('');
                 setFilterServiceType('all');
+                setFilterTier('all');
               }}
               className="w-full px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-900 rounded-lg font-medium transition"
             >
@@ -176,6 +195,7 @@ export default function AdminLeadsPage() {
                     <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Service</th>
                     <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Timeline</th>
                     <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Photos</th>
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Tier</th>
                     <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
                     <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Action</th>
                   </tr>
@@ -200,6 +220,15 @@ export default function AdminLeadsPage() {
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-900">
                         {lead.has_photos ? '📷 Yes' : '—'}
+                      </td>
+                      <td className="px-6 py-4 text-sm font-semibold">
+                        <span className={`px-2 py-1 rounded text-xs font-bold ${
+                          lead.tier === 'A' ? 'bg-emerald-100 text-emerald-800' :
+                          lead.tier === 'B' ? 'bg-yellow-100 text-yellow-800' :
+                          'bg-red-100 text-red-800'
+                        }`}>
+                          Tier {lead.tier}
+                        </span>
                       </td>
                       <td className="px-6 py-4 text-sm">
                         <span className={`px-3 py-1 rounded-full text-xs font-semibold ${statusColors[lead.status] || 'bg-gray-100 text-gray-800'}`}>

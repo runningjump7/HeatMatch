@@ -14,6 +14,7 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get('status');
     const suburb = searchParams.get('suburb');
     const service_type = searchParams.get('service_type');
+    const tier = searchParams.get('tier');
     const limit = parseInt(searchParams.get('limit') || '10', 10);
     const offset = parseInt(searchParams.get('offset') || '0', 10);
 
@@ -72,8 +73,25 @@ export async function GET(request: NextRequest) {
       params
     );
 
+    // Calculate tier for each lead
+    const leadsWithTier = leadsResult.rows.map((lead: any) => {
+      const qualityScore =
+        (lead.has_photos ? 25 : 0) +
+        (lead.service_type === 'new_install' || lead.service_type === 'replace' ? 30 : 15) +
+        (lead.timeline === 'asap' ? 30 : lead.timeline === 'two_weeks' ? 20 : 10) +
+        10;
+      const tierClass = qualityScore >= 80 ? 'A' : qualityScore >= 50 ? 'B' : 'C';
+      return { ...lead, tier: tierClass, qualityScore };
+    });
+
+    // Filter by tier if specified
+    let filteredLeads = leadsWithTier;
+    if (tier && tier !== 'all') {
+      filteredLeads = leadsWithTier.filter((lead: any) => lead.tier === tier);
+    }
+
     return NextResponse.json({
-      leads: leadsResult.rows,
+      leads: filteredLeads,
       total,
       limit,
       offset,
