@@ -44,7 +44,7 @@ export async function PATCH(
 
     await query(
       `UPDATE leads
-       SET admin_notes = $1, status = $2, assigned_installers = $3
+       SET completed_notes = $1, status = $2, assigned_installers = $3
        WHERE id = $4`,
       [admin_notes, status, assigned_installers || [], id]
     );
