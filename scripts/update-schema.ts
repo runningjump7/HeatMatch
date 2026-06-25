@@ -56,6 +56,7 @@ async function updateSchema() {
       ADD COLUMN IF NOT EXISTS status VARCHAR(50) DEFAULT 'new',
       ADD COLUMN IF NOT EXISTS rejection_reason TEXT,
       ADD COLUMN IF NOT EXISTS completed_notes TEXT,
+      ADD COLUMN IF NOT EXISTS assigned_installers UUID[] DEFAULT ARRAY[]::UUID[],
       ADD COLUMN IF NOT EXISTS created_at TIMESTAMP DEFAULT NOW();
     `);
     console.log('✓ leads table updated');
