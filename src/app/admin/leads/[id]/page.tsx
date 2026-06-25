@@ -13,6 +13,7 @@ interface Lead {
   bedrooms: string;
   heat_pumps_needed: string;
   location_to_install: string[];
+  location_notes: string;
   existing_unit: string;
   photos: string[];
   timeline: string;
@@ -247,6 +248,12 @@ export default function LeadDetailPage() {
                   ))}
                 </div>
               </div>
+              {lead.location_notes && (
+                <div className="col-span-2">
+                  <p className="text-sm text-gray-600">Location Notes</p>
+                  <p className="font-medium text-gray-900 mt-1">{lead.location_notes}</p>
+                </div>
+              )}
             </div>
           </div>
 
