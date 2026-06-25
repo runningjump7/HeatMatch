@@ -8,6 +8,7 @@ export async function POST(request: NextRequest) {
       service_type,
       property_type,
       bedrooms,
+      square_meters,
       heat_pumps_needed,
       location_to_install,
       existing_unit,
@@ -21,10 +22,14 @@ export async function POST(request: NextRequest) {
     } = await request.json();
 
     // Validate required string/non-array fields
+    const isResidential = ['home', 'apartment'].includes(property_type);
+    const isCommercial = ['office', 'commercial'].includes(property_type);
+
     if (
       !service_type ||
       !property_type ||
-      !bedrooms ||
+      (isResidential && !bedrooms) ||
+      (isCommercial && !square_meters) ||
       !heat_pumps_needed ||
       !existing_unit ||
       !timeline ||
@@ -62,6 +67,7 @@ export async function POST(request: NextRequest) {
         service_type,
         property_type,
         bedrooms,
+        square_meters,
         heat_pumps_needed,
         location_to_install,
         existing_unit,
@@ -75,12 +81,13 @@ export async function POST(request: NextRequest) {
         status,
         created_at
       )
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, NOW())`,
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, NOW())`,
       [
         leadId,
         service_type,
         property_type,
-        bedrooms,
+        bedrooms || null,
+        square_meters || null,
         heat_pumps_needed,
         location_to_install,
         existing_unit,
