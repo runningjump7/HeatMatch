@@ -3,14 +3,6 @@ import { put } from '@vercel/blob';
 
 export async function POST(request: NextRequest) {
   try {
-    // Check if Vercel Blob is configured
-    if (!process.env.BLOB_READ_WRITE_TOKEN) {
-      // Fallback: return a placeholder URL for local development
-      return NextResponse.json({
-        url: 'https://via.placeholder.com/150?text=Photo+Uploaded',
-      });
-    }
-
     const formData = await request.formData();
     const file = formData.get('file') as File;
 
@@ -19,6 +11,18 @@ export async function POST(request: NextRequest) {
         { error: 'No file provided' },
         { status: 400 }
       );
+    }
+
+    // Check if Vercel Blob is configured
+    if (!process.env.BLOB_READ_WRITE_TOKEN) {
+      // Fallback for local development: convert file to base64 data URL
+      const bytes = await file.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+      const base64 = buffer.toString('base64');
+      const mimeType = file.type || 'image/jpeg';
+      const dataUrl = `data:${mimeType};base64,${base64}`;
+
+      return NextResponse.json({ url: dataUrl });
     }
 
     // Upload to Vercel Blob
