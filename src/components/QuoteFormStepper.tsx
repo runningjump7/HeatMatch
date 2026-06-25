@@ -20,6 +20,7 @@ export interface FormData {
   // Step 3: Job Details
   heat_pumps_needed: string | null;
   location_to_install: string[];
+  location_notes: string;
   existing_unit: 'yes' | 'no' | 'need_recommendation' | null;
   photos: File[];
 
@@ -57,6 +58,7 @@ export default function QuoteFormStepper({ isOpen, onClose, initialServiceType }
     square_meters: null,
     heat_pumps_needed: null,
     location_to_install: [],
+    location_notes: '',
     existing_unit: null,
     photos: [],
     timeline: null,
@@ -130,6 +132,7 @@ export default function QuoteFormStepper({ isOpen, onClose, initialServiceType }
           square_meters: formData.square_meters,
           heat_pumps_needed: formData.heat_pumps_needed,
           location_to_install: formData.location_to_install,
+          location_notes: formData.location_notes,
           existing_unit: formData.existing_unit,
           photos: uploadedPhotoUrls,
           timeline: formData.timeline,
@@ -217,6 +220,7 @@ export default function QuoteFormStepper({ isOpen, onClose, initialServiceType }
               value={{
                 heat_pumps_needed: formData.heat_pumps_needed,
                 location_to_install: formData.location_to_install,
+                location_notes: formData.location_notes,
                 existing_unit: formData.existing_unit,
                 photos: formData.photos,
               }}

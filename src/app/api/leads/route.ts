@@ -11,6 +11,7 @@ export async function POST(request: NextRequest) {
       square_meters,
       heat_pumps_needed,
       location_to_install,
+      location_notes,
       existing_unit,
       photos,
       timeline,
@@ -70,6 +71,7 @@ export async function POST(request: NextRequest) {
         square_meters,
         heat_pumps_needed,
         location_to_install,
+        location_notes,
         existing_unit,
         photos,
         timeline,
@@ -81,7 +83,7 @@ export async function POST(request: NextRequest) {
         status,
         created_at
       )
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, NOW())`,
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, NOW())`,
       [
         leadId,
         service_type,
@@ -90,6 +92,7 @@ export async function POST(request: NextRequest) {
         square_meters || null,
         heat_pumps_needed,
         location_to_install,
+        location_notes || null,
         existing_unit,
         photos || [],
         timeline,

@@ -6,6 +6,7 @@ interface Step3JobDetailsProps {
   value: {
     heat_pumps_needed: string | null;
     location_to_install: string[];
+    location_notes: string;
     existing_unit: 'yes' | 'no' | 'need_recommendation' | null;
     photos: File[];
   };
@@ -14,6 +15,7 @@ interface Step3JobDetailsProps {
   onChange: (updates: Partial<{
     heat_pumps_needed: string;
     location_to_install: string[];
+    location_notes: string;
     existing_unit: 'yes' | 'no' | 'need_recommendation';
     photos: File[];
   }>) => void;
@@ -160,6 +162,17 @@ export default function Step3JobDetails({ value, propertyType, serviceType, onCh
             </button>
           ))}
         </div>
+
+        {/* Notes for "Other" locations */}
+        {value.location_to_install.includes('Other (specify in notes)') && (
+          <textarea
+            value={value.location_notes}
+            onChange={(e) => onChange({ location_notes: e.target.value })}
+            placeholder="Please describe the location where you'd like the heat pump installed..."
+            className="w-full mt-3 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none text-gray-900"
+            rows={3}
+          />
+        )}
       </div>
 
       {/* Existing Unit */}

@@ -34,6 +34,7 @@ async function updateSchema() {
       ADD COLUMN IF NOT EXISTS square_meters VARCHAR(50),
       ADD COLUMN IF NOT EXISTS heat_pumps_needed VARCHAR(50),
       ADD COLUMN IF NOT EXISTS location_to_install TEXT[],
+      ADD COLUMN IF NOT EXISTS location_notes TEXT,
       ADD COLUMN IF NOT EXISTS existing_unit VARCHAR(50),
       ADD COLUMN IF NOT EXISTS photos TEXT[],
       ADD COLUMN IF NOT EXISTS timeline VARCHAR(50),
