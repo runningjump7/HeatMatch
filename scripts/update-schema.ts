@@ -26,6 +26,17 @@ async function updateSchema() {
 
     // 2. Update leads table
     console.log('Updating leads table...');
+
+    // First, drop old NOT NULL constraints by making columns nullable
+    await client.query(`
+      ALTER TABLE leads
+      ALTER COLUMN customer_name DROP NOT NULL,
+      ALTER COLUMN customer_email DROP NOT NULL;
+    `).catch(() => {
+      // Columns might not exist or constraint might not exist, that's ok
+    });
+
+    // Add new columns
     await client.query(`
       ALTER TABLE leads
       ADD COLUMN IF NOT EXISTS service_type VARCHAR(50),
