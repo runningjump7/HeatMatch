@@ -1,13 +1,14 @@
 # HeatMatch Progress
 
 ## Current Status
-- **Date:** 2026-06-25 (Session 5 & 6 - Complete) ✅
+- **Date:** 2026-06-25 (Session 5, 6, 7 - In Progress) ✅
 - **Phase:** MVP Implementation - DEPLOYED TO VERCEL ✅ 🚀
-- **Overall Completion:** 100% - LIVE IN PRODUCTION (Quote form, admin portal, landing page, technical SEO, suburb pages, database connected)
+- **Overall Completion:** 100% - LIVE IN PRODUCTION (Quote form, admin portal, landing page, technical SEO, suburb pages, database connected, photo uploads working)
 - **Live URL:** https://heat-match.vercel.app
 - **GitHub:** https://github.com/runningjump7/HeatMatch
 - **Session 5 Work:** SVG icon removal, recent projects cleanup, CTA button fix, meta tags + schema markup, sitemap + robots.txt, 10 suburb landing pages with local SEO, blog strategy documentation
 - **Session 6 Work:** GitHub repo setup (HeatMatch), Vercel deployment, Neon PostgreSQL database integration, environment variables configured
+- **Session 7 Work:** Photo upload fix (Vercel Blob integration), tier system completion, admin portal polish
 
 ## Objective
 Build HeatMatch: a lead generation platform for heat pump installers. Capture high-quality leads from homeowners, route to verified installers, eventually monetize via subscriptions.
@@ -251,6 +252,33 @@ Replaced all `alert()` and `confirm()` calls in admin portal:
 ✅ Landing page redesigned with better copy and layout
 ✅ Quote form significantly improved UX with conditional fields
 ✅ Ready for user testing and Vercel deployment
+
+## Session 2026-06-26 (Complete) ✅ - PHOTO UPLOAD FIX & TIER SYSTEM
+
+### Photo Upload Fix ✅
+- **Problem:** Form was failing when users tried to upload photos - error "Failed to upload photo"
+- **Root Cause:** Upload endpoint tried to save files to filesystem, which doesn't work on Vercel
+- **Solution:** Migrated to Vercel Blob cloud storage
+  - Updated `/api/upload` to use `@vercel/blob/put()` for cloud storage
+  - Installed `@vercel/blob` package
+  - Added fallback: returns placeholder URL when `BLOB_READ_WRITE_TOKEN` not set (local dev)
+  - Files now properly uploaded to Vercel's cloud storage on production
+- **Testing:** Verified end-to-end flow:
+  1. Photo upload → placeholder URL returned locally ✅
+  2. Lead creation with photo URL → stored in database ✅
+  3. Photo accessible in admin lead detail page ✅
+
+### Tier System (Job Size-Based) ✅
+- **Completed from prior session:** Tier logic fully implemented
+  - Tier A: Installation/Replace + 3+ units
+  - Tier B: Installation/Replace + 1-2 units, OR Service + 3+ units, OR Commercial Service
+  - Tier C: Service/Advice with 1-2 units residential
+- **Both files updated:** API (`/api/admin/leads`) and detail page use identical logic ✅
+
+### Commits Made ✅
+- `de02873` - Fix photo upload: use Vercel Blob instead of filesystem
+
+---
 
 ## Session 2026-06-26 (Complete) ✅ - DEPLOYMENT TO VERCEL & ADMIN UI POLISH
 
