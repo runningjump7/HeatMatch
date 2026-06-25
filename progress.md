@@ -249,9 +249,31 @@ Replaced all `alert()` and `confirm()` calls in admin portal:
 ✅ Quote form significantly improved UX with conditional fields
 ✅ Ready for user testing and Vercel deployment
 
-## Session 2026-06-25 (Complete) ✅
+## Session 2026-06-25 (In Progress) ⏳
 
 ### Completed This Session ✅
+
+#### 🌍 Suburb Landing Pages (10 Dynamic Pages)
+- Created dynamic route: `src/app/installers/[suburb]/page.tsx`
+- **Suburbs covered:** Albany, Takapuna, Milford, Browns Bay, Glenfield, Birkenhead, Devonport, Mairangi Bay, Northcote, Long Bay
+- **Per-page structure:**
+  - Hero section with suburb-specific title + description
+  - Population and average cost stats
+  - 5 FAQ items tailored to each suburb
+  - Why Choose HeatMatch section
+  - Final CTA
+  - Quote form integration
+- **Each page targets local keywords:**
+  - "heat pump installation [suburb]"
+  - "heat pump cost [suburb]"
+  - "heat pump [suburb]"
+  - "[suburb] heat pump installers"
+- **SEO benefits:**
+  - 10x keyword surface expansion (one page per suburb)
+  - High-intent local search targeting
+  - Internal linking from homepage coverage section
+  - Dynamic metadata (tailored OG tags per suburb)
+  - All pages added to sitemap with 0.9 priority
 
 #### 🎨 Landing Page Polish
 1. **"How It Works" Section Icon Removal**
