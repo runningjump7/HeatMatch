@@ -1,10 +1,10 @@
 # HeatMatch Progress
 
 ## Current Status
-- **Date:** 2026-06-24 (Session 4 - In Progress)
-- **Phase:** MVP Implementation - Landing Page & Form Polish ✅
-- **Overall Completion:** ~97% (Quote form, admin portal, landing page fully polished - ready for Vercel deployment)
-- **Session Work:** Admin portal modals, photo uploads, landing page complete redesign, quote form UX improvements, conditional form fields, "How It Works" and "Coverage" section updates
+- **Date:** 2026-06-25 (Session 5 - In Progress)
+- **Phase:** MVP Implementation - Technical SEO Foundations ✅
+- **Overall Completion:** ~99% (Quote form, admin portal, landing page complete - technical SEO added - ready for Vercel deployment)
+- **Session Work:** SVG icon removal (How It Works), recent projects timestamp cleanup, "Get My Free Quote" CTA button fix, technical SEO (meta tags, schema markup, sitemap, robots.txt), blog strategy documentation
 
 ## Objective
 Build HeatMatch: a lead generation platform for heat pump installers. Capture high-quality leads from homeowners, route to verified installers, eventually monetize via subscriptions.
@@ -248,6 +248,93 @@ Replaced all `alert()` and `confirm()` calls in admin portal:
 ✅ Landing page redesigned with better copy and layout
 ✅ Quote form significantly improved UX with conditional fields
 ✅ Ready for user testing and Vercel deployment
+
+## Session 2026-06-25 (Complete) ✅
+
+### Completed This Session ✅
+
+#### 🎨 Landing Page Polish
+1. **"How It Works" Section Icon Removal**
+   - Removed 3 SVG icons (form, search, people icons) from above step numbers
+   - Kept numbered circles (1, 2, 3) and text descriptions
+   - Cleaner, more minimal design
+
+2. **Recent Projects Card Cleanup**
+   - Removed hardcoded timestamps ("Just now", "1 hour ago", "2 hours ago", "3 hours ago")
+   - Reason: Prevents suspicious UX for returning users seeing identical timestamps
+   - Now shows only: suburb, title, description (timeless)
+
+3. **"Get My Free Quote" CTA Button Fix**
+   - Added missing `onClick` handler to lower CTA button (section 5)
+   - Now correctly opens quote stepper modal at Step 1
+   - Matches behavior of nav button and hero service selector
+
+#### 🔍 Technical SEO Implementation (Quick Wins)
+
+1. **Meta Tags & Open Graph** [src/app/layout.tsx:15-38]
+   - Enhanced title: "HeatMatch - Find Heat Pump Installers | North Shore Auckland"
+   - Rich description targeting local keywords
+   - Added `keywords` field for heat pump + location
+   - Open Graph tags for social sharing (Facebook, LinkedIn, Twitter Card)
+   - Twitter Card for proper Twitter preview
+   - Canonical URL to prevent duplicate content issues
+   - Locale set to `en_NZ`
+
+2. **JSON-LD Schema Markup** [src/app/layout.tsx:66-113]
+   - **LocalBusiness Schema**: Defines HeatMatch as a local business serving North Shore
+     - Includes 10 service areas (suburbs)
+     - Contact point for customer service
+     - Social profiles (Facebook, Instagram)
+   - **Service Schema**: Lists all service offerings (installation, replacement, service)
+     - Ties to LocalBusiness provider
+     - Area served: North Shore, Auckland
+   - Renders in `<head>` as valid JSON-LD scripts
+
+3. **Sitemap** [public/sitemap.xml]
+   - Comprehensive URL structure
+   - Priority weighting: homepage (1.0) → section links (0.8/0.7)
+   - Last modified dates for crawl optimization
+   - Change frequency hints (weekly for homepage, monthly for sections)
+
+4. **Robots.txt** [public/robots.txt]
+   - Clean crawl rules (allow all public pages)
+   - Block admin and API routes from indexing
+   - Points Google to sitemap for discovery
+
+#### 📚 SEO Strategy Documentation
+- Created `docs/SEO_AND_BLOG_STRATEGY.md` with:
+  - Blog publishing cadence: 1 article/week (proven sustainable)
+  - 3 content pillars: Education (60%), Local (20%), Seasonal (20%)
+  - 15+ blog topic examples with keywords
+  - SEO execution checklist per post (800-1200 words, internal linking, etc.)
+  - Content calendar template
+  - Expected timeline: Month 1-2 content build, Month 3+ organic traction
+  - When to start: After suburb landing pages are live
+
+### Key Features Added
+✅ Professional meta tags for search result CTR
+✅ Structured data (schema) for Google rich results
+✅ Sitemap for easy crawl discovery
+✅ Robots.txt for clean crawl budget management
+✅ Blog strategy framework (ready to execute)
+✅ Landing page polish (cleaner design, fixed CTAs)
+✅ Recent projects don't look stale (no timestamps)
+
+### SEO Readiness Checklist
+- ✅ Meta tags optimized
+- ✅ Schema markup (LocalBusiness + Service)
+- ✅ Sitemap submitted (ready to add to GSC)
+- ✅ Robots.txt in place
+- ⏭️ Next: Google Business Profile setup
+- ⏭️ Next: Suburb landing pages (/installers/[suburb])
+- ⏭️ Future: Weekly blog posts (1-3 months out)
+
+### Files Modified
+- `src/app/layout.tsx` — Added meta tags, Open Graph, schema markup
+- `src/app/page.tsx` — Removed How It Works icons, removed recent project timestamps, added "Get My Free Quote" onClick
+- `docs/SEO_AND_BLOG_STRATEGY.md` — NEW, comprehensive blog strategy guide
+- `public/sitemap.xml` — NEW, XML sitemap
+- `public/robots.txt` — NEW, crawl rules
 
 ## Session 2026-06-22 (Complete) ✅
 

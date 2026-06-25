@@ -25,28 +25,24 @@ export default function Home() {
       suburb: 'ALBANY',
       title: 'New installation',
       desc: '3-bedroom family home',
-      time: 'Just now',
       image: '/images/project-1.jpg',
     },
     {
       suburb: 'TAKAPUNA',
       title: 'Replacement unit',
       desc: 'Existing heat pump upgrade',
-      time: '1 hour ago',
       image: '/images/project-2.jpg',
     },
     {
       suburb: 'BROWNS BAY',
       title: 'Commercial installation',
       desc: 'Small office fit-out',
-      time: '2 hours ago',
       image: '/images/project-3.jpg',
     },
     {
       suburb: 'MILFORD',
       title: 'Bedroom installation',
       desc: 'Single room heat pump',
-      time: '3 hours ago',
       image: '/images/project-4.jpg',
     },
   ];
@@ -220,14 +216,6 @@ export default function Home() {
             <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 mb-12">
               {/* Step 1 */}
               <div className="flex flex-col items-center flex-1 min-w-0">
-                <div className="mb-6 flex justify-center">
-                  <svg width="80" height="80" viewBox="0 0 64 64" className="w-20 h-20">
-                    <circle cx="32" cy="32" r="28" fill="#ECFDF5"/>
-                    <rect x="20" y="16" width="24" height="32" rx="4" fill="none" stroke="#10B981" strokeWidth="3"/>
-                    <path d="M26 26h12M26 34h12M26 42h8" fill="none" stroke="#10B981" strokeWidth="3" strokeLinecap="round"/>
-                    <path d="M24 22h4M24 30h4M24 38h4" fill="none" stroke="#10B981" strokeWidth="3" strokeLinecap="round"/>
-                  </svg>
-                </div>
                 <div className="mb-3 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">1</div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">Tell Us About Your Project</h3>
                 <p className="text-gray-600 text-center text-sm">Answer a few quick questions about your home and requirements.</p>
@@ -242,15 +230,6 @@ export default function Home() {
 
               {/* Step 2 */}
               <div className="flex flex-col items-center flex-1 min-w-0">
-                <div className="mb-6 flex justify-center">
-                  <svg width="80" height="80" viewBox="0 0 64 64" className="w-20 h-20">
-                    <circle cx="32" cy="32" r="28" fill="#ECFDF5"/>
-                    <circle cx="29" cy="29" r="11" fill="none" stroke="#10B981" strokeWidth="3"/>
-                    <path d="M37 37l9 9" fill="none" stroke="#10B981" strokeWidth="3.5" strokeLinecap="round"/>
-                    <path d="M29 22v14M22 29h14" fill="none" stroke="#10B981" strokeWidth="3" strokeLinecap="round"/>
-                    <path d="M26 44l6-6 6 6" fill="none" stroke="#10B981" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
                 <div className="mb-3 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">2</div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">We Match You With<br/><span className="font-bold">The Right Installer</span></h3>
                 <p className="text-gray-600 text-center text-sm">We review your project and connect you with trusted local professionals.</p>
@@ -265,14 +244,6 @@ export default function Home() {
 
               {/* Step 3 */}
               <div className="flex flex-col items-center flex-1 min-w-0">
-                <div className="mb-6 flex justify-center">
-                  <svg width="80" height="80" viewBox="0 0 64 64" className="w-20 h-20">
-                    <circle cx="32" cy="32" r="28" fill="#ECFDF5"/>
-                    <circle cx="24" cy="26" r="7" fill="none" stroke="#10B981" strokeWidth="3"/>
-                    <circle cx="40" cy="26" r="7" fill="none" stroke="#10B981" strokeWidth="3"/>
-                    <path d="M16 47c2-8 8-12 16-12s14 4 16 12" fill="none" stroke="#10B981" strokeWidth="3" strokeLinecap="round"/>
-                  </svg>
-                </div>
                 <div className="mb-3 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">3</div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">Get Your Quote</h3>
                 <p className="text-gray-600 text-center text-sm">Your installer gets in touch to discuss your project and next steps.</p>
@@ -457,8 +428,7 @@ export default function Home() {
                 <div className="p-4">
                   <p className="text-xs font-bold text-emerald-600 mb-2">{project.suburb}</p>
                   <h4 className="font-bold text-gray-900 text-sm mb-1">{project.title}</h4>
-                  <p className="text-xs text-gray-600 mb-3">{project.desc}</p>
-                  <p className="text-xs text-gray-500">{project.time}</p>
+                  <p className="text-xs text-gray-600">{project.desc}</p>
                 </div>
               </div>
             ))}
@@ -566,7 +536,10 @@ export default function Home() {
               <p className="text-lg text-gray-300 mb-6">
                 Tell us about your project and get connected with a trusted local installer today.
               </p>
-              <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-lg font-semibold transition">
+              <button
+                onClick={() => { setSelectedService(null); setShowStepper(true); }}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-lg font-semibold transition"
+              >
                 Get My Free Quote →
               </button>
               <div className="flex items-center gap-6 mt-6 text-sm text-gray-400">
