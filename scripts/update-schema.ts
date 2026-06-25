@@ -28,6 +28,19 @@ async function updateSchema() {
     console.log('Updating leads table...');
     await client.query(`
       ALTER TABLE leads
+      ADD COLUMN IF NOT EXISTS service_type VARCHAR(50),
+      ADD COLUMN IF NOT EXISTS property_type VARCHAR(50),
+      ADD COLUMN IF NOT EXISTS bedrooms VARCHAR(50),
+      ADD COLUMN IF NOT EXISTS square_meters VARCHAR(50),
+      ADD COLUMN IF NOT EXISTS heat_pumps_needed VARCHAR(50),
+      ADD COLUMN IF NOT EXISTS location_to_install TEXT[],
+      ADD COLUMN IF NOT EXISTS existing_unit VARCHAR(50),
+      ADD COLUMN IF NOT EXISTS photos TEXT[],
+      ADD COLUMN IF NOT EXISTS timeline VARCHAR(50),
+      ADD COLUMN IF NOT EXISTS homeowner_name VARCHAR(255),
+      ADD COLUMN IF NOT EXISTS phone VARCHAR(20),
+      ADD COLUMN IF NOT EXISTS email VARCHAR(255),
+      ADD COLUMN IF NOT EXISTS consent_given BOOLEAN DEFAULT false,
       ADD COLUMN IF NOT EXISTS status VARCHAR(50) DEFAULT 'new',
       ADD COLUMN IF NOT EXISTS rejection_reason TEXT,
       ADD COLUMN IF NOT EXISTS completed_notes TEXT,
