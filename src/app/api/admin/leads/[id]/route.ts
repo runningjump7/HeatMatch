@@ -44,7 +44,7 @@ export async function PATCH(
 
     await query(
       `UPDATE leads
-       SET admin_notes = $1, status = $2, assigned_installers = $3, updated_at = NOW()
+       SET admin_notes = $1, status = $2, assigned_installers = $3
        WHERE id = $4`,
       [admin_notes, status, assigned_installers || [], id]
     );
@@ -55,7 +55,10 @@ export async function PATCH(
   } catch (error) {
     console.error('Error updating lead:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      {
+        error: 'Internal server error',
+        details: error instanceof Error ? error.message : String(error),
+      },
       { status: 500 }
     );
   }
