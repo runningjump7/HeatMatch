@@ -139,6 +139,19 @@ export async function POST(request: NextRequest) {
         ` : ''}
       </div>
 
+      ${photoCount > 0 ? `
+      <div style="margin-top: 30px; margin-bottom: 30px;">
+        <h3 style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 15px;">Project Photos (${photoCount})</h3>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+          ${Array.isArray(lead.photos) ? lead.photos.slice(0, 4).map((photoUrl: string) => `
+            <div style="background-color: #f3f4f6; border-radius: 8px; overflow: hidden;">
+              <img src="${photoUrl}" alt="Project photo" style="width: 100%; height: 200px; object-fit: cover; display: block;" />
+            </div>
+          `).join('') : ''}
+        </div>
+      </div>
+      ` : ''}
+
       <p style="margin-top: 30px; margin-bottom: 10px; font-weight: 600;">Are you interested in this lead?</p>
 
       <div class="actions">
