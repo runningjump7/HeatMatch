@@ -92,8 +92,8 @@ export default function ContactPage() {
 
             <div className="mb-8">
               <h3 className="font-semibold text-gray-900 mb-2">Email</h3>
-              <a href="mailto:hello@heatmatch.co.nz" className="text-emerald-600 hover:text-emerald-700">
-                hello@heatmatch.co.nz
+              <a href="mailto:hello@heatmatch.nz" className="text-emerald-600 hover:text-emerald-700">
+                hello@heatmatch.nz
               </a>
             </div>
 

@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     // Send email to HeatMatch
     const result = await resend.emails.send({
       from: 'HeatMatch <onboarding@resend.dev>',
-      to: 'hello@heatmatch.co.nz',
+      to: 'hello@heatmatch.nz',
       replyTo: email,
       subject: `New Contact Form Submission: ${subject}`,
       html: `

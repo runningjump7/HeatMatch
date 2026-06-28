@@ -534,7 +534,7 @@ export async function POST(request: NextRequest) {
                 <div class="footer-col">
                   <strong>Need help?</strong><br />
                   Reply to this email or contact<br />
-                  <a href="mailto:support@heatmatch.co.nz" style="color: #2563eb;">support@heatmatch.co.nz</a>
+                  <a href="mailto:support@heatmatch.nz" style="color: #2563eb;">support@heatmatch.nz</a>
                 </div>
               </div>
             </td>

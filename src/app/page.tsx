@@ -583,7 +583,7 @@ export default function Home() {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-4">Contact</h4>
-              <p className="text-sm">hello@heatmatch.co.nz</p>
+              <p className="text-sm">hello@heatmatch.nz</p>
             </div>
           </div>
 

@@ -19,13 +19,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_NZ",
-    url: "https://heatmatch.co.nz",
+    url: "https://heatmatch.nz",
     siteName: "HeatMatch",
     title: "HeatMatch - Find Heat Pump Installers | North Shore Auckland",
     description: "Connect with trusted local heat pump installers on Auckland's North Shore. Free quotes, no obligation.",
     images: [
       {
-        url: "https://heatmatch.co.nz/og-image.jpg",
+        url: "https://heatmatch.nz/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "HeatMatch - Find Local Heat Pump Installers",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     description: "Connect with trusted local heat pump installers on Auckland's North Shore. Free quotes, no obligation.",
   },
   alternates: {
-    canonical: "https://heatmatch.co.nz",
+    canonical: "https://heatmatch.nz",
   },
 };
 
@@ -53,8 +53,8 @@ export default function RootLayout({
     "@type": "LocalBusiness",
     "name": "HeatMatch",
     "description": "Heat pump installer marketplace connecting homeowners with trusted local installers on Auckland's North Shore",
-    "url": "https://heatmatch.co.nz",
-    "logo": "https://heatmatch.co.nz/icons/heatmatch-logo.svg",
+    "url": "https://heatmatch.nz",
+    "logo": "https://heatmatch.nz/icons/heatmatch-logo.svg",
     "areaServed": {
       "@type": "City",
       "name": "Auckland",
@@ -67,7 +67,7 @@ export default function RootLayout({
     "contactPoint": {
       "@type": "ContactPoint",
       "contactType": "Customer Service",
-      "url": "https://heatmatch.co.nz"
+      "url": "https://heatmatch.nz"
     },
     "sameAs": [
       "https://www.facebook.com/heatmatch",
