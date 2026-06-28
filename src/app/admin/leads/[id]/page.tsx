@@ -25,6 +25,9 @@ interface Lead {
   status: string;
   admin_notes: string;
   assigned_installers: string[];
+  installer_response?: string;
+  installer_response_at?: string;
+  installer_response_from?: string;
   created_at: string;
   updated_at: string;
 }
@@ -326,6 +329,32 @@ export default function LeadDetailPage() {
               <option value="failed">Failed</option>
             </select>
           </div>
+
+          {/* Installer Response */}
+          {lead.installer_response && (
+            <div className={`bg-white rounded-lg shadow p-6 border-l-4 ${
+              lead.installer_response === 'accept' ? 'border-emerald-500 bg-emerald-50' :
+              lead.installer_response === 'reject' ? 'border-red-500 bg-red-50' :
+              'border-amber-500 bg-amber-50'
+            }`}>
+              <h2 className="text-lg font-semibold text-gray-900 mb-2">Installer Response</h2>
+              <div className="flex items-center gap-2 mb-2">
+                <span className={`text-xl ${
+                  lead.installer_response === 'accept' ? '✅' :
+                  lead.installer_response === 'reject' ? '❌' :
+                  '❓'
+                }`}></span>
+                <span className="font-semibold text-gray-900">
+                  {lead.installer_response === 'accept' ? 'Accepted' :
+                   lead.installer_response === 'reject' ? 'Rejected' :
+                   'Needs More Info'}
+                </span>
+              </div>
+              <p className="text-sm text-gray-600">
+                Responded: {new Date(lead.installer_response_at || '').toLocaleString()}
+              </p>
+            </div>
+          )}
 
           {/* Assign Installer */}
           <div className="bg-white rounded-lg shadow p-6">

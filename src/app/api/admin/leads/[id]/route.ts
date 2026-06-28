@@ -42,12 +42,47 @@ export async function PATCH(
     const { id } = await params;
     const { admin_notes, status, assigned_installers } = await request.json();
 
+    // Fetch current lead to check previous assignments
+    const currentResult = await query('SELECT assigned_installers FROM leads WHERE id = $1', [id]);
+    const currentAssignments = currentResult.rows[0]?.assigned_installers || [];
+    const newAssignments = assigned_installers || [];
+
+    // Find newly assigned installers (not in previous list)
+    const newlyAssigned = newAssignments.filter(
+      (id: string) => !currentAssignments.includes(id)
+    );
+
     await query(
       `UPDATE leads
        SET completed_notes = $1, status = $2, assigned_installers = $3
        WHERE id = $4`,
-      [admin_notes, status, assigned_installers || [], id]
+      [admin_notes, status, newAssignments, id]
     );
+
+    // Send emails to newly assigned installers
+    for (const installer_id of newlyAssigned) {
+      try {
+        const emailResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/installer/send-lead-email`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ lead_id: id, installer_id }),
+          }
+        );
+
+        if (!emailResponse.ok) {
+          console.error(
+            `Failed to send email to installer ${installer_id}:`,
+            await emailResponse.text()
+          );
+        } else {
+          console.log(`Email sent to installer ${installer_id} for lead ${id}`);
+        }
+      } catch (error) {
+        console.error(`Error sending email to installer ${installer_id}:`, error);
+      }
+    }
 
     const result = await query('SELECT * FROM leads WHERE id = $1', [id]);
 
