@@ -1,15 +1,15 @@
 # HeatMatch Progress
 
 ## Current Status
-- **Date:** 2026-06-28 (Session 8 - Complete) ✅
+- **Date:** 2026-06-28 (Session 8 - Extended) ✅
 - **Phase:** MVP Implementation - DEPLOYED TO VERCEL ✅ 🚀
-- **Overall Completion:** 100% - LIVE IN PRODUCTION (Quote form, admin portal, landing page, technical SEO, suburb pages, database connected, photo uploads working, installer feedback mechanism)
+- **Overall Completion:** 100% - LIVE IN PRODUCTION (Quote form, admin portal, landing page, technical SEO, suburb pages, database connected, photo uploads working, installer feedback mechanism fully functional)
 - **Live URL:** https://heat-match.vercel.app
 - **GitHub:** https://github.com/runningjump7/HeatMatch
 - **Session 5 Work:** SVG icon removal, recent projects cleanup, CTA button fix, meta tags + schema markup, sitemap + robots.txt, 10 suburb landing pages with local SEO, blog strategy documentation
 - **Session 6 Work:** GitHub repo setup (HeatMatch), Vercel deployment, Neon PostgreSQL database integration, environment variables configured
 - **Session 7 Work:** Photo upload fix (Vercel Blob integration), tier system completion, admin portal polish, Blob storage troubleshooting
-- **Session 8 Work:** Installer feedback mechanism (JWT tokens, email sending, response tracking, admin dashboard integration)
+- **Session 8 Work:** Installer feedback mechanism (JWT tokens, email sending, professional email template, response tracking, admin dashboard integration, consent checkboxes, legal compliance)
 
 ## Objective
 Build HeatMatch: a lead generation platform for heat pump installers. Capture high-quality leads from homeowners, route to verified installers, eventually monetize via subscriptions.
@@ -124,14 +124,42 @@ Build HeatMatch: a lead generation platform for heat pump installers. Capture hi
 ✅ All endpoints live and functional
 ⏳ Database migration pending (run manual script when ready)
 
+### Session 8 Extended Work (Email & Legal)
+
+#### ✅ Email Template Redesign
+- Replaced simple template with professional HTML design
+- Custom header image support (email_header.png)
+- 4-photo grid layout for lead photos
+- Card-based lead details display
+- Responsive design for all email clients
+- HeatMatch logo integration (heatmap_logo_light.png)
+- Removed logo from header to reduce visual clutter
+
+#### ✅ Legal & Consent
+- Added two-checkbox consent system on quote form (Step 5)
+- Privacy Policy link in consent text
+- Terms & Conditions link in consent text
+- Clear data sharing language: "...storing my contact information and sharing it with heat pump installers..."
+- Proper HTML email structure for email client compatibility
+- Admin dashboard shows response status with color coding:
+  - ✅ Green = Accepted
+  - ❌ Red = Rejected
+  - ❓ Amber = Needs More Info
+
+#### ✅ Database Migrations
+- Ran migration: `add-installer-response-columns.ts`
+- Added 3 columns to leads table (installer_response, installer_response_at, installer_response_from)
+- Index created for fast response lookups
+- All 11 commits pushed to production
+
 ### Next Steps (Phase 2 & Beyond)
-- [ ] Run database migration: `node -r dotenv/config -r ts-node/register scripts/add-installer-response-columns.ts`
-- [ ] Test full flow: create lead → assign installer → receive email → respond
 - [ ] Add reminder emails (2-day follow-up if no response)
 - [ ] Auto-escalate "need_info" responses to admin
 - [ ] Track response time metrics
 - [ ] Multi-installer assignment (assign to 2-3 installers concurrently)
 - [ ] SMS fallback for non-responders
+- [ ] Installer portal (self-service lead acceptance)
+- [ ] Email notifications to homeowners when installer confirms interest
 
 ---
 
