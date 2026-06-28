@@ -142,17 +142,31 @@ export default function Step5ContactInfo({
         )}
       </div>
 
-      {/* Consent Checkbox */}
-      <div className="mb-6">
+      {/* Consent Checkboxes */}
+      <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+        <h3 className="font-semibold text-gray-900 mb-3">Please confirm:</h3>
+
+        <label className="flex items-start gap-3 cursor-pointer mb-4">
+          <input
+            type="checkbox"
+            checked={value.consent_given}
+            onChange={(e) => onChange({ consent_given: e.target.checked })}
+            className="mt-1 w-5 h-5 border border-gray-300 rounded accent-emerald-600 flex-shrink-0"
+          />
+          <span className="text-sm text-gray-700">
+            I consent to HeatMatch storing my contact information and sharing it with heat pump installers to provide quotes. I understand HeatMatch is free for homeowners and my data will be handled in accordance with the <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 font-semibold">Privacy Policy</a>.
+          </span>
+        </label>
+
         <label className="flex items-start gap-3 cursor-pointer">
           <input
             type="checkbox"
             checked={value.consent_given}
             onChange={(e) => onChange({ consent_given: e.target.checked })}
-            className="mt-1 w-5 h-5 border border-gray-300 rounded accent-emerald-600"
+            className="mt-1 w-5 h-5 border border-gray-300 rounded accent-emerald-600 flex-shrink-0"
           />
           <span className="text-sm text-gray-700">
-            I agree to be contacted by installers about this project. I understand HeatMatch is free for homeowners.
+            I agree to the <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 font-semibold">Terms and Conditions</a> and understand that installers may contact me via phone, email, or SMS.
           </span>
         </label>
       </div>
