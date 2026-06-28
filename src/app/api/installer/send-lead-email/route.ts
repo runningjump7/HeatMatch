@@ -401,7 +401,6 @@ export async function POST(request: NextRequest) {
           <tr>
             <td class="hero">
               <img src="${logoUrl}" alt="HeatMatch" style="height: 40px; margin-bottom: 20px;" />
-              <img src="${headerImageUrl}" alt="HeatMatch Heat Pump" class="hero-image" style="width: 100%; max-height: 200px; object-fit: cover; margin-bottom: 20px;" />
               <div class="hero-badge">New Lead Assigned</div>
               <div class="hero-title">You've been assigned a new heat pump lead.</div>
               <p class="hero-subtitle">A homeowner is looking for help with a project in your service area.</p>
