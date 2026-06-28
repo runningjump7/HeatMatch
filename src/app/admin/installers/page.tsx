@@ -385,7 +385,7 @@ export default function AdminInstallersPage() {
                     onChange={(e) => setForm({ ...form, approved: e.target.checked })}
                     className="w-4 h-4 rounded border-gray-300"
                   />
-                  <span className="text-sm font-semibold text-gray-900">Active</span>
+                  <span className="text-sm font-semibold text-gray-900">Approved</span>
                 </label>
               </div>
 
