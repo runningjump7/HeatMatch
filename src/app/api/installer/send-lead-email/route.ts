@@ -50,133 +50,142 @@ export async function POST(request: NextRequest) {
     // Format photos count
     const photoCount = Array.isArray(lead.photos) ? lead.photos.length : 0;
 
-    // Build email HTML
+    // Build email HTML - simplified for better email client compatibility
     const emailHtml = `
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color: #1f2937; }
-    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-    .header { background-color: #10B981; color: white; padding: 30px; border-radius: 8px 8px 0 0; }
-    .header h1 { margin: 0; font-size: 24px; font-weight: bold; }
-    .header p { margin: 5px 0 0 0; opacity: 0.9; }
-    .content { background-color: #f9fafb; border: 1px solid #e5e7eb; border-top: none; padding: 30px; border-radius: 0 0 8px 8px; }
-    .lead-info { background-color: white; border: 1px solid #e5e7eb; border-radius: 6px; padding: 20px; margin: 20px 0; }
-    .info-row { display: flex; margin: 12px 0; }
-    .info-label { font-weight: 600; color: #374151; width: 140px; flex-shrink: 0; }
-    .info-value { color: #6b7280; }
-    .actions { text-align: center; margin: 30px 0; }
-    .button { display: inline-block; padding: 12px 28px; background-color: #10B981; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; }
-    .button:hover { background-color: #059669; }
-    .divider { border-top: 1px solid #e5e7eb; margin: 20px 0; }
-    .footer { font-size: 12px; color: #9ca3af; text-align: center; margin-top: 30px; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
-  <div class="container">
-    <div class="header">
-      <h1>🔥 New Lead Assigned</h1>
-      <p>You've been assigned a new heat pump lead</p>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color: #1f2937; margin: 0; padding: 0;">
+
+  <!-- Header -->
+  <div style="background-color: #10B981; color: white; padding: 30px 20px; text-align: center;">
+    <h1 style="margin: 0 0 10px 0; font-size: 28px;">🔥 New Lead Assigned</h1>
+    <p style="margin: 0; opacity: 0.9; font-size: 16px;">You've been assigned a new heat pump lead</p>
+  </div>
+
+  <!-- Main Content -->
+  <div style="max-width: 600px; margin: 0 auto; padding: 30px 20px; background-color: #ffffff;">
+
+    <p style="margin: 0 0 20px 0; font-size: 16px;">Hi ${installer.business_name || 'there'},</p>
+    <p style="margin: 0 0 20px 0; font-size: 16px;">A new homeowner is looking for help with a heat pump project. Here are the details:</p>
+
+    <!-- Lead Details -->
+    <div style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; padding: 20px; margin: 0 0 25px 0;">
+
+      <table cellpadding="0" cellspacing="0" style="width: 100%; font-size: 14px;">
+        <!-- Contact Info -->
+        <tr>
+          <td style="padding: 10px 0; font-weight: 600; color: #374151; width: 130px; vertical-align: top;">Homeowner:</td>
+          <td style="padding: 10px 0; color: #374151;">${lead.homeowner_name}</td>
+        </tr>
+        <tr>
+          <td style="padding: 10px 0; font-weight: 600; color: #374151;">Phone:</td>
+          <td style="padding: 10px 0; color: #374151;"><a href="tel:${lead.phone}" style="color: #10B981; text-decoration: none;">${lead.phone}</a></td>
+        </tr>
+        <tr>
+          <td style="padding: 10px 0; font-weight: 600; color: #374151;">Email:</td>
+          <td style="padding: 10px 0; color: #374151;"><a href="mailto:${lead.email}" style="color: #10B981; text-decoration: none;">${lead.email}</a></td>
+        </tr>
+        <tr>
+          <td colspan="2" style="padding: 15px 0; border-top: 1px solid #e5e7eb;"></td>
+        </tr>
+
+        <!-- Project Details -->
+        <tr>
+          <td style="padding: 10px 0; font-weight: 600; color: #374151;">Location:</td>
+          <td style="padding: 10px 0; color: #374151;">${lead.suburb}</td>
+        </tr>
+        <tr>
+          <td style="padding: 10px 0; font-weight: 600; color: #374151;">Service Type:</td>
+          <td style="padding: 10px 0; color: #374151;">${lead.service_type?.replace(/_/g, ' ') || 'Not specified'}</td>
+        </tr>
+        <tr>
+          <td style="padding: 10px 0; font-weight: 600; color: #374151;">Property Type:</td>
+          <td style="padding: 10px 0; color: #374151;">${lead.property_type?.charAt(0).toUpperCase() + lead.property_type?.slice(1) || 'Not specified'}</td>
+        </tr>
+        <tr>
+          <td style="padding: 10px 0; font-weight: 600; color: #374151;">Bedrooms:</td>
+          <td style="padding: 10px 0; color: #374151;">${lead.bedrooms || 'Not specified'}</td>
+        </tr>
+        <tr>
+          <td style="padding: 10px 0; font-weight: 600; color: #374151;">Heat Pumps:</td>
+          <td style="padding: 10px 0; color: #374151;">${lead.heat_pumps_needed || 'Not specified'}</td>
+        </tr>
+        <tr>
+          <td style="padding: 10px 0; font-weight: 600; color: #374151; vertical-align: top;">Locations:</td>
+          <td style="padding: 10px 0; color: #374151;">${locations}</td>
+        </tr>
+        <tr>
+          <td style="padding: 10px 0; font-weight: 600; color: #374151;">Existing Unit:</td>
+          <td style="padding: 10px 0; color: #374151;">${lead.existing_unit?.replace(/_/g, ' ') || 'Not specified'}</td>
+        </tr>
+        <tr>
+          <td style="padding: 10px 0; font-weight: 600; color: #374151;">Timeline:</td>
+          <td style="padding: 10px 0; color: #374151;">${lead.timeline?.replace(/_/g, ' ') || 'Not specified'}</td>
+        </tr>
+        ${photoCount > 0 ? `
+        <tr>
+          <td style="padding: 10px 0; font-weight: 600; color: #374151;">Photos:</td>
+          <td style="padding: 10px 0; color: #374151;">${photoCount} photo${photoCount !== 1 ? 's' : ''}</td>
+        </tr>
+        ` : ''}
+      </table>
+
     </div>
 
-    <div class="content">
-      <p>Hi ${installer.business_name || 'there'},</p>
-      <p>A new homeowner is looking for help with a heat pump project. Here are the details:</p>
-
-      <div class="lead-info">
-        <div class="info-row">
-          <div class="info-label">Homeowner</div>
-          <div class="info-value">${lead.homeowner_name}</div>
-        </div>
-        <div class="info-row">
-          <div class="info-label">Phone</div>
-          <div class="info-value">${lead.phone}</div>
-        </div>
-        <div class="info-row">
-          <div class="info-label">Email</div>
-          <div class="info-value">${lead.email}</div>
-        </div>
-        <div class="divider"></div>
-        <div class="info-row">
-          <div class="info-label">Location</div>
-          <div class="info-value">${lead.suburb}</div>
-        </div>
-        <div class="info-row">
-          <div class="info-label">Service Type</div>
-          <div class="info-value">${lead.service_type?.replace(/_/g, ' ') || 'Not specified'}</div>
-        </div>
-        <div class="info-row">
-          <div class="info-label">Property Type</div>
-          <div class="info-value">${lead.property_type?.charAt(0).toUpperCase() + lead.property_type?.slice(1) || 'Not specified'}</div>
-        </div>
-        <div class="info-row">
-          <div class="info-label">Bedrooms</div>
-          <div class="info-value">${lead.bedrooms || 'Not specified'}</div>
-        </div>
-        <div class="info-row">
-          <div class="info-label">Heat Pumps Needed</div>
-          <div class="info-value">${lead.heat_pumps_needed || 'Not specified'}</div>
-        </div>
-        <div class="info-row">
-          <div class="info-label">Locations</div>
-          <div class="info-value">${locations}</div>
-        </div>
-        <div class="info-row">
-          <div class="info-label">Existing Unit</div>
-          <div class="info-value">${lead.existing_unit?.replace(/_/g, ' ') || 'Not specified'}</div>
-        </div>
-        <div class="info-row">
-          <div class="info-label">Timeline</div>
-          <div class="info-value">${lead.timeline?.replace(/_/g, ' ') || 'Not specified'}</div>
-        </div>
-        ${photoCount > 0 ? `
-        <div class="info-row">
-          <div class="info-label">Photos</div>
-          <div class="info-value">${photoCount} photo${photoCount !== 1 ? 's' : ''} included</div>
-        </div>
-        ` : ''}
-      </div>
-
-      ${photoCount > 0 ? `
-      <div style="margin-top: 30px; margin-bottom: 30px;">
-        <h3 style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 15px;">Project Photos (${photoCount})</h3>
-        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
-          ${Array.isArray(lead.photos) ? lead.photos.slice(0, 4).map((photoUrl: string) => `
-            <div style="background-color: #f3f4f6; border-radius: 8px; overflow: hidden;">
-              <img src="${photoUrl}" alt="Project photo" style="width: 100%; height: 200px; object-fit: cover; display: block;" />
-            </div>
+    <!-- Photos Section -->
+    ${photoCount > 0 ? `
+    <div style="margin: 0 0 25px 0;">
+      <h3 style="margin: 0 0 15px 0; font-size: 16px; font-weight: 600; color: #111827;">Project Photos</h3>
+      <table cellpadding="0" cellspacing="10" style="width: 100%;">
+        <tr>
+          ${Array.isArray(lead.photos) ? lead.photos.slice(0, 2).map((photoUrl: string) => `
+          <td style="width: 50%; vertical-align: top;">
+            <img src="${photoUrl}" alt="Project photo" style="width: 100%; height: auto; border-radius: 6px; display: block;" />
+          </td>
           `).join('') : ''}
-        </div>
-      </div>
-      ` : ''}
+        </tr>
+        ${Array.isArray(lead.photos) && lead.photos.length > 2 ? `
+        <tr>
+          ${lead.photos.slice(2, 4).map((photoUrl: string) => `
+          <td style="width: 50%; vertical-align: top;">
+            <img src="${photoUrl}" alt="Project photo" style="width: 100%; height: auto; border-radius: 6px; display: block;" />
+          </td>
+          `).join('')}
+        </tr>
+        ` : ''}
+      </table>
+    </div>
+    ` : ''}
 
-      <p style="margin-top: 30px; margin-bottom: 10px; font-weight: 600;">Are you interested in this lead?</p>
+    <!-- Call to Action -->
+    <div style="text-align: center; margin: 30px 0;">
+      <p style="margin: 0 0 20px 0; font-size: 16px; font-weight: 600;">Are you interested in this lead?</p>
+      <a href="${responseLink}&response=accept" style="display: inline-block; padding: 14px 32px; background-color: #10B981; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 16;">✅ Yes, I'll Follow Up</a>
+    </div>
 
-      <div class="actions">
-        <a href="${responseLink}&response=accept" class="button">✅ Yes, I'll Follow Up</a>
-      </div>
-
-      <p style="text-align: center; font-size: 14px; color: #6b7280; margin-top: 20px;">
-        Not interested? You can also:
-      </p>
-      <p style="text-align: center; margin-top: 10px;">
+    <!-- Alternative Actions -->
+    <div style="text-align: center; margin: 20px 0; font-size: 14px; color: #6b7280;">
+      <p style="margin: 0 0 10px 0;">Not interested?</p>
+      <p style="margin: 0;">
         <a href="${responseLink}&response=reject" style="color: #ef4444; text-decoration: none; font-weight: 600;">Decline this lead</a>
-        &nbsp;•&nbsp;
+        &nbsp;&nbsp;•&nbsp;&nbsp;
         <a href="${responseLink}&response=need_info" style="color: #f59e0b; text-decoration: none; font-weight: 600;">Request more info</a>
       </p>
-
-      <p style="margin-top: 40px; font-size: 14px; color: #9ca3af;">
-        The homeowner has consented to be contacted about their heat pump project. Please reach out promptly to make the best impression.
-      </p>
     </div>
 
-    <div class="footer">
-      <p>HeatMatch • Connecting homeowners with trusted heat pump installers</p>
-      <p>© ${new Date().getFullYear()} HeatMatch. All rights reserved.</p>
+    <!-- Footer -->
+    <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #e5e7eb; font-size: 12px; color: #9ca3af; text-align: center;">
+      <p style="margin: 0;">The homeowner has consented to be contacted about their heat pump project. Please reach out promptly to make the best impression.</p>
+      <p style="margin: 10px 0 0 0;">HeatMatch • Connecting homeowners with trusted heat pump installers</p>
+      <p style="margin: 5px 0 0 0;">© ${new Date().getFullYear()} HeatMatch. All rights reserved.</p>
     </div>
+
   </div>
+
 </body>
 </html>
     `;
