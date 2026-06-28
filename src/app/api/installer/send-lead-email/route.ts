@@ -400,7 +400,7 @@ export async function POST(request: NextRequest) {
           <!-- HERO -->
           <tr>
             <td class="hero">
-              <img src="${logoUrl}" alt="HeatMatch" style="height: 40px; margin-bottom: 20px;" />
+              <img src="${logoUrl}" alt="HeatMatch" style="height: 40px; margin-bottom: 20px; display: none;" />
               <div class="hero-badge">New Lead Assigned</div>
               <div class="hero-title">You've been assigned a new heat pump lead.</div>
               <p class="hero-subtitle">A homeowner is looking for help with a project in your service area.</p>
