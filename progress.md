@@ -1,18 +1,123 @@
 # HeatMatch Progress
 
 ## Current Status
-- **Date:** 2026-06-28 (Session 8 - Extended) ✅
-- **Phase:** MVP Implementation - DEPLOYED TO VERCEL ✅ 🚀
-- **Overall Completion:** 100% - LIVE IN PRODUCTION (Quote form, admin portal, landing page, technical SEO, suburb pages, database connected, photo uploads working, installer feedback mechanism fully functional)
-- **Live URL:** https://heat-match.vercel.app
+- **Date:** 2026-06-28 (Session 9 Extended - Email Infrastructure & Installer Outreach Prep) 🚀
+- **Phase:** Production Launch Prep - Email System Fixed & Go-To-Market Materials Ready
+- **Overall Completion:** 100% - LIVE IN PRODUCTION (Quote form, admin portal, landing page, technical SEO, suburb pages, database connected, photo uploads working, installer feedback mechanism fully functional, contact form working with Resend)
+- **Live URL:** https://heatmatch.nz (custom domain active)
+- **Custom Domain:** heatmatch.nz (purchased, DNS configured, Vercel nameservers active)
+- **Email System:** Resend configured with verified domain (noreply@heatmatch.nz), contact form working
 - **GitHub:** https://github.com/runningjump7/HeatMatch
 - **Session 5 Work:** SVG icon removal, recent projects cleanup, CTA button fix, meta tags + schema markup, sitemap + robots.txt, 10 suburb landing pages with local SEO, blog strategy documentation
 - **Session 6 Work:** GitHub repo setup (HeatMatch), Vercel deployment, Neon PostgreSQL database integration, environment variables configured
 - **Session 7 Work:** Photo upload fix (Vercel Blob integration), tier system completion, admin portal polish, Blob storage troubleshooting
 - **Session 8 Work:** Installer feedback mechanism (JWT tokens, email sending, professional email template, response tracking, admin dashboard integration, consent checkboxes, legal compliance)
+- **Session 9 Work:** Custom domain setup (heatmatch.nz), DNS configuration, codebase email reference updates, Resend domain verification, contact form fix, installer outreach materials created
 
 ## Objective
 Build HeatMatch: a lead generation platform for heat pump installers. Capture high-quality leads from homeowners, route to verified installers, eventually monetize via subscriptions.
+
+## Session 2026-06-28 (Complete) ✅ - DOMAIN, EMAIL & INSTALLER OUTREACH PREP
+
+### Completed This Session ✅
+
+#### 🌐 Custom Domain Setup (heatmatch.nz)
+- **Domain Purchase:** heatmatch.nz registered via SecureParkme
+- **DNS Configuration:** Vercel nameservers pointed (ns1.vercel-dns.com, ns2.vercel-dns.com)
+- **Vercel Integration:** Domain added to Vercel project, status: Valid Configuration
+- **Production URL:** https://heatmatch.nz now live (www redirect also active)
+- **Favicon:** Custom favicon.ico added and deployed
+
+#### 📧 Email System (Resend Integration) ✅
+- **Resend Domain Setup:** heatmatch.nz verified via auto-configure with Vercel DNS (6 minutes)
+- **API Key Created:** New production Resend API key generated and added to Vercel environment
+- **Contact Form Fixed:** Updated to send from noreply@heatmatch.nz (verified domain)
+- **Test Email Route:** Temporarily sending to alex@alexvaz.org for testing (before hello@heatmatch.nz Google Workspace setup)
+- **Status:** Contact form now fully functional at https://heatmatch.nz/contact
+- **Deployment:** All changes committed and pushed (2 commits)
+
+#### 🔧 Codebase Updates (Email Domain References)
+- **Files Updated:** 7 files updated from heatmatch.co.nz → heatmatch.nz + Resend integration
+  - `src/app/contact/page.tsx` — Contact page email link (hello@heatmatch.nz)
+  - `src/app/layout.tsx` — Meta tags, Open Graph URLs, canonical URL, schema markup
+  - `src/app/page.tsx` — Footer email address
+  - `src/app/api/contact/route.ts` — Contact form (Resend sender + test recipient)
+  - `src/app/api/installer/send-lead-email/route.ts` — Support email footer
+  - `src/components/Footer.tsx` — Footer email display
+  - `src/app/favicon.ico` — Custom favicon
+- **Status:** All changes committed and deployed to production
+
+#### 📋 Installer Outreach Materials Created
+**1. Installer Onboarding PDF** (`docs/installer-onboarding.md`)
+- 6-month free pilot program overview
+- Clear value proposition (exclusive leads, no competition)
+- Requirements and expectations documented
+- Geographic exclusivity strategy (North Shore → Wider Auckland → National)
+- FAQ section covering common objections
+- Professional formatting ready for PDF conversion
+
+**2. Email Outreach Templates** (`docs/installer-outreach-email-template.md`)
+- 3 email versions (Direct/Punchy, Problem-Focused, Relationship-First)
+- Follow-up email template (for non-responders)
+- Phone script with objection handling
+- Email sending tips (best times, personalization)
+- Professional email signature template
+
+**3. Complete Outreach Guide** (`docs/installer-outreach-guide.md`)
+- **How to Find Installers:** Google Maps, trade associations, review sites, competitor research
+- **Vetting Criteria:** Must-haves and red flags to avoid
+- **Research Process:** What to gather before emailing (2 min per installer)
+- **Outreach Approach:** Email → follow-up → call sequence
+- **9 Objection Handlers:** Scripts for common pushback ("too busy", "what's the catch", "bad experience with leads")
+- **Phone Scripts:** What to say when calling after email
+- **Tracking System:** Spreadsheet template for outreach management
+- **Weekly Plan:** Day-by-day breakdown (Monday research → Friday sign-ups)
+- **Metrics to Track:** Email performance, conversion funnel
+- **Common Mistakes:** What to avoid (generic emails, overpromising, desperation)
+- **Red Flags:** Warning signs during conversations
+- **Celebration Milestones:** Track progress and wins
+
+#### 🎯 Go-To-Market Strategy Defined
+**Pilot Program Structure:**
+- **Offer:** 6 months free exclusive leads
+- **Ask:** 24hr response time, lead quality feedback, job outcome updates
+- **After Pilot:** Monthly subscription (tiered, $150-$400/month estimate)
+- **Geographic Rollout:**
+  - Phase 1: North Shore (2-3 installers) - NOW
+  - Phase 2: Wider Auckland (Q3 2026)
+  - Phase 3: National (2027)
+
+**Target This Week:**
+- Email 10-15 North Shore installers
+- Get 5+ positive responses
+- Sign 2-3 pilot partners
+
+#### 🔐 Learning & Context
+- **Gmail vs Resend:** Clarified distinction (Gmail = inbox for receiving, Resend = transactional sending API)
+- **Why Both Needed:** Google Workspace for business email inbox, Resend for programmatic contact form emails
+- **Resend Benefits:** Better deliverability, simpler API, designed for transactional emails vs Gmail SMTP
+
+### What's Ready Now
+✅ Custom domain (heatmatch.nz) fully functional in production
+✅ Custom favicon deployed
+✅ Contact form sending emails via Resend (working end-to-end)
+✅ Resend domain verified and configured
+✅ Professional onboarding PDF ready for installers
+✅ 3 email templates + follow-up ready to send
+✅ Complete outreach guide with scripts and tracking system
+✅ Go-to-market strategy documented and actionable
+
+### Next Steps (Week of 2026-06-29)
+- [ ] Convert installer-onboarding.md to PDF
+- [ ] Research 10-15 North Shore installers (Google Maps, reviews)
+- [ ] Send first 5 outreach emails (Tuesday 9-11am recommended)
+- [ ] Follow up with non-responders (Thursday/Friday)
+- [ ] Book calls with interested installers
+- [ ] Sign 2-3 pilot partners by end of week
+- [ ] Set up Google Workspace for hello@heatmatch.nz (when ready to go live)
+- [ ] Change contact form recipient from alex@alexvaz.org → hello@heatmatch.nz
+
+---
 
 ## Session 2026-06-28 (Complete) ✅ - INSTALLER FEEDBACK MECHANISM
 
