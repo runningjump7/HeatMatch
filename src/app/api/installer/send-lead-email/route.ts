@@ -6,12 +6,6 @@ import { Resend } from 'resend';
 
 export async function POST(request: NextRequest) {
   try {
-    // Check admin auth
-    const session = await getAdminSession();
-    if (!isAdminAuthenticated(session)) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const { lead_id, installer_id } = await request.json();
 
     if (!lead_id || !installer_id) {

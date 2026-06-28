@@ -62,25 +62,28 @@ export async function PATCH(
     // Send emails to newly assigned installers
     for (const installer_id of newlyAssigned) {
       try {
-        const emailResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/installer/send-lead-email`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ lead_id: id, installer_id }),
-          }
-        );
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+        const emailUrl = `${baseUrl}/api/installer/send-lead-email`;
+
+        console.log(`[DEBUG] Sending email to installer ${installer_id}. URL: ${emailUrl}`);
+
+        const emailResponse = await fetch(emailUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ lead_id: id, installer_id }),
+        });
+
+        const emailText = await emailResponse.text();
 
         if (!emailResponse.ok) {
           console.error(
-            `Failed to send email to installer ${installer_id}:`,
-            await emailResponse.text()
+            `[ERROR] Failed to send email to installer ${installer_id}. Status: ${emailResponse.status}. Response: ${emailText}`
           );
         } else {
-          console.log(`Email sent to installer ${installer_id} for lead ${id}`);
+          console.log(`[SUCCESS] Email sent to installer ${installer_id} for lead ${id}. Response: ${emailText}`);
         }
       } catch (error) {
-        console.error(`Error sending email to installer ${installer_id}:`, error);
+        console.error(`[ERROR] Exception sending email to installer ${installer_id}:`, error);
       }
     }
 
