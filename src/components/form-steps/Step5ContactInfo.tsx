@@ -85,7 +85,7 @@ export default function Step5ContactInfo({
           value={value.homeowner_name}
           onChange={(e) => onChange({ homeowner_name: e.target.value })}
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none text-gray-900"
-          placeholder="John Smith"
+          placeholder={t('form.step5.fullNamePlaceholder')}
         />
       </div>
 
@@ -110,7 +110,7 @@ export default function Step5ContactInfo({
           value={value.email}
           onChange={(e) => onChange({ email: e.target.value })}
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none text-gray-900"
-          placeholder="john@example.com"
+          placeholder={t('form.step5.emailPlaceholder')}
         />
       </div>
 
