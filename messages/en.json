@@ -209,6 +209,19 @@
     "buttons": {
       "back": "← Back",
       "continue": "Continue →"
+    },
+    "confirmation": {
+      "title": "Quote Request Submitted!",
+      "thankYou": "Thank you for submitting your project details.",
+      "requestId": "Your unique request ID is",
+      "nextStepsHeading": "What happens next?",
+      "step1": "We review your project details",
+      "step2": "Trusted installers are notified",
+      "step3": "You'll be contacted within 24 hours",
+      "freeService": "Free service - no cost to you",
+      "noObligation": "No obligation - get quotes to compare",
+      "verifiedInstallers": "Verified installers only",
+      "closeButton": "Close"
     }
   },
   "faq": {

@@ -209,6 +209,19 @@
     "buttons": {
       "back": "← 返回",
       "continue": "继续 →"
+    },
+    "confirmation": {
+      "title": "报价请求已提交！",
+      "thankYou": "感谢您提交您的项目详情。",
+      "requestId": "您的唯一请求 ID 是",
+      "nextStepsHeading": "接下来会发生什么？",
+      "step1": "我们审查您的项目详情",
+      "step2": "可信的安装商被告知",
+      "step3": "您将在 24 小时内被联系",
+      "freeService": "免费服务 - 对您没有成本",
+      "noObligation": "无义务 - 获取报价进行比较",
+      "verifiedInstallers": "仅限经过验证的安装商",
+      "closeButton": "关闭"
     }
   },
   "faq": {

@@ -209,6 +209,19 @@
     "buttons": {
       "back": "← 返回",
       "continue": "繼續 →"
+    },
+    "confirmation": {
+      "title": "報價請求已提交！",
+      "thankYou": "感謝您提交您的項目詳情。",
+      "requestId": "您的唯一請求 ID 是",
+      "nextStepsHeading": "接下來會發生什麼？",
+      "step1": "我們審查您的項目詳情",
+      "step2": "可信的安裝商被告知",
+      "step3": "您將在 24 小時內被聯繫",
+      "freeService": "免費服務 - 對您沒有成本",
+      "noObligation": "無義務 - 獲取報價進行比較",
+      "verifiedInstallers": "僅限經過驗證的安裝商",
+      "closeButton": "關閉"
     }
   },
   "faq": {
