@@ -1,6 +1,6 @@
-import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { locales } from '@/lib/i18n';
+import { ClientLayout } from './client-layout';
 
 export const dynamic = 'force-dynamic';
 
@@ -27,21 +27,6 @@ export async function generateMetadata({ params }: Omit<Props, 'children'>) {
   };
 }
 
-async function loadMessages(locale: string) {
-  try {
-    if (locale === 'zh-CN') {
-      return (await import('../../../messages/zh-CN.json')).default;
-    } else if (locale === 'zh-TW') {
-      return (await import('../../../messages/zh-TW.json')).default;
-    } else {
-      return (await import('../../../messages/en.json')).default;
-    }
-  } catch (error) {
-    console.error(`Failed to load messages for locale: ${locale}`, error);
-    return null;
-  }
-}
-
 export default async function LocaleLayout({
   children,
   params
@@ -52,14 +37,5 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  const messages = await loadMessages(locale);
-  if (!messages) {
-    notFound();
-  }
-
-  return (
-    <NextIntlClientProvider messages={messages} locale={locale}>
-      {children}
-    </NextIntlClientProvider>
-  );
+  return <ClientLayout locale={locale}>{children}</ClientLayout>;
 }
