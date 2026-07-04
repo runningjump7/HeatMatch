@@ -9,18 +9,18 @@ interface Step1ServiceTypeProps {
 }
 
 export default function Step1ServiceType({ value, onChange, onNext }: Step1ServiceTypeProps) {
-  const t = useTranslations('hero');
+  const t = useTranslations();
 
   const services: Array<{ id: 'new_install' | 'replace' | 'service' | 'advice'; label: string; icon: string }> = [
-    { id: 'new_install', label: t('services.newInstall'), icon: '/icons/service-new-installation.svg' },
-    { id: 'replace', label: t('services.replace'), icon: '/icons/service-replace-existing.svg' },
-    { id: 'service', label: t('services.service'), icon: '/icons/service-heat-pump-service.svg' },
-    { id: 'advice', label: t('services.advice'), icon: '/icons/service-need-advice.svg' },
+    { id: 'new_install', label: t('hero.services.newInstall'), icon: '/icons/service-new-installation.svg' },
+    { id: 'replace', label: t('hero.services.replace'), icon: '/icons/service-replace-existing.svg' },
+    { id: 'service', label: t('hero.services.service'), icon: '/icons/service-heat-pump-service.svg' },
+    { id: 'advice', label: t('hero.services.advice'), icon: '/icons/service-need-advice.svg' },
   ];
 
   return (
     <div>
-      <h2 className="text-3xl font-bold text-gray-900 mb-3">{t('formTitle')}</h2>
+      <h2 className="text-3xl font-bold text-gray-900 mb-3">{t('hero.formTitle')}</h2>
 
       <div className="space-y-3 mb-8">
         {services.map((service) => (
@@ -49,7 +49,7 @@ export default function Step1ServiceType({ value, onChange, onNext }: Step1Servi
         disabled={!value}
         className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white py-3 rounded-lg font-semibold transition"
       >
-        {t('continueButton')}
+        {t('hero.continueButton')}
       </button>
     </div>
   );

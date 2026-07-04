@@ -18,30 +18,30 @@ interface Step2PropertyInfoProps {
 }
 
 export default function Step2PropertyInfo({ value, onChange, onNext, onBack }: Step2PropertyInfoProps) {
-  const t = useTranslations('form');
+  const t = useTranslations();
 
   const propertyTypes: Array<{
     id: 'home' | 'apartment' | 'office' | 'commercial';
     label: string;
   }> = [
-    { id: 'home', label: t('propertyTypes.home') },
-    { id: 'apartment', label: t('propertyTypes.apartment') },
-    { id: 'office', label: t('propertyTypes.office') },
-    { id: 'commercial', label: t('propertyTypes.commercial') },
+    { id: 'home', label: t('form.propertyTypes.home') },
+    { id: 'apartment', label: t('form.propertyTypes.apartment') },
+    { id: 'office', label: t('form.propertyTypes.office') },
+    { id: 'commercial', label: t('form.propertyTypes.commercial') },
   ];
 
   const bedroomOptions = [
-    { id: '1', label: t('bedrooms.one') },
-    { id: '2', label: t('bedrooms.two') },
-    { id: '3', label: t('bedrooms.three') },
-    { id: '4', label: t('bedrooms.four') },
+    { id: '1', label: t('form.bedrooms.one') },
+    { id: '2', label: t('form.bedrooms.two') },
+    { id: '3', label: t('form.bedrooms.three') },
+    { id: '4', label: t('form.bedrooms.four') },
   ];
 
   const squareMeterOptions = [
-    { id: 'small', label: t('spaceSize.small') },
-    { id: 'medium', label: t('spaceSize.medium') },
-    { id: 'large', label: t('spaceSize.large') },
-    { id: 'xlarge', label: t('spaceSize.xlarge') },
+    { id: 'small', label: t('form.spaceSize.small') },
+    { id: 'medium', label: t('form.spaceSize.medium') },
+    { id: 'large', label: t('form.spaceSize.large') },
+    { id: 'xlarge', label: t('form.spaceSize.xlarge') },
   ];
 
   const isResidential = ['home', 'apartment'].includes(value.property_type || '');
@@ -50,12 +50,12 @@ export default function Step2PropertyInfo({ value, onChange, onNext, onBack }: S
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('step2.title')}</h2>
-      <p className="text-gray-600 mb-6">{t('step2.subtitle')}</p>
+      <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('form.step2.title')}</h2>
+      <p className="text-gray-600 mb-6">{t('form.step2.subtitle')}</p>
 
       {/* Property Type */}
       <div className="mb-8">
-        <label className="block text-sm font-semibold text-gray-900 mb-3">{t('step2.propertyType')}</label>
+        <label className="block text-sm font-semibold text-gray-900 mb-3">{t('form.step2.propertyType')}</label>
         <div className="grid grid-cols-2 gap-3">
           {propertyTypes.map((type) => (
             <button
@@ -76,7 +76,7 @@ export default function Step2PropertyInfo({ value, onChange, onNext, onBack }: S
       {/* Bedrooms (for residential) */}
       {isResidential && (
         <div className="mb-8">
-          <label className="block text-sm font-semibold text-gray-900 mb-3">{t('step2.bedrooms')}</label>
+          <label className="block text-sm font-semibold text-gray-900 mb-3">{t('form.step2.bedrooms')}</label>
           <div className="grid grid-cols-2 gap-3">
             {bedroomOptions.map((option) => (
               <button
@@ -98,7 +98,7 @@ export default function Step2PropertyInfo({ value, onChange, onNext, onBack }: S
       {/* Square Meters (for commercial) */}
       {isCommercial && (
         <div className="mb-8">
-          <label className="block text-sm font-semibold text-gray-900 mb-3">{t('step2.spaceSize')}</label>
+          <label className="block text-sm font-semibold text-gray-900 mb-3">{t('form.step2.spaceSize')}</label>
           <div className="grid grid-cols-2 gap-3">
             {squareMeterOptions.map((option) => (
               <button
@@ -123,14 +123,14 @@ export default function Step2PropertyInfo({ value, onChange, onNext, onBack }: S
           onClick={onBack}
           className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-900 py-3 rounded-lg font-semibold transition"
         >
-          {t('buttons.back')}
+          {t('form.buttons.back')}
         </button>
         <button
           onClick={onNext}
           disabled={!isComplete}
           className="flex-1 bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white py-3 rounded-lg font-semibold transition"
         >
-          {t('buttons.continue')}
+          {t('form.buttons.continue')}
         </button>
       </div>
     </div>
