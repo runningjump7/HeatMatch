@@ -1,6 +1,9 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { locales } from '@/lib/i18n';
+import enMessages from '../../../messages/en.json';
+import zhCNMessages from '../../../messages/zh-CN.json';
+import zhTWMessages from '../../../messages/zh-TW.json';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,6 +14,12 @@ export function generateStaticParams() {
 type Props = {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
+};
+
+const messages: Record<string, typeof enMessages> = {
+  'en': enMessages,
+  'zh-CN': zhCNMessages,
+  'zh-TW': zhTWMessages,
 };
 
 export async function generateMetadata({ params }: Omit<Props, 'children'>) {
@@ -37,10 +46,13 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  const messages = (await import(`../../../messages/${locale}.json`)).default;
+  const pageMessages = messages[locale];
+  if (!pageMessages) {
+    notFound();
+  }
 
   return (
-    <NextIntlClientProvider messages={messages} locale={locale}>
+    <NextIntlClientProvider messages={pageMessages} locale={locale}>
       {children}
     </NextIntlClientProvider>
   );
