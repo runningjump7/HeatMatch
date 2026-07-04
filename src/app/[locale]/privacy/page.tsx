@@ -20,7 +20,7 @@ export default function PrivacyPolicyPage() {
       <div className="max-w-4xl mx-auto px-4 py-16">
         <div className="prose prose-sm max-w-none text-gray-700 space-y-6">
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Introduction</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">1. {t('pages.privacy.introductionTitle')}</h2>
             <p>{t('pages.privacy.introduction')}</p>
           </section>
 
@@ -50,7 +50,7 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">7. {t('pages.privacy.section6')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">7. {t('pages.privacy.section6Title')}</h2>
             <p>{t('pages.privacy.section6Text')}</p>
           </section>
 
