@@ -1,28 +1,70 @@
 # HeatMatch Progress
 
 ## Current Status
-- **Date:** 2026-07-04 (Session 11 - Phase 1 Smoke Testing Complete) 🧪
-- **Phase:** Pre-Deployment Testing Complete - Multi-Language Live + Quality Assurance
-- **Overall Completion:** 100% + Phase 1 Testing Framework - LIVE IN PRODUCTION + QA Ready
+- **Date:** 2026-07-04 (Session 12 - Form Translation Fixes Complete) 🌍
+- **Phase:** Multi-Language Complete - All UI Fully Localized
+- **Overall Completion:** 100% + Phase 1 Testing Framework - LIVE IN PRODUCTION + Fully Localized
 - **Live URL:** https://heatmatch.nz (all 3 languages + 30 suburb pages deployed)
-- **Languages Supported:** English (/en), Simplified Chinese (/zh-CN), Traditional Chinese (/zh-TW)
+- **Languages Supported:** English (/en), Simplified Chinese (/zh-CN), Traditional Chinese (/zh-TW) ✅ ALL LOCALIZED
 - **SEO Pages:** 30 total (10 suburbs × 3 languages) all live & indexed
 - **Custom Domain:** heatmatch.nz (purchased, DNS configured, Vercel nameservers active)
 - **Email System:** Resend configured with verified domain (noreply@heatmatch.nz), contact form working
 - **GitHub:** https://github.com/runningjump7/HeatMatch (pushed to production)
 - **Testing Framework:** ✅ Phase 1 Smoke Tests Complete (8/8 passing)
-- **Session 11 Completed:**
-  - ✅ Playwright configuration (playwright.config.ts)
-  - ✅ 8 smoke test suite (tests/e2e/smoke.spec.ts)
-  - ✅ npm scripts: test:smoke, test:smoke:ui
-  - ✅ All 3 languages tested (EN, ZH-CN, ZH-TW)
-  - ✅ Quote form, API endpoints, error handling
-  - ✅ Pre-deployment checklist (DEPLOYMENT_CHECKLIST.md)
-  - ✅ Documentation complete
-  - ✅ Ready for production deployment without human testing risk
+- **Session 12 Completed:**
+  - ✅ Fixed form stepper translations (all steps now respond to language changes)
+  - ✅ Fixed recent projects section translations
+  - ✅ Fixed useTranslations() hook implementation in client components
+  - ✅ All 3 languages fully working in dynamic UI (EN, ZH-CN, ZH-TW)
+  - ✅ Quote form modal renders in selected language
+  - ✅ Recent projects cards display in selected language
+  - ✅ 2 commits pushed to GitHub (form translations + hook fix)
+  - ✅ Smoke tests still passing (8/8)
 
 ## Objective
 Build HeatMatch: a lead generation platform for heat pump installers. Capture high-quality leads from homeowners, route to verified installers, eventually monetize via subscriptions.
+
+## Session 2026-07-04 Extended (Complete) ✅ - MULTI-LANGUAGE FORM TRANSLATIONS
+
+### Session Summary
+Fixed critical translation issue where the quote form stepper and recent projects section were hardcoded in English and didn't respond to language changes. User identified: "whys the stepper and the projects section still in english?" - this revealed form UI wasn't using `useTranslations()` hooks correctly.
+
+### Root Cause Analysis
+- Form step components (Step1ServiceType, Step2PropertyInfo) were trying to use scoped namespaces like `useTranslations('hero')` and `useTranslations('form')`
+- Scoped namespaces don't work reliably in client components when wrapped by NextIntlClientProvider
+- Components were falling back to hardcoded English strings
+
+### Solution Implemented
+Changed all form step components to use unscoped `useTranslations()` with full dot-notation paths:
+- Before: `useTranslations('hero')` → `t('services.newInstall')`
+- After: `useTranslations()` → `t('hero.services.newInstall')`
+
+### Files Modified
+1. **src/components/form-steps/Step1ServiceType.tsx**
+   - Changed to unscoped useTranslations()
+   - Updated all translation paths to use full dot notation (hero.services.*, hero.formTitle, hero.continueButton)
+
+2. **src/components/form-steps/Step2PropertyInfo.tsx**
+   - Changed to unscoped useTranslations()
+   - Updated all translation paths (form.propertyTypes.*, form.bedrooms.*, form.spaceSize.*, form.step2.*, form.buttons.*)
+
+### What's Now Working
+✅ Quote form stepper (all steps) displays in all 3 languages dynamically
+✅ Recent projects section displays in all 3 languages dynamically
+✅ Language switcher now fully works - clicking flags instantly updates form text
+✅ All form steps (1-5) respond to language changes
+✅ All 3 languages fully localized (EN, ZH-CN, ZH-TW)
+
+### Test Results
+- Smoke tests: 8/8 passing (no regressions)
+- Manual testing: Form stepper translates correctly when switching languages
+- HTML verification: Server-side translations correct for all locales
+
+### Commits
+1. `493110b` - Fix form and recent projects translations across all 3 languages
+2. `1eadb27` - Fix form step translations: use unscoped useTranslations() with full paths
+
+---
 
 ## Session 2026-07-04 (Complete) ✅ - PHASE 1 SMOKE TESTING FRAMEWORK
 
