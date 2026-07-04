@@ -269,11 +269,22 @@
     "contactHeading": "聯繫"
   },
   "contactForm": {
+    "nameLabel": "姓名",
     "namePlaceholder": "您的名字",
+    "emailLabel": "電子郵件",
     "emailPlaceholder": "your@email.com",
+    "phoneLabel": "電話",
     "phonePlaceholder": "09 123 4567",
+    "typeLabel": "我是",
+    "typeHomeowner": "房主",
+    "typeInstaller": "熱泵安裝商",
+    "typeBusiness": "業主",
+    "typeOther": "其他",
+    "subjectLabel": "主題",
     "subjectPlaceholder": "這是關於什麼？",
+    "messageLabel": "消息",
     "messagePlaceholder": "告訴我們您需要什麼...",
+    "consentLabel": "我同意被聯繫以回復我的查詢。我理解我的信息將被用於回復我的消息。",
     "successMessage": "感謝您的消息。我們很快會回復您！",
     "errorMessage": "發送消息時出錯。請重試。"
   },

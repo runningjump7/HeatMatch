@@ -162,7 +162,7 @@ export default function ContactPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name */}
             <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-2">{t('pages.contact.name')} *</label>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">{t('contactForm.nameLabel')} *</label>
               <input
                 type="text"
                 name="name"
@@ -176,7 +176,7 @@ export default function ContactPage() {
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-2">{t('pages.contact.email')} *</label>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">{t('contactForm.emailLabel')} *</label>
               <input
                 type="email"
                 name="email"
@@ -190,7 +190,7 @@ export default function ContactPage() {
 
             {/* Phone */}
             <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-2">{t('pages.contact.phone')}</label>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">{t('contactForm.phoneLabel')}</label>
               <input
                 type="tel"
                 name="phone"
@@ -203,7 +203,7 @@ export default function ContactPage() {
 
             {/* Type */}
             <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-2">I am a *</label>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">{t('contactForm.typeLabel')} *</label>
               <select
                 name="type"
                 value={form.type}
@@ -211,16 +211,16 @@ export default function ContactPage() {
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none text-gray-900"
               >
-                <option value="homeowner">Homeowner</option>
-                <option value="installer">Heat Pump Installer</option>
-                <option value="business">Business Owner</option>
-                <option value="other">Other</option>
+                <option value="homeowner">{t('contactForm.typeHomeowner')}</option>
+                <option value="installer">{t('contactForm.typeInstaller')}</option>
+                <option value="business">{t('contactForm.typeBusiness')}</option>
+                <option value="other">{t('contactForm.typeOther')}</option>
               </select>
             </div>
 
             {/* Subject */}
             <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-2">{t('pages.contact.subject')} *</label>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">{t('contactForm.subjectLabel')} *</label>
               <input
                 type="text"
                 name="subject"
@@ -234,7 +234,7 @@ export default function ContactPage() {
 
             {/* Message */}
             <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-2">{t('pages.contact.message')} *</label>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">{t('contactForm.messageLabel')} *</label>
               <textarea
                 name="message"
                 value={form.message}
@@ -258,7 +258,7 @@ export default function ContactPage() {
                   className="mt-1 w-5 h-5 border border-gray-300 rounded accent-emerald-600"
                 />
                 <span className="text-sm text-gray-700">
-                  {t('pages.contact.consent')} *
+                  {t('contactForm.consentLabel')} *
                 </span>
               </label>
             </div>
