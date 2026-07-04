@@ -127,6 +127,53 @@
       "bedrooms": "卧室数量",
       "spaceSize": "近似空间大小"
     },
+    "step3": {
+      "title": "告诉我们工作的详情",
+      "subtitle": "更多详情帮助我们为您找到完美的安装商。",
+      "heatPumps": "您需要多少台热泵？",
+      "locations": {
+        "install": "您希望在哪里安装？（选择所有适用的）",
+        "replace": "您希望在哪里更换？（选择所有适用的）",
+        "service": "您希望在哪里维修？（选择所有适用的）",
+        "notes": "请说明您希望安装热泵的位置..."
+      },
+      "pumpOptions": {
+        "one": "1 台热泵",
+        "two": "2 台热泵",
+        "three": "3 台热泵",
+        "four": "4+ 台热泵"
+      },
+      "residentialLocations": {
+        "lounge": "起居室",
+        "mainBedroom": "主卧室",
+        "bedroom2": "卧室 2",
+        "bedroom3": "卧室 3",
+        "kitchen": "厨房",
+        "bathroom": "浴室",
+        "laundry": "洗衣房",
+        "office": "办公室"
+      },
+      "commercialLocations": {
+        "reception": "前台区域",
+        "conference": "会议室",
+        "warehouse": "仓库/存储",
+        "showroom": "展厅",
+        "server": "服务器房",
+        "corridor": "走廊/公共区域",
+        "kitchen": "厨房/休息室",
+        "other": "其他（在备注中说明）"
+      },
+      "existingUnit": "您有现有的热泵机组吗？",
+      "existingUnitOptions": {
+        "yes": "是的，我有现有机组",
+        "no": "否，这是新安装",
+        "unsure": "不确定，需要建议"
+      },
+      "photoUpload": "上传照片（最多 5 张）",
+      "photoError": "最多允许 5 张照片",
+      "photoSizeError": "照片大于 5MB",
+      "photoTypeError": "不是图片"
+    },
     "buttons": {
       "back": "← 返回",
       "continue": "继续 →"

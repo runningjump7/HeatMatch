@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 interface Step3JobDetailsProps {
   value: {
@@ -24,35 +25,36 @@ interface Step3JobDetailsProps {
 }
 
 export default function Step3JobDetails({ value, propertyType, serviceType, onChange, onNext, onBack }: Step3JobDetailsProps) {
+  const t = useTranslations();
   const [uploadError, setUploadError] = useState<string | null>(null);
 
   const pumpOptions = [
-    { id: '1', label: '1 Heat Pump' },
-    { id: '2', label: '2 Heat Pumps' },
-    { id: '3', label: '3 Heat Pumps' },
-    { id: '4', label: '4+ Heat Pumps' },
+    { id: '1', label: t('form.step3.pumpOptions.one') },
+    { id: '2', label: t('form.step3.pumpOptions.two') },
+    { id: '3', label: t('form.step3.pumpOptions.three') },
+    { id: '4', label: t('form.step3.pumpOptions.four') },
   ];
 
   const residentialLocations = [
-    'Lounge',
-    'Main Bedroom',
-    'Bedroom 2',
-    'Bedroom 3',
-    'Kitchen',
-    'Bathroom',
-    'Laundry',
-    'Office',
+    { key: 'lounge', label: t('form.step3.residentialLocations.lounge') },
+    { key: 'mainBedroom', label: t('form.step3.residentialLocations.mainBedroom') },
+    { key: 'bedroom2', label: t('form.step3.residentialLocations.bedroom2') },
+    { key: 'bedroom3', label: t('form.step3.residentialLocations.bedroom3') },
+    { key: 'kitchen', label: t('form.step3.residentialLocations.kitchen') },
+    { key: 'bathroom', label: t('form.step3.residentialLocations.bathroom') },
+    { key: 'laundry', label: t('form.step3.residentialLocations.laundry') },
+    { key: 'office', label: t('form.step3.residentialLocations.office') },
   ];
 
   const commercialLocations = [
-    'Reception Area',
-    'Conference Room',
-    'Warehouse/Storage',
-    'Showroom',
-    'Server Room',
-    'Corridor/Common Area',
-    'Kitchen/Break Room',
-    'Other (specify in notes)',
+    { key: 'reception', label: t('form.step3.commercialLocations.reception') },
+    { key: 'conference', label: t('form.step3.commercialLocations.conference') },
+    { key: 'warehouse', label: t('form.step3.commercialLocations.warehouse') },
+    { key: 'showroom', label: t('form.step3.commercialLocations.showroom') },
+    { key: 'server', label: t('form.step3.commercialLocations.server') },
+    { key: 'corridor', label: t('form.step3.commercialLocations.corridor') },
+    { key: 'kitchen', label: t('form.step3.commercialLocations.kitchen') },
+    { key: 'other', label: t('form.step3.commercialLocations.other') },
   ];
 
   const locationOptions = ['office', 'commercial'].includes(propertyType || '')
@@ -63,15 +65,15 @@ export default function Step3JobDetails({ value, propertyType, serviceType, onCh
     id: 'yes' | 'no' | 'need_recommendation';
     label: string;
   }> = [
-    { id: 'yes', label: 'Yes, I have an existing unit' },
-    { id: 'no', label: 'No, this is a new installation' },
-    { id: 'need_recommendation', label: 'Not sure, need advice' },
+    { id: 'yes', label: t('form.step3.existingUnitOptions.yes') },
+    { id: 'no', label: t('form.step3.existingUnitOptions.no') },
+    { id: 'need_recommendation', label: t('form.step3.existingUnitOptions.unsure') },
   ];
 
-  const handleLocationToggle = (location: string) => {
-    const newLocations = value.location_to_install.includes(location)
-      ? value.location_to_install.filter(l => l !== location)
-      : [...value.location_to_install, location];
+  const handleLocationToggle = (locationKey: string) => {
+    const newLocations = value.location_to_install.includes(locationKey)
+      ? value.location_to_install.filter(l => l !== locationKey)
+      : [...value.location_to_install, locationKey];
     onChange({ location_to_install: newLocations });
   };
 
@@ -80,18 +82,18 @@ export default function Step3JobDetails({ value, propertyType, serviceType, onCh
     setUploadError(null);
 
     if (value.photos.length + files.length > 5) {
-      setUploadError('Maximum 5 photos allowed');
+      setUploadError(t('form.step3.photoError'));
       return;
     }
 
     const validFiles: File[] = [];
     for (const file of files) {
       if (file.size > 5 * 1024 * 1024) {
-        setUploadError(`Photo "${file.name}" is larger than 5MB`);
+        setUploadError(`${file.name} ${t('form.step3.photoSizeError')}`);
         continue;
       }
       if (!file.type.startsWith('image/')) {
-        setUploadError(`"${file.name}" is not an image`);
+        setUploadError(`"${file.name}" ${t('form.step3.photoTypeError')}`);
         continue;
       }
       validFiles.push(file);
@@ -111,22 +113,22 @@ export default function Step3JobDetails({ value, propertyType, serviceType, onCh
   const getLocationLabel = () => {
     switch (serviceType) {
       case 'replace':
-        return 'Where would you like them replaced? (Select all that apply)';
+        return t('form.step3.locations.replace');
       case 'service':
-        return 'Where would you like them serviced? (Select all that apply)';
+        return t('form.step3.locations.service');
       default:
-        return 'Where would you like them installed? (Select all that apply)';
+        return t('form.step3.locations.install');
     }
   };
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900 mb-2">Tell us about the job</h2>
-      <p className="text-gray-600 mb-6">More details help us find the perfect installer for you.</p>
+      <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('form.step3.title')}</h2>
+      <p className="text-gray-600 mb-6">{t('form.step3.subtitle')}</p>
 
       {/* Heat Pumps Needed */}
       <div className="mb-8">
-        <label className="block text-sm font-semibold text-gray-900 mb-3">How many heat pumps do you need?</label>
+        <label className="block text-sm font-semibold text-gray-900 mb-3">{t('form.step3.heatPumps')}</label>
         <div className="grid grid-cols-2 gap-3">
           {pumpOptions.map((option) => (
             <button
@@ -150,25 +152,25 @@ export default function Step3JobDetails({ value, propertyType, serviceType, onCh
         <div className="grid grid-cols-2 gap-2">
           {locationOptions.map((location) => (
             <button
-              key={location}
-              onClick={() => handleLocationToggle(location)}
+              key={location.key}
+              onClick={() => handleLocationToggle(location.key)}
               className={`p-3 rounded-lg border-2 font-medium text-sm transition text-center ${
-                value.location_to_install.includes(location)
+                value.location_to_install.includes(location.key)
                   ? 'border-emerald-600 bg-emerald-50 text-gray-900'
                   : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
               }`}
             >
-              {location}
+              {location.label}
             </button>
           ))}
         </div>
 
         {/* Notes for "Other" locations */}
-        {value.location_to_install.includes('Other (specify in notes)') && (
+        {value.location_to_install.includes('other') && (
           <textarea
             value={value.location_notes}
             onChange={(e) => onChange({ location_notes: e.target.value })}
-            placeholder="Please describe the location where you'd like the heat pump installed..."
+            placeholder={t('form.step3.locations.notes')}
             className="w-full mt-3 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none text-gray-900"
             rows={3}
           />
@@ -177,7 +179,7 @@ export default function Step3JobDetails({ value, propertyType, serviceType, onCh
 
       {/* Existing Unit */}
       <div className="mb-8">
-        <label className="block text-sm font-semibold text-gray-900 mb-3">Do you have an existing heat pump unit?</label>
+        <label className="block text-sm font-semibold text-gray-900 mb-3">{t('form.step3.existingUnit')}</label>
         <div className="space-y-2">
           {existingUnitOptions.map((option) => (
             <button
@@ -198,7 +200,7 @@ export default function Step3JobDetails({ value, propertyType, serviceType, onCh
       {/* Photo Upload */}
       <div className="mb-8">
         <label className="block text-sm font-semibold text-gray-900 mb-3">
-          Upload photos (optional)
+          {t('form.step3.photoUpload')}
           <span className="text-gray-500 font-normal text-xs block mt-1">Max 5 photos, 5MB each. Photos help installers provide better quotes.</span>
         </label>
 
@@ -252,14 +254,14 @@ export default function Step3JobDetails({ value, propertyType, serviceType, onCh
           onClick={onBack}
           className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-900 py-3 rounded-lg font-semibold transition"
         >
-          ← Back
+          {t('form.buttons.back')}
         </button>
         <button
           onClick={onNext}
           disabled={!isComplete}
           className="flex-1 bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white py-3 rounded-lg font-semibold transition"
         >
-          Continue →
+          {t('form.buttons.continue')}
         </button>
       </div>
     </div>

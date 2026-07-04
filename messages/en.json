@@ -127,6 +127,53 @@
       "bedrooms": "Number of Bedrooms",
       "spaceSize": "Approximate Space Size"
     },
+    "step3": {
+      "title": "Tell us about the job",
+      "subtitle": "More details help us find the perfect installer for you.",
+      "heatPumps": "How many heat pumps do you need?",
+      "locations": {
+        "install": "Where would you like them installed? (Select all that apply)",
+        "replace": "Where would you like them replaced? (Select all that apply)",
+        "service": "Where would you like them serviced? (Select all that apply)",
+        "notes": "Please describe the location where you'd like the heat pump installed..."
+      },
+      "pumpOptions": {
+        "one": "1 Heat Pump",
+        "two": "2 Heat Pumps",
+        "three": "3 Heat Pumps",
+        "four": "4+ Heat Pumps"
+      },
+      "residentialLocations": {
+        "lounge": "Lounge",
+        "mainBedroom": "Main Bedroom",
+        "bedroom2": "Bedroom 2",
+        "bedroom3": "Bedroom 3",
+        "kitchen": "Kitchen",
+        "bathroom": "Bathroom",
+        "laundry": "Laundry",
+        "office": "Office"
+      },
+      "commercialLocations": {
+        "reception": "Reception Area",
+        "conference": "Conference Room",
+        "warehouse": "Warehouse/Storage",
+        "showroom": "Showroom",
+        "server": "Server Room",
+        "corridor": "Corridor/Common Area",
+        "kitchen": "Kitchen/Break Room",
+        "other": "Other (specify in notes)"
+      },
+      "existingUnit": "Do you have an existing heat pump unit?",
+      "existingUnitOptions": {
+        "yes": "Yes, I have an existing unit",
+        "no": "No, this is a new installation",
+        "unsure": "Not sure, need advice"
+      },
+      "photoUpload": "Upload photos (up to 5)",
+      "photoError": "Maximum 5 photos allowed",
+      "photoSizeError": "Photo is larger than 5MB",
+      "photoTypeError": "is not an image"
+    },
     "buttons": {
       "back": "← Back",
       "continue": "Continue →"
