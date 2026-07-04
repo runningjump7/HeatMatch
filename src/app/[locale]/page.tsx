@@ -1,12 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
+import Link from 'next/link';
 import QuoteFormStepper from '@/components/QuoteFormStepper';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 export default function Home() {
   const t = useTranslations();
+  const locale = useLocale();
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const [showStepper, setShowStepper] = useState(false);
 
@@ -294,8 +296,9 @@ export default function Home() {
             {/* Row 1 */}
             <div className="flex flex-wrap justify-center gap-4 mb-4">
               {suburbs.slice(0, 5).map((suburb) => (
-                <div
+                <Link
                   key={suburb}
+                  href={`/${locale}/installers/${suburb.toLowerCase().replace(/\s+/g, '-')}`}
                   className="flex items-center gap-2 px-5 py-3 bg-emerald-50 border border-emerald-200 rounded-full text-sm text-emerald-900 font-medium hover:bg-emerald-100 transition"
                 >
                   <svg width="18" height="18" viewBox="0 0 64 64" className="w-4 h-4 flex-shrink-0">
@@ -303,15 +306,16 @@ export default function Home() {
                     <circle cx="32" cy="30" r="4.5" fill="#10B981"/>
                   </svg>
                   {suburb}
-                </div>
+                </Link>
               ))}
             </div>
 
             {/* Row 2 */}
             <div className="flex flex-wrap justify-center gap-4">
               {suburbs.slice(5, 10).map((suburb) => (
-                <div
+                <Link
                   key={suburb}
+                  href={`/${locale}/installers/${suburb.toLowerCase().replace(/\s+/g, '-')}`}
                   className="flex items-center gap-2 px-5 py-3 bg-emerald-50 border border-emerald-200 rounded-full text-sm text-emerald-900 font-medium hover:bg-emerald-100 transition"
                 >
                   <svg width="18" height="18" viewBox="0 0 64 64" className="w-4 h-4 flex-shrink-0">
@@ -319,7 +323,7 @@ export default function Home() {
                     <circle cx="32" cy="30" r="4.5" fill="#10B981"/>
                   </svg>
                   {suburb}
-                </div>
+                </Link>
               ))}
             </div>
           </div>

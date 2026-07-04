@@ -115,5 +115,30 @@
     "contactLabel": "联系",
     "email": "hello@heatmatch.nz",
     "copyright": "© HeatMatch 2026. 版权所有。"
+  },
+  "suburbs": {
+    "pageTitle": "{{suburb}}热泵安装",
+    "pageDescription": "{{suburb}}房屋和商业热泵专业服务",
+    "faqHeading": "{{suburb}}热泵常见问题",
+    "costQuestion": "{{suburb}}热泵安装费用是多少？",
+    "costAnswer": "{{suburb}}热泵安装的平均费用范围为{{cost}}。这取决于您家的大小、现有基础设施和选择的特定系统。我们的安装商提供免费报价，为您提供准确的定价。",
+    "localQuestion": "为什么应该选择本地热泵安装商？",
+    "localAnswer": "本地安装商了解区域气候条件、当地建筑法规，并可以为维护和服务电话提供更快的响应时间。他们熟悉您所在地区的房屋，可以为您的社区推荐最佳系统。",
+    "timelineQuestion": "热泵安装需要多长时间？",
+    "timelineAnswer": "大多数热泵安装需要1-3天，取决于复杂程度。我们的安装商将在初始咨询期间提供时间表。",
+    "climateQuestion": "热泵适合我们的北岸气候吗？",
+    "climateAnswer": "是的！热泵非常适合北岸的温和气候。它们在冬季提供高效的供暖，在夏季提供冷却，全年降低您的能源成本。",
+    "financingQuestion": "您提供融资选项吗？",
+    "financingAnswer": "我们许多合作的安装商提供融资选项。在您的免费咨询期间讨论付款计划。",
+    "whyChooseHeading": "为什么选择 HeatMatch？",
+    "whyChoose1": "从{{suburb}}值得信赖的本地安装商获得免费报价",
+    "whyChoose2": "无继续的义务",
+    "whyChoose3": "24小时内响应",
+    "whyChoose4": "所有安装商都是经过验证的专业人士",
+    "ctaHeading": "准备好进行热泵安装了吗？",
+    "ctaSubheading": "从{{suburb}}值得信赖的本地安装商获得免费报价。无义务，无费用。",
+    "ctaButton": "获取免费报价 →",
+    "backButton": "← 返回主页",
+    "freeQuoteButton": "获取免费报价 →"
   }
 }

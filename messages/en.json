@@ -115,5 +115,30 @@
     "contactLabel": "Contact",
     "email": "hello@heatmatch.nz",
     "copyright": "© HeatMatch 2026. All rights reserved."
+  },
+  "suburbs": {
+    "pageTitle": "Heat Pump Installation in {{suburb}}",
+    "pageDescription": "Professional heat pump services for {{suburb}} homes and businesses",
+    "faqHeading": "Heat Pump FAQs for {{suburb}}",
+    "costQuestion": "How much does heat pump installation cost in {{suburb}}?",
+    "costAnswer": "The average cost for heat pump installation in {{suburb}} ranges from {{cost}}. This depends on the size of your home, existing infrastructure, and the specific system chosen. Our installers provide free quotes to give you accurate pricing.",
+    "localQuestion": "Why should I choose a local heat pump installer?",
+    "localAnswer": "Local installers understand regional climate conditions, local building codes, and can provide faster response times for maintenance and service calls. They're familiar with homes in your area and can recommend the best systems for your neighborhood.",
+    "timelineQuestion": "How long does heat pump installation take?",
+    "timelineAnswer": "Most heat pump installations take 1-3 days depending on complexity. Our installers will provide a timeline during the initial consultation.",
+    "climateQuestion": "Are heat pumps suitable for our North Shore climate?",
+    "climateAnswer": "Yes! Heat pumps are excellent for the North Shore's moderate climate. They provide efficient heating in winter and cooling in summer, reducing your energy costs year-round.",
+    "financingQuestion": "Do you offer financing options?",
+    "financingAnswer": "Many of our partner installers offer financing options. Discuss payment plans during your free consultation.",
+    "whyChooseHeading": "Why Choose HeatMatch?",
+    "whyChoose1": "Free quotes from trusted local installers in {{suburb}}",
+    "whyChoose2": "No obligation to proceed",
+    "whyChoose3": "Response within 24 hours",
+    "whyChoose4": "All installers are verified professionals",
+    "ctaHeading": "Ready for Your Heat Pump Installation?",
+    "ctaSubheading": "Get a free quote from trusted local installers in {{suburb}}. No obligation, no charge.",
+    "ctaButton": "Get Free Quote →",
+    "backButton": "← Back to Home",
+    "freeQuoteButton": "Get Free Quote →"
   }
 }
