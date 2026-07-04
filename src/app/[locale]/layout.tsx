@@ -1,9 +1,6 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { locales } from '@/lib/i18n';
-import enMessages from '../../../messages/en.json';
-import zhCNMessages from '../../../messages/zh-CN.json';
-import zhTWMessages from '../../../messages/zh-TW.json';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,12 +11,6 @@ export function generateStaticParams() {
 type Props = {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
-};
-
-const messages: Record<string, typeof enMessages> = {
-  'en': enMessages,
-  'zh-CN': zhCNMessages,
-  'zh-TW': zhTWMessages,
 };
 
 export async function generateMetadata({ params }: Omit<Props, 'children'>) {
@@ -36,23 +27,38 @@ export async function generateMetadata({ params }: Omit<Props, 'children'>) {
   };
 }
 
+async function loadMessages(locale: string) {
+  try {
+    if (locale === 'zh-CN') {
+      return (await import('../../../messages/zh-CN.json')).default;
+    } else if (locale === 'zh-TW') {
+      return (await import('../../../messages/zh-TW.json')).default;
+    } else {
+      return (await import('../../../messages/en.json')).default;
+    }
+  } catch (error) {
+    console.error(`Failed to load messages for locale: ${locale}`, error);
+    return null;
+  }
+}
+
 export default async function LocaleLayout({
   children,
   params
 }: Props) {
   const { locale } = await params;
 
-  if (!locales.includes(locale as any)) {
+  if (!locale || !locales.includes(locale as any)) {
     notFound();
   }
 
-  const pageMessages = messages[locale];
-  if (!pageMessages) {
+  const messages = await loadMessages(locale);
+  if (!messages) {
     notFound();
   }
 
   return (
-    <NextIntlClientProvider messages={pageMessages} locale={locale}>
+    <NextIntlClientProvider messages={messages} locale={locale}>
       {children}
     </NextIntlClientProvider>
   );
