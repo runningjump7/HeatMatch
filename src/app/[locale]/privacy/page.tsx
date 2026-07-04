@@ -65,7 +65,7 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">10. {{t('pages.privacy.section9')}}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">10. {t('pages.privacy.section9')}</h2>
             <p>{t('pages.privacy.section9Text')}</p>
           </section>
 
