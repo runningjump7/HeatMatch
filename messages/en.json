@@ -238,7 +238,14 @@
     "terms": "Terms",
     "contactLabel": "Contact",
     "email": "hello@heatmatch.nz",
-    "copyright": "© HeatMatch 2026. All rights reserved."
+    "copyright": "© HeatMatch 2026. All rights reserved.",
+    "companyHeading": "Company",
+    "aboutLink": "About",
+    "contactLink": "Contact",
+    "legalHeading": "Legal",
+    "privacyLink": "Privacy Policy",
+    "termsLink": "Terms",
+    "contactHeading": "Contact"
   },
   "suburbs": {
     "pageTitle": "Heat Pump Installation in {{suburb}}",

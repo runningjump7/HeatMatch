@@ -238,7 +238,14 @@
     "terms": "條款",
     "contactLabel": "聯繫",
     "email": "hello@heatmatch.nz",
-    "copyright": "© HeatMatch 2026. 版權所有。"
+    "copyright": "© HeatMatch 2026. 版權所有。",
+    "companyHeading": "公司",
+    "aboutLink": "關於",
+    "contactLink": "聯繫",
+    "legalHeading": "法律",
+    "privacyLink": "隱私政策",
+    "termsLink": "條款",
+    "contactHeading": "聯繫"
   },
   "suburbs": {
     "pageTitle": "{{suburb}}熱泵安裝",
