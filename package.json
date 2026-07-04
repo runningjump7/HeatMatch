@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "test": "node tests/api-integration.test.mjs",
+    "test:smoke": "playwright test",
+    "test:smoke:ui": "playwright test --ui",
     "db:init": "node -r dotenv/config -r ts-node/register scripts/init-db.ts",
     "db:seed": "node -r dotenv/config -r ts-node/register scripts/seed-db.ts",
     "db:users": "node -r dotenv/config -r ts-node/register scripts/create-users-table.ts",

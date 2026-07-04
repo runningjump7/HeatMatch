@@ -1,9 +1,9 @@
 'use client';
 
 import { NextIntlClientProvider } from 'next-intl';
-import enMessages from '../../../messages/en.json';
-import zhCNMessages from '../../../messages/zh-CN.json';
-import zhTWMessages from '../../../messages/zh-TW.json';
+import enMessages from '@/messages/en.json';
+import zhCNMessages from '@/messages/zh-CN.json';
+import zhTWMessages from '@/messages/zh-TW.json';
 
 const messages = {
   en: enMessages,
