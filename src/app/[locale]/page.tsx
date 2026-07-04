@@ -28,26 +28,26 @@ export default function Home() {
   const recentProjects = [
     {
       suburb: 'ALBANY',
-      title: 'New installation',
-      desc: '3-bedroom family home',
+      title: t('recentProjects.project1.title'),
+      desc: t('recentProjects.project1.desc'),
       image: '/images/project-1.jpg',
     },
     {
       suburb: 'TAKAPUNA',
-      title: 'Replacement unit',
-      desc: 'Existing heat pump upgrade',
+      title: t('recentProjects.project2.title'),
+      desc: t('recentProjects.project2.desc'),
       image: '/images/project-2.jpg',
     },
     {
       suburb: 'BROWNS BAY',
-      title: 'Commercial installation',
-      desc: 'Small office fit-out',
+      title: t('recentProjects.project3.title'),
+      desc: t('recentProjects.project3.desc'),
       image: '/images/project-3.jpg',
     },
     {
       suburb: 'MILFORD',
-      title: 'Bedroom installation',
-      desc: 'Single room heat pump',
+      title: t('recentProjects.project4.title'),
+      desc: t('recentProjects.project4.desc'),
       image: '/images/project-4.jpg',
     },
   ];

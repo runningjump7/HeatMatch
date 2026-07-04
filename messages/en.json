@@ -73,7 +73,23 @@
     }
   },
   "recentProjects": {
-    "heading": "Recent Project Requests"
+    "heading": "Recent Project Requests",
+    "project1": {
+      "title": "New installation",
+      "desc": "3-bedroom family home"
+    },
+    "project2": {
+      "title": "Replacement unit",
+      "desc": "Existing heat pump upgrade"
+    },
+    "project3": {
+      "title": "Commercial installation",
+      "desc": "Small office fit-out"
+    },
+    "project4": {
+      "title": "Bedroom installation",
+      "desc": "Single room heat pump"
+    }
   },
   "trust": {
     "heading": "Local Installers You Can Trust",
@@ -83,6 +99,37 @@
       "trustedBusinesses": "Trusted local businesses",
       "fastResponse": "Fast response times",
       "satisfaction": "High customer satisfaction"
+    }
+  },
+  "form": {
+    "propertyTypes": {
+      "home": "House",
+      "apartment": "Apartment/Unit",
+      "office": "Office",
+      "commercial": "Commercial"
+    },
+    "bedrooms": {
+      "one": "1 Bedroom",
+      "two": "2 Bedrooms",
+      "three": "3 Bedrooms",
+      "four": "4+ Bedrooms"
+    },
+    "spaceSize": {
+      "small": "Up to 50 m²",
+      "medium": "50-200 m²",
+      "large": "200-500 m²",
+      "xlarge": "500+ m²"
+    },
+    "step2": {
+      "title": "Tell us about your property",
+      "subtitle": "This helps us match you with the right installer.",
+      "propertyType": "Property Type",
+      "bedrooms": "Number of Bedrooms",
+      "spaceSize": "Approximate Space Size"
+    },
+    "buttons": {
+      "back": "← Back",
+      "continue": "Continue →"
     }
   },
   "faq": {

@@ -73,7 +73,23 @@
     }
   },
   "recentProjects": {
-    "heading": "最近项目请求"
+    "heading": "最近项目请求",
+    "project1": {
+      "title": "新安装",
+      "desc": "3卧室家庭住宅"
+    },
+    "project2": {
+      "title": "更换单元",
+      "desc": "现有热泵升级"
+    },
+    "project3": {
+      "title": "商业安装",
+      "desc": "小型办公室装修"
+    },
+    "project4": {
+      "title": "卧室安装",
+      "desc": "单个房间热泵"
+    }
   },
   "trust": {
     "heading": "您可以信赖的本地安装商",
@@ -83,6 +99,37 @@
       "trustedBusinesses": "值得信赖的本地企业",
       "fastResponse": "快速响应时间",
       "satisfaction": "高客户满意度"
+    }
+  },
+  "form": {
+    "propertyTypes": {
+      "home": "房屋",
+      "apartment": "公寓/单位",
+      "office": "办公室",
+      "commercial": "商业"
+    },
+    "bedrooms": {
+      "one": "1 间卧室",
+      "two": "2 间卧室",
+      "three": "3 间卧室",
+      "four": "4+ 间卧室"
+    },
+    "spaceSize": {
+      "small": "最多 50 m²",
+      "medium": "50-200 m²",
+      "large": "200-500 m²",
+      "xlarge": "500+ m²"
+    },
+    "step2": {
+      "title": "告诉我们您的物业信息",
+      "subtitle": "这帮助我们为您匹配合适的安装商。",
+      "propertyType": "物业类型",
+      "bedrooms": "卧室数量",
+      "spaceSize": "近似空间大小"
+    },
+    "buttons": {
+      "back": "← 返回",
+      "continue": "继续 →"
     }
   },
   "faq": {

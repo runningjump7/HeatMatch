@@ -73,7 +73,23 @@
     }
   },
   "recentProjects": {
-    "heading": "最近項目請求"
+    "heading": "最近項目請求",
+    "project1": {
+      "title": "新安裝",
+      "desc": "3卧室家庭住宅"
+    },
+    "project2": {
+      "title": "更換單元",
+      "desc": "現有熱泵升級"
+    },
+    "project3": {
+      "title": "商業安裝",
+      "desc": "小型辦公室裝修"
+    },
+    "project4": {
+      "title": "卧室安裝",
+      "desc": "單個房間熱泵"
+    }
   },
   "trust": {
     "heading": "您可以信賴的本地安裝商",
@@ -83,6 +99,37 @@
       "trustedBusinesses": "值得信賴的本地企業",
       "fastResponse": "快速回應時間",
       "satisfaction": "高客戶滿意度"
+    }
+  },
+  "form": {
+    "propertyTypes": {
+      "home": "房屋",
+      "apartment": "公寓/單位",
+      "office": "辦公室",
+      "commercial": "商業"
+    },
+    "bedrooms": {
+      "one": "1 間卧室",
+      "two": "2 間卧室",
+      "three": "3 間卧室",
+      "four": "4+ 間卧室"
+    },
+    "spaceSize": {
+      "small": "最多 50 m²",
+      "medium": "50-200 m²",
+      "large": "200-500 m²",
+      "xlarge": "500+ m²"
+    },
+    "step2": {
+      "title": "告訴我們您的物業資訊",
+      "subtitle": "這幫助我們為您配對合適的安裝商。",
+      "propertyType": "物業類型",
+      "bedrooms": "卧室數量",
+      "spaceSize": "近似空間大小"
+    },
+    "buttons": {
+      "back": "← 返回",
+      "continue": "繼續 →"
     }
   },
   "faq": {
