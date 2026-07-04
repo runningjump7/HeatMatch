@@ -1,59 +1,129 @@
 # HeatMatch Progress
 
 ## Current Status
-- **Date:** 2026-07-04 (Session 12 - Form Translation Fixes Complete) 🌍
-- **Phase:** Multi-Language Complete - All UI Fully Localized
+- **Date:** 2026-07-04 (Session 12 Extended - Full Utility Page & Footer Translation Complete) 🌍
+- **Phase:** Multi-Language Complete - All UI 100% Localized + Utility Pages Fully Translated
 - **Overall Completion:** 100% + Phase 1 Testing Framework - LIVE IN PRODUCTION + Fully Localized
 - **Live URL:** https://heatmatch.nz (all 3 languages + 30 suburb pages deployed)
-- **Languages Supported:** English (/en), Simplified Chinese (/zh-CN), Traditional Chinese (/zh-TW) ✅ ALL LOCALIZED
-- **SEO Pages:** 30 total (10 suburbs × 3 languages) all live & indexed
+- **Languages Supported:** English (/en), Simplified Chinese (/zh-CN), Traditional Chinese (/zh-TW) ✅ 100% LOCALIZED
+- **SEO Pages:** 30 total (10 suburbs × 3 languages) + 12 utility pages (about, contact, privacy, terms × 3 languages) all live
 - **Custom Domain:** heatmatch.nz (purchased, DNS configured, Vercel nameservers active)
 - **Email System:** Resend configured with verified domain (noreply@heatmatch.nz), contact form working
 - **GitHub:** https://github.com/runningjump7/HeatMatch (pushed to production)
 - **Testing Framework:** ✅ Phase 1 Smoke Tests Complete (8/8 passing)
-- **Session 12 Completed:**
-  - ✅ Fixed form stepper translations (all steps now respond to language changes)
+- **Session 12 Extended Completed:**
+  - ✅ Fixed form stepper translations (all steps 3, 4, 5 now respond to language changes)
   - ✅ Fixed recent projects section translations
   - ✅ Fixed useTranslations() hook implementation in client components
+  - ✅ Implemented locale-aware routing for utility pages (about, contact, privacy, terms)
+  - ✅ Created root-level redirects to /en/{page} for backward compatibility
+  - ✅ Added full translations for all 4 utility pages (about, contact, privacy, terms)
+  - ✅ All utility page text now translatable across all 3 languages
+  - ✅ Translated section titles ("Introduction", "Cookies") in privacy policy
+  - ✅ Translated footer component across all 3 languages
+  - ✅ Footer links maintain correct locale when switching languages
   - ✅ All 3 languages fully working in dynamic UI (EN, ZH-CN, ZH-TW)
   - ✅ Quote form modal renders in selected language
   - ✅ Recent projects cards display in selected language
-  - ✅ 2 commits pushed to GitHub (form translations + hook fix)
-  - ✅ Smoke tests still passing (8/8)
+  - ✅ 6 commits pushed to GitHub (form translations, utility page routing, footer translation)
+  - ✅ Smoke tests passing (8/8)
 
 ## Objective
 Build HeatMatch: a lead generation platform for heat pump installers. Capture high-quality leads from homeowners, route to verified installers, eventually monetize via subscriptions.
 
-## Session 2026-07-04 Extended (Complete) ✅ - MULTI-LANGUAGE FORM TRANSLATIONS
+## Session 2026-07-04 Extended (Complete) ✅ - FULL MULTI-LANGUAGE TRANSLATION COMPLETION
 
 ### Session Summary
-Fixed critical translation issue where the quote form stepper and recent projects section were hardcoded in English and didn't respond to language changes. User identified: "whys the stepper and the projects section still in english?" - this revealed form UI wasn't using `useTranslations()` hooks correctly.
+Completed full multi-language implementation for ALL remaining UI elements:
+1. Fixed critical translation issue where the quote form stepper (steps 3, 4, 5) and recent projects section were hardcoded in English
+2. Implemented locale-aware routing for utility pages (about, contact, privacy, terms) to support all 3 languages
+3. Added comprehensive translations for all 4 utility pages (about, contact, privacy, terms) across EN, ZH-CN, ZH-TW
+4. Translated footer component so it now displays in the selected language with proper locale-aware links
 
-### Root Cause Analysis
-- Form step components (Step1ServiceType, Step2PropertyInfo) were trying to use scoped namespaces like `useTranslations('hero')` and `useTranslations('form')`
-- Scoped namespaces don't work reliably in client components when wrapped by NextIntlClientProvider
-- Components were falling back to hardcoded English strings
+**User feedback identified three issues:**
+- "so does step 4 and step 5" — confirmed form translation affected multiple steps
+- "about and contact us seem to have the same issue we fixed earlier too regarding the locale perhaps?" — identified utility pages needed locale routing
+- "contact us and about us pages are also still english when user has chinese language on" → "privacy policy, 'introduction' and 'cookies' should this be english?" — identified all utility pages and footer needed translation
+- Footer always showing in English on utility pages — fixed by adding translations to Footer component
+
+### Root Cause Analysis (Issue 1: Form Translations)
+- Form step components (Step3JobDetails, Step4Timeline, Step5ContactInfo) were hardcoded in English strings
+- Steps 1 & 2 had hooks but steps 3-5 did not
+- Components were ignoring the `useTranslations()` hook and rendering hardcoded English text
+
+### Root Cause Analysis (Issue 2: Utility Page Locale Routing)
+- Utility pages (about, contact, privacy, terms) were created at root level: `src/app/about/page.tsx`
+- Root-level pages don't receive the `[locale]` parameter, so they can't access locale information
+- Accessing /zh-CN/about returned 404 because Next.js couldn't find a matching [locale] route
 
 ### Solution Implemented
-Changed all form step components to use unscoped `useTranslations()` with full dot-notation paths:
-- Before: `useTranslations('hero')` → `t('services.newInstall')`
-- After: `useTranslations()` → `t('hero.services.newInstall')`
+
+**Part 1: Form Translations (Steps 3, 4, 5)**
+Changed all form step components to use `useTranslations()` with full dot-notation paths:
+- Before: Hardcoded strings like `"Select a heat pump option"`
+- After: `useTranslations()` → `t('form.step3.pumpOptions.one')`
+
+**Part 2: Utility Page Locale Routing**
+Implemented locale-aware routing by:
+1. Creating locale-aware page files under `src/app/[locale]/` (about, contact, privacy, terms)
+2. Creating redirect pages at root level (`src/app/`) that redirect to `/en/{page}` for backward compatibility
+3. This pattern allows all 3 languages to access each utility page naturally
 
 ### Files Modified
-1. **src/components/form-steps/Step1ServiceType.tsx**
-   - Changed to unscoped useTranslations()
-   - Updated all translation paths to use full dot notation (hero.services.*, hero.formTitle, hero.continueButton)
 
-2. **src/components/form-steps/Step2PropertyInfo.tsx**
+**Form Translation Fixes:**
+1. **src/components/form-steps/Step3JobDetails.tsx**
+   - Added `import { useTranslations } from 'next-intl'`
    - Changed to unscoped useTranslations()
-   - Updated all translation paths (form.propertyTypes.*, form.bedrooms.*, form.spaceSize.*, form.step2.*, form.buttons.*)
+   - Updated all location options, pump options, existing unit options to use t() with full paths
+   - Updated buttons to use t('form.buttons.back') and t('form.buttons.continue')
+
+2. **src/components/form-steps/Step4Timeline.tsx**
+   - Added `import { useTranslations } from 'next-intl'`
+   - Changed to unscoped useTranslations()
+   - Updated all timeline options to use t('form.step4.options.asap'), t('form.step4.options.twoWeeks'), etc.
+
+3. **src/components/form-steps/Step5ContactInfo.tsx**
+   - Added `import { useTranslations } from 'next-intl'`
+   - Changed all form labels, suburb options, and consent text to use translations
+   - Split consent text into consent1, consent2Prefix, consent2Suffix for proper link insertion
+
+**Utility Page Locale Routing:**
+1. **src/app/about/page.tsx** (MODIFIED)
+   - Changed from full page content to redirect: `redirect('/en/about')`
+
+2. **src/app/contact/page.tsx** (MODIFIED)
+   - Changed from full page content to redirect: `redirect('/en/contact')`
+
+3. **src/app/privacy/page.tsx** (MODIFIED)
+   - Changed from full page content to redirect: `redirect('/en/privacy')`
+
+4. **src/app/terms/page.tsx** (MODIFIED)
+   - Changed from full page content to redirect: `redirect('/en/terms')`
+
+5. **src/app/[locale]/about/page.tsx** (CREATED)
+   - Full about page content with HeatMatch mission, value propositions, service overview
+
+6. **src/app/[locale]/contact/page.tsx** (CREATED)
+   - Full contact page with contact info, contact form, service area details
+
+7. **src/app/[locale]/privacy/page.tsx** (CREATED)
+   - Privacy policy content with 11 sections (introduction, data collection, usage, sharing, security, rights, cookies, links, children, changes, contact)
+
+8. **src/app/[locale]/terms/page.tsx** (CREATED)
+   - Terms and conditions with 13 sections (acceptance, use license, disclaimer, limitations, accuracy, links, modifications, governing law, user responsibilities, installer independence, limitation of liability, termination, contact)
 
 ### What's Now Working
-✅ Quote form stepper (all steps) displays in all 3 languages dynamically
+✅ Quote form stepper (all steps 1-5) displays in all 3 languages dynamically
 ✅ Recent projects section displays in all 3 languages dynamically
-✅ Language switcher now fully works - clicking flags instantly updates form text
+✅ All 4 utility pages (about, contact, privacy, terms) fully translatable
+✅ Privacy policy section titles now translated ("Introduction", "Cookies", etc.)
+✅ Footer component fully translated with locale-aware links
+✅ Language switcher now fully works - clicking flags instantly updates ALL text
 ✅ All form steps (1-5) respond to language changes
-✅ All 3 languages fully localized (EN, ZH-CN, ZH-TW)
+✅ All utility pages respond to language changes
+✅ All footer links maintain correct locale when switching languages
+✅ All 3 languages fully localized across entire platform (EN, ZH-CN, ZH-TW)
 
 ### Test Results
 - Smoke tests: 8/8 passing (no regressions)
@@ -63,6 +133,11 @@ Changed all form step components to use unscoped `useTranslations()` with full d
 ### Commits
 1. `493110b` - Fix form and recent projects translations across all 3 languages
 2. `1eadb27` - Fix form step translations: use unscoped useTranslations() with full paths
+3. `eb387aa` - Implement locale-aware routing for utility pages (about, contact, privacy, terms)
+4. `5810146` - Add full translations for utility pages (about, contact, privacy, terms)
+5. `ec50f1e` - Fix syntax error in privacy page (double braces)
+6. `e7c4d20` - Translate 'Introduction' and 'Cookies' section titles in privacy policy
+7. `90e4f4f` - Translate footer component across all 3 languages
 
 ---
 
