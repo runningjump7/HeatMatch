@@ -1,0 +1,119 @@
+{
+  "nav": {
+    "howItWorks": "How It Works",
+    "coverage": "Areas We Service",
+    "faq": "FAQ",
+    "getQuote": "Get Quote"
+  },
+  "hero": {
+    "badge": "North Shore Specialists",
+    "heading": "Get Matched With Trusted Local Installers Without Calling Around",
+    "subheading": "Tell us about your project and we'll connect you with trusted local heat pump installers serving Auckland's North Shore.",
+    "trustIndicators": {
+      "freeService": "Free service",
+      "noObligation": "No obligation quotes",
+      "trustedInstallers": "Trusted local installers",
+      "northShoreSpecialists": "North Shore specialists"
+    },
+    "formTitle": "What do you need help with?",
+    "continueButton": "Select an option to continue",
+    "averageResponse": "⏱️ Average response time: Under 24 hours",
+    "services": {
+      "newInstall": "New Heat Pump Installation",
+      "replace": "Replace Existing Heat Pump",
+      "service": "Heat Pump Service",
+      "advice": "Not Sure / Need Advice"
+    }
+  },
+  "howItWorks": {
+    "badge": "How HeatMatch Works",
+    "heading": "Finding a heat pump installer doesn't need to be complicated.",
+    "subheading": "From request to installer in three simple steps.",
+    "step1Title": "Tell Us About Your Project",
+    "step1Desc": "Answer a few quick questions about your home and requirements.",
+    "step2Title": "We Match You With The Right Installer",
+    "step2Desc": "We review your project and connect you with trusted local professionals.",
+    "step3Title": "Get Your Quote",
+    "step3Desc": "Your installer gets in touch to discuss your project and next steps."
+  },
+  "whyHeatMatch": {
+    "heading": "Why Homeowners Use HeatMatch",
+    "stopCalling": {
+      "title": "Stop Calling Around",
+      "desc": "Tell us about your project once and we'll do the rest."
+    },
+    "trustedInstallers": {
+      "title": "Trusted Local Installers",
+      "desc": "We work with reputable North Shore businesses experienced in heat pump installation."
+    },
+    "freeToUse": {
+      "title": "Free To Use",
+      "desc": "Our service is completely free for homeowners."
+    },
+    "noObligation": {
+      "title": "No Obligation",
+      "desc": "Get connected with installers at no cost and decide if you'd like to proceed."
+    },
+    "northShoreExperts": {
+      "title": "North Shore Experts",
+      "desc": "We only work with installers who service Auckland's North Shore."
+    },
+    "multipleOptions": {
+      "title": "Multiple Options",
+      "desc": "Receive multiple quotes to compare and choose from."
+    }
+  },
+  "coverage": {
+    "badge": "Local Installers, Local Knowledge",
+    "heading": "Local Installers Across Auckland's North Shore",
+    "subheading": "We connect homeowners with trusted installers who service their local area.",
+    "expansion": {
+      "title": "Expanding Across Auckland Soon",
+      "desc": "We're growing our network to help more homeowners across Auckland find the right heat pump installer."
+    }
+  },
+  "recentProjects": {
+    "heading": "Recent Project Requests"
+  },
+  "trust": {
+    "heading": "Local Installers You Can Trust",
+    "description": "HeatMatch works with experienced installers serving Auckland's North Shore. Every enquiry is reviewed before being passed on, helping ensure businesses receive high-quality opportunities and homeowners receive the right support.",
+    "badges": {
+      "qualityChecked": "Quality checked leads",
+      "trustedBusinesses": "Trusted local businesses",
+      "fastResponse": "Fast response times",
+      "satisfaction": "High customer satisfaction"
+    }
+  },
+  "faq": {
+    "heading": "Frequently Asked Questions",
+    "q1": "Do I pay anything?",
+    "a1": "No. HeatMatch is completely free for homeowners.",
+    "q2": "How many installers will contact me?",
+    "a2": "Typically between one and three depending on your project and location.",
+    "q3": "Can I upload photos?",
+    "a3": "Yes. Photos help installers understand your project and provide better advice.",
+    "q4": "How quickly will I hear back?",
+    "a4": "Most enquiries receive a response within 24 hours.",
+    "q5": "Do I need to create an account?",
+    "a5": "No. Simply submit your project details and we'll handle the rest."
+  },
+  "cta": {
+    "heading": "Ready To Find A Heat Pump Installer?",
+    "subheading": "Tell us about your project and get connected with a trusted local installer today.",
+    "button": "Get My Free Quote →",
+    "benefits": "✓ Free • No obligation • North Shore specialists"
+  },
+  "footer": {
+    "tagline": "Connecting North Shore homeowners with trusted heat pump installers.",
+    "company": "Company",
+    "about": "About",
+    "contact": "Contact",
+    "legal": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms",
+    "contactLabel": "Contact",
+    "email": "hello@heatmatch.nz",
+    "copyright": "© HeatMatch 2026. All rights reserved."
+  }
+}

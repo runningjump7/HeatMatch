@@ -1,0 +1,119 @@
+{
+  "nav": {
+    "howItWorks": "工作流程",
+    "coverage": "服务区域",
+    "faq": "常见问题",
+    "getQuote": "获取报价"
+  },
+  "hero": {
+    "badge": "北岸专家",
+    "heading": "与可信的本地安装商匹配 无需四处奔波",
+    "subheading": "告诉我们您的项目，我们将为您与服务于奥克兰北岸的可信本地热泵安装商联系。",
+    "trustIndicators": {
+      "freeService": "完全免费",
+      "noObligation": "无义务报价",
+      "trustedInstallers": "值得信赖的本地安装商",
+      "northShoreSpecialists": "北岸专家"
+    },
+    "formTitle": "您需要什么帮助？",
+    "continueButton": "选择选项继续",
+    "averageResponse": "⏱️ 平均响应时间：24小时内",
+    "services": {
+      "newInstall": "新热泵安装",
+      "replace": "更换现有热泵",
+      "service": "热泵维修服务",
+      "advice": "不确定 / 需要建议"
+    }
+  },
+  "howItWorks": {
+    "badge": "HeatMatch 工作原理",
+    "heading": "寻找热泵安装商不必那么复杂。",
+    "subheading": "从请求到安装商只需三个简单步骤。",
+    "step1Title": "告诉我们您的项目",
+    "step1Desc": "回答几个关于您的家和需求的快速问题。",
+    "step2Title": "我们为您匹配合适的安装商",
+    "step2Desc": "我们审核您的项目并将您与值得信赖的本地专业人士联系。",
+    "step3Title": "获取您的报价",
+    "step3Desc": "您的安装商会与您联系以讨论您的项目和后续步骤。"
+  },
+  "whyHeatMatch": {
+    "heading": "为什么房主选择 HeatMatch",
+    "stopCalling": {
+      "title": "停止四处打电话",
+      "desc": "告诉我们一次您的项目，我们会处理其余的。"
+    },
+    "trustedInstallers": {
+      "title": "值得信赖的本地安装商",
+      "desc": "我们与有丰富热泵安装经验的有信誉的北岸企业合作。"
+    },
+    "freeToUse": {
+      "title": "免费使用",
+      "desc": "我们的服务对房主完全免费。"
+    },
+    "noObligation": {
+      "title": "无义务",
+      "desc": "免费与安装商联系，决定是否继续。"
+    },
+    "northShoreExperts": {
+      "title": "北岸专家",
+      "desc": "我们仅与服务奥克兰北岸的安装商合作。"
+    },
+    "multipleOptions": {
+      "title": "多个选项",
+      "desc": "获得多个报价以供比较和选择。"
+    }
+  },
+  "coverage": {
+    "badge": "本地安装商，本地知识",
+    "heading": "奥克兰北岸的本地安装商",
+    "subheading": "我们将房主与服务当地地区的值得信赖的安装商联系。",
+    "expansion": {
+      "title": "即将扩展至整个奥克兰",
+      "desc": "我们正在扩大网络，帮助更多奥克兰房主找到合适的热泵安装商。"
+    }
+  },
+  "recentProjects": {
+    "heading": "最近项目请求"
+  },
+  "trust": {
+    "heading": "您可以信赖的本地安装商",
+    "description": "HeatMatch 与服务奥克兰北岸的经验丰富的安装商合作。每个查询都会在转交之前进行审核，帮助确保企业获得高质量的机会，房主获得适当的支持。",
+    "badges": {
+      "qualityChecked": "质量检查的线索",
+      "trustedBusinesses": "值得信赖的本地企业",
+      "fastResponse": "快速响应时间",
+      "satisfaction": "高客户满意度"
+    }
+  },
+  "faq": {
+    "heading": "常见问题",
+    "q1": "我需要付款吗？",
+    "a1": "不需要。HeatMatch 对房主完全免费。",
+    "q2": "多少个安装商会联系我？",
+    "a2": "通常取决于您的项目和位置，有一到三个。",
+    "q3": "我可以上传照片吗？",
+    "a3": "可以。照片帮助安装商理解您的项目并提供更好的建议。",
+    "q4": "我多快会收到回复？",
+    "a4": "大多数查询在24小时内收到响应。",
+    "q5": "我需要创建账户吗？",
+    "a5": "不需要。只需提交您的项目详情，我们会处理其余的。"
+  },
+  "cta": {
+    "heading": "准备好找热泵安装商了吗？",
+    "subheading": "告诉我们您的项目，今天就与值得信赖的本地安装商联系。",
+    "button": "获取我的免费报价 →",
+    "benefits": "✓ 免费 • 无义务 • 北岸专家"
+  },
+  "footer": {
+    "tagline": "将奥克兰北岸房主与值得信赖的热泵安装商联系。",
+    "company": "公司",
+    "about": "关于",
+    "contact": "联系",
+    "legal": "法律",
+    "privacy": "隐私政策",
+    "terms": "条款",
+    "contactLabel": "联系",
+    "email": "hello@heatmatch.nz",
+    "copyright": "© HeatMatch 2026. 版权所有。"
+  }
+}
