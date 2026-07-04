@@ -194,6 +194,7 @@
       "fullName": "全名",
       "fullNamePlaceholder": "李明",
       "phone": "电话号码",
+      "phonePlaceholder": "09 123 4567",
       "email": "电子邮件地址",
       "emailPlaceholder": "liming@example.com",
       "suburb": "郊区/地区",
@@ -209,6 +210,11 @@
     "buttons": {
       "back": "← 返回",
       "continue": "继续 →"
+    },
+    "errors": {
+      "uploadPhoto": "照片上传失败",
+      "submitForm": "表单提交失败",
+      "generic": "发生错误"
     },
     "confirmation": {
       "title": "报价请求已提交！",
@@ -261,6 +267,15 @@
     "privacyLink": "隐私政策",
     "termsLink": "条款",
     "contactHeading": "联系"
+  },
+  "contactForm": {
+    "namePlaceholder": "您的名字",
+    "emailPlaceholder": "your@email.com",
+    "phonePlaceholder": "09 123 4567",
+    "subjectPlaceholder": "这是关于什么？",
+    "messagePlaceholder": "告诉我们您需要什么...",
+    "successMessage": "感谢您的消息。我们很快会回复您！",
+    "errorMessage": "发送消息时出错。请重试。"
   },
   "suburbs": {
     "pageTitle": "{{suburb}}热泵安装",

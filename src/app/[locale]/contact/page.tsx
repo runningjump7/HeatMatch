@@ -41,7 +41,7 @@ export default function ContactPage() {
       if (res.ok) {
         setSubmitStatus({
           type: 'success',
-          message: 'Thank you for your message. We\'ll get back to you soon!',
+          message: t('contactForm.successMessage'),
         });
         setForm({
           name: '',
@@ -55,13 +55,13 @@ export default function ContactPage() {
       } else {
         setSubmitStatus({
           type: 'error',
-          message: 'There was an error sending your message. Please try again.',
+          message: t('contactForm.errorMessage'),
         });
       }
     } catch (error) {
       setSubmitStatus({
         type: 'error',
-        message: 'There was an error sending your message. Please try again.',
+        message: t('contactForm.errorMessage'),
       });
     } finally {
       setIsSubmitting(false);
@@ -170,7 +170,7 @@ export default function ContactPage() {
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none text-gray-900"
-                placeholder="Your name"
+                placeholder={t('contactForm.namePlaceholder')}
               />
             </div>
 
@@ -184,7 +184,7 @@ export default function ContactPage() {
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none text-gray-900"
-                placeholder="your@email.com"
+                placeholder={t('contactForm.emailPlaceholder')}
               />
             </div>
 
@@ -197,7 +197,7 @@ export default function ContactPage() {
                 value={form.phone}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none text-gray-900"
-                placeholder="09 123 4567"
+                placeholder={t('contactForm.phonePlaceholder')}
               />
             </div>
 
@@ -228,7 +228,7 @@ export default function ContactPage() {
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none text-gray-900"
-                placeholder="What is this about?"
+                placeholder={t('contactForm.subjectPlaceholder')}
               />
             </div>
 
@@ -242,7 +242,7 @@ export default function ContactPage() {
                 required
                 rows={5}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none text-gray-900 resize-none"
-                placeholder="Tell us what you need..."
+                placeholder={t('contactForm.messagePlaceholder')}
               />
             </div>
 

@@ -194,6 +194,7 @@
       "fullName": "全名",
       "fullNamePlaceholder": "王小明",
       "phone": "電話號碼",
+      "phonePlaceholder": "09 123 4567",
       "email": "電子郵件地址",
       "emailPlaceholder": "wang@example.com",
       "suburb": "郊區/地區",
@@ -209,6 +210,11 @@
     "buttons": {
       "back": "← 返回",
       "continue": "繼續 →"
+    },
+    "errors": {
+      "uploadPhoto": "照片上傳失敗",
+      "submitForm": "表單提交失敗",
+      "generic": "發生錯誤"
     },
     "confirmation": {
       "title": "報價請求已提交！",
@@ -261,6 +267,15 @@
     "privacyLink": "隱私政策",
     "termsLink": "條款",
     "contactHeading": "聯繫"
+  },
+  "contactForm": {
+    "namePlaceholder": "您的名字",
+    "emailPlaceholder": "your@email.com",
+    "phonePlaceholder": "09 123 4567",
+    "subjectPlaceholder": "這是關於什麼？",
+    "messagePlaceholder": "告訴我們您需要什麼...",
+    "successMessage": "感謝您的消息。我們很快會回復您！",
+    "errorMessage": "發送消息時出錯。請重試。"
   },
   "suburbs": {
     "pageTitle": "{{suburb}}熱泵安裝",

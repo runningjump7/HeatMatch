@@ -194,6 +194,7 @@
       "fullName": "Full Name",
       "fullNamePlaceholder": "John Smith",
       "phone": "Phone Number",
+      "phonePlaceholder": "09 123 4567",
       "email": "Email Address",
       "emailPlaceholder": "john@example.com",
       "suburb": "Suburb / Area",
@@ -209,6 +210,11 @@
     "buttons": {
       "back": "← Back",
       "continue": "Continue →"
+    },
+    "errors": {
+      "uploadPhoto": "Failed to upload photo",
+      "submitForm": "Failed to submit form",
+      "generic": "An error occurred"
     },
     "confirmation": {
       "title": "Quote Request Submitted!",
@@ -286,6 +292,15 @@
     "ctaButton": "Get Free Quote →",
     "backButton": "← Back to Home",
     "freeQuoteButton": "Get Free Quote →"
+  },
+  "contactForm": {
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "your@email.com",
+    "phonePlaceholder": "09 123 4567",
+    "subjectPlaceholder": "What is this about?",
+    "messagePlaceholder": "Tell us what you need...",
+    "successMessage": "Thank you for your message. We'll get back to you soon!",
+    "errorMessage": "There was an error sending your message. Please try again."
   },
   "pages": {
     "about": {

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import Step1ServiceType from './form-steps/Step1ServiceType';
 import Step2PropertyInfo from './form-steps/Step2PropertyInfo';
 import Step3JobDetails from './form-steps/Step3JobDetails';
@@ -42,6 +43,7 @@ interface QuoteFormStepperProps {
 }
 
 export default function QuoteFormStepper({ isOpen, onClose, initialServiceType }: QuoteFormStepperProps) {
+  const t = useTranslations();
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
@@ -118,7 +120,7 @@ export default function QuoteFormStepper({ isOpen, onClose, initialServiceType }
           if (!uploadRes.ok) {
             const errorData = await uploadRes.json();
             console.error('Photo upload error:', errorData);
-            throw new Error(errorData.details || 'Failed to upload photo');
+            throw new Error(errorData.details || t('form.errors.uploadPhoto'));
           }
 
           const uploadedData = await uploadRes.json();
@@ -156,14 +158,14 @@ export default function QuoteFormStepper({ isOpen, onClose, initialServiceType }
 
       if (!res.ok) {
         const error = await res.json();
-        throw new Error(error.message || 'Failed to submit form');
+        throw new Error(error.message || t('form.errors.submitForm'));
       }
 
       const data = await res.json();
       setSubmittedLeadId(data.leadId);
       setCurrentStep(6); // Confirmation screen
     } catch (error) {
-      setSubmissionError(error instanceof Error ? error.message : 'An error occurred');
+      setSubmissionError(error instanceof Error ? error.message : t('form.errors.generic'));
     } finally {
       setIsSubmitting(false);
     }
