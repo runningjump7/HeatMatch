@@ -174,6 +174,36 @@
       "photoSizeError": "Photo is larger than 5MB",
       "photoTypeError": "is not an image"
     },
+    "step4": {
+      "title": "What's your timeline?",
+      "subtitle": "This helps us prioritize and find installers who match your needs.",
+      "options": {
+        "asap": "ASAP",
+        "asapDesc": "I need it done urgently (within 1 week)",
+        "twoWeeks": "Within 2 weeks",
+        "twoWeeksDesc": "I have a specific deadline coming up",
+        "oneMonth": "Within 1 month",
+        "oneMonthDesc": "I have some flexibility but want to get it done soon",
+        "researching": "Still researching",
+        "researchingDesc": "I'm exploring options and timelines are flexible"
+      }
+    },
+    "step5": {
+      "title": "Your contact information",
+      "subtitle": "Installers will use this to reach you about your project.",
+      "fullName": "Full Name",
+      "phone": "Phone Number",
+      "email": "Email Address",
+      "suburb": "Suburb / Area",
+      "suburbOther": "Other (please specify)",
+      "suburbPlaceholder": "e.g., Wellington, Auckland CBD",
+      "confirmTitle": "Please confirm:",
+      "consent1": "I consent to HeatMatch storing my contact information and sharing it with heat pump installers to provide quotes. I understand HeatMatch is free for homeowners and my data will be handled in accordance with the",
+      "consent2Prefix": "I agree to the",
+      "consent2Suffix": "and understand that installers may contact me via phone, email, or SMS.",
+      "privacyPolicy": "Privacy Policy",
+      "termsAndConditions": "Terms and Conditions"
+    },
     "buttons": {
       "back": "← Back",
       "continue": "Continue →"

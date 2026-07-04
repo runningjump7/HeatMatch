@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 interface ContactInfoValue {
   homeowner_name: string;
@@ -27,6 +28,7 @@ export default function Step5ContactInfo({
   isSubmitting,
   error,
 }: Step5ContactInfoProps) {
+  const t = useTranslations();
   const [customSuburb, setCustomSuburb] = useState<string>('');
   const [isOtherSelected, setIsOtherSelected] = useState<boolean>(value.suburb === 'Other' || !['Albany', 'Takapuna', 'Milford', 'Browns Bay', 'Glenfield', 'Birkenhead', 'Devonport', 'Mairangi Bay', 'Northcote', 'Long Bay'].includes(value.suburb));
 
@@ -72,12 +74,12 @@ export default function Step5ContactInfo({
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900 mb-2">Your contact information</h2>
-      <p className="text-gray-600 mb-6">Installers will use this to reach you about your project.</p>
+      <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('form.step5.title')}</h2>
+      <p className="text-gray-600 mb-6">{t('form.step5.subtitle')}</p>
 
       {/* Name */}
       <div className="mb-4">
-        <label className="block text-sm font-semibold text-gray-900 mb-2">Full Name</label>
+        <label className="block text-sm font-semibold text-gray-900 mb-2">{t('form.step5.fullName')}</label>
         <input
           type="text"
           value={value.homeowner_name}
@@ -89,7 +91,7 @@ export default function Step5ContactInfo({
 
       {/* Phone */}
       <div className="mb-4">
-        <label className="block text-sm font-semibold text-gray-900 mb-2">Phone Number</label>
+        <label className="block text-sm font-semibold text-gray-900 mb-2">{t('form.step5.phone')}</label>
         <input
           type="tel"
           value={value.phone}
@@ -102,7 +104,7 @@ export default function Step5ContactInfo({
 
       {/* Email */}
       <div className="mb-4">
-        <label className="block text-sm font-semibold text-gray-900 mb-2">Email Address</label>
+        <label className="block text-sm font-semibold text-gray-900 mb-2">{t('form.step5.email')}</label>
         <input
           type="email"
           value={value.email}
@@ -114,7 +116,7 @@ export default function Step5ContactInfo({
 
       {/* Suburb */}
       <div className="mb-6">
-        <label className="block text-sm font-semibold text-gray-900 mb-2">Suburb / Area</label>
+        <label className="block text-sm font-semibold text-gray-900 mb-2">{t('form.step5.suburb')}</label>
         <select
           value={isOther ? 'Other' : value.suburb}
           onChange={(e) => handleSuburbChange(e.target.value)}
@@ -126,7 +128,7 @@ export default function Step5ContactInfo({
               {suburb}
             </option>
           ))}
-          <option value="Other">Other (please specify)</option>
+          <option value="Other">{t('form.step5.suburbOther')}</option>
         </select>
 
         {/* Custom suburb input for "Other" */}
@@ -137,14 +139,14 @@ export default function Step5ContactInfo({
             onChange={(e) => handleCustomSuburbChange(e.target.value)}
             autoFocus
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none text-gray-900 mt-3"
-            placeholder="e.g., Wellington, Auckland CBD"
+            placeholder={t('form.step5.suburbPlaceholder')}
           />
         )}
       </div>
 
       {/* Consent Checkboxes */}
       <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-        <h3 className="font-semibold text-gray-900 mb-3">Please confirm:</h3>
+        <h3 className="font-semibold text-gray-900 mb-3">{t('form.step5.confirmTitle')}</h3>
 
         <label className="flex items-start gap-3 cursor-pointer mb-4">
           <input
@@ -154,7 +156,7 @@ export default function Step5ContactInfo({
             className="mt-1 w-5 h-5 border border-gray-300 rounded accent-emerald-600 flex-shrink-0"
           />
           <span className="text-sm text-gray-700">
-            I consent to HeatMatch storing my contact information and sharing it with heat pump installers to provide quotes. I understand HeatMatch is free for homeowners and my data will be handled in accordance with the <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 font-semibold">Privacy Policy</a>.
+            {t('form.step5.consent1')} <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 font-semibold">{t('form.step5.privacyPolicy')}</a>.
           </span>
         </label>
 
@@ -166,7 +168,7 @@ export default function Step5ContactInfo({
             className="mt-1 w-5 h-5 border border-gray-300 rounded accent-emerald-600 flex-shrink-0"
           />
           <span className="text-sm text-gray-700">
-            I agree to the <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 font-semibold">Terms and Conditions</a> and understand that installers may contact me via phone, email, or SMS.
+            {t('form.step5.consent2Prefix')} <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 font-semibold">{t('form.step5.termsAndConditions')}</a> {t('form.step5.consent2Suffix')}
           </span>
         </label>
       </div>
@@ -185,7 +187,7 @@ export default function Step5ContactInfo({
           disabled={isSubmitting}
           className="flex-1 bg-gray-200 hover:bg-gray-300 disabled:bg-gray-300 text-gray-900 py-3 rounded-lg font-semibold transition"
         >
-          ← Back
+          {t('form.buttons.back')}
         </button>
         <button
           onClick={onSubmit}
@@ -197,7 +199,7 @@ export default function Step5ContactInfo({
               <svg className="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 2v20m10-10H2" />
               </svg>
-              Submitting...
+              {t('form.step5.submitting') || 'Submitting...'}
             </>
           ) : (
             <>Get Your Quote →</>

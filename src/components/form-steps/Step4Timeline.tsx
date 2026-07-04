@@ -1,5 +1,7 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+
 interface Step4TimelineProps {
   value: 'asap' | 'two_weeks' | 'one_month' | 'researching' | null;
   onChange: (value: 'asap' | 'two_weeks' | 'one_month' | 'researching') => void;
@@ -8,6 +10,8 @@ interface Step4TimelineProps {
 }
 
 export default function Step4Timeline({ value, onChange, onNext, onBack }: Step4TimelineProps) {
+  const t = useTranslations();
+
   const timelineOptions: Array<{
     id: 'asap' | 'two_weeks' | 'one_month' | 'researching';
     label: string;
@@ -15,30 +19,30 @@ export default function Step4Timeline({ value, onChange, onNext, onBack }: Step4
   }> = [
     {
       id: 'asap',
-      label: 'ASAP',
-      desc: 'I need it done urgently (within 1 week)',
+      label: t('form.step4.options.asap'),
+      desc: t('form.step4.options.asapDesc'),
     },
     {
       id: 'two_weeks',
-      label: 'Within 2 weeks',
-      desc: 'I have a specific deadline coming up',
+      label: t('form.step4.options.twoWeeks'),
+      desc: t('form.step4.options.twoWeeksDesc'),
     },
     {
       id: 'one_month',
-      label: 'Within 1 month',
-      desc: 'I have some flexibility but want to get it done soon',
+      label: t('form.step4.options.oneMonth'),
+      desc: t('form.step4.options.oneMonthDesc'),
     },
     {
       id: 'researching',
-      label: 'Still researching',
-      desc: 'I\'m exploring options and timelines are flexible',
+      label: t('form.step4.options.researching'),
+      desc: t('form.step4.options.researchingDesc'),
     },
   ];
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900 mb-2">What's your timeline?</h2>
-      <p className="text-gray-600 mb-6">This helps us prioritize and find installers who match your needs.</p>
+      <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('form.step4.title')}</h2>
+      <p className="text-gray-600 mb-6">{t('form.step4.subtitle')}</p>
 
       <div className="space-y-3 mb-8">
         {timelineOptions.map((option) => (
@@ -67,14 +71,14 @@ export default function Step4Timeline({ value, onChange, onNext, onBack }: Step4
           onClick={onBack}
           className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-900 py-3 rounded-lg font-semibold transition"
         >
-          ← Back
+          {t('form.buttons.back')}
         </button>
         <button
           onClick={onNext}
           disabled={!value}
           className="flex-1 bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white py-3 rounded-lg font-semibold transition"
         >
-          Continue →
+          {t('form.buttons.continue')}
         </button>
       </div>
     </div>

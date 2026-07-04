@@ -174,6 +174,36 @@
       "photoSizeError": "照片大于 5MB",
       "photoTypeError": "不是图片"
     },
+    "step4": {
+      "title": "您的时间表是什么？",
+      "subtitle": "这有助于我们优先处理并找到符合您需求的安装商。",
+      "options": {
+        "asap": "立即",
+        "asapDesc": "我需要在紧急时间内完成（1 周内）",
+        "twoWeeks": "2 周内",
+        "twoWeeksDesc": "我有即将到来的具体截止日期",
+        "oneMonth": "1 个月内",
+        "oneMonthDesc": "我有一些灵活性但想尽快完成",
+        "researching": "仍在研究中",
+        "researchingDesc": "我在探索选项，时间表很灵活"
+      }
+    },
+    "step5": {
+      "title": "您的联系信息",
+      "subtitle": "安装商将使用此信息联系您关于您的项目。",
+      "fullName": "全名",
+      "phone": "电话号码",
+      "email": "电子邮件地址",
+      "suburb": "郊区/地区",
+      "suburbOther": "其他（请说明）",
+      "suburbPlaceholder": "例如：惠灵顿、奥克兰 CBD",
+      "confirmTitle": "请确认：",
+      "consent1": "我同意 HeatMatch 存储我的联系信息并与热泵安装商分享以提供报价。我了解 HeatMatch 对房主免费，我的数据将根据",
+      "consent2Prefix": "我同意",
+      "consent2Suffix": "并理解安装商可能通过电话、电子邮件或短信与我联系。",
+      "privacyPolicy": "隐私政策",
+      "termsAndConditions": "条款和条件"
+    },
     "buttons": {
       "back": "← 返回",
       "continue": "继续 →"
