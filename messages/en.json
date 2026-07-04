@@ -264,5 +264,115 @@
     "ctaButton": "Get Free Quote →",
     "backButton": "← Back to Home",
     "freeQuoteButton": "Get Free Quote →"
+  },
+  "pages": {
+    "about": {
+      "heading": "About HeatMatch",
+      "subheading": "Making heat pump installation simple and transparent",
+      "mission": {
+        "title": "Our Mission",
+        "text": "HeatMatch connects homeowners and businesses across Auckland's North Shore with trusted, local heat pump installers. We simplify the process of finding the right professional for your heating and cooling needs, whether you're installing a new system, replacing an existing unit, or scheduling routine maintenance."
+      },
+      "whyChoose": {
+        "title": "Why Choose HeatMatch?",
+        "localExpertise": "Local Expertise: All our installers service Auckland's North Shore and know the region inside out.",
+        "freeService": "Free Service: Getting matched with installers is completely free for homeowners.",
+        "noObligation": "No Obligation: Receive quotes and compare options before making any commitments.",
+        "trustedPartners": "Trusted Partners: All installers are vetted professionals committed to quality service."
+      },
+      "service": {
+        "title": "Our Service",
+        "text1": "Whether you need a new heat pump installation, are replacing an existing system, require maintenance and servicing, or simply need professional advice, HeatMatch connects you with qualified installers ready to help.",
+        "text2": "Tell us about your project, and we'll match you with installers in your area. You'll receive quotes and can choose the installer that's right for you."
+      }
+    },
+    "contact": {
+      "heading": "Contact Us",
+      "subheading": "Get in touch with the HeatMatch team",
+      "getInTouch": "Get in Touch",
+      "phone": "Phone",
+      "email": "Email",
+      "serviceArea": "Service Area",
+      "serviceAreaText": "Auckland's North Shore, including suburbs from Albany to Long Bay",
+      "howWeCanHelp": "How We Can Help",
+      "forHomeowners": {
+        "title": "For Homeowners",
+        "text": "Have questions about your project? Need help with your quote request? Contact us and we'll get back to you quickly."
+      },
+      "forInstallers": {
+        "title": "For Installers",
+        "text": "Interested in becoming a partner installer? We're always looking to expand our network of trusted professionals. Reach out to discuss partnership opportunities."
+      },
+      "feedback": {
+        "title": "Feedback",
+        "text": "We'd love to hear about your experience with HeatMatch. Your feedback helps us improve our service."
+      },
+      "generalInquiries": {
+        "title": "General Inquiries",
+        "text": "Use the form below to send us a message, and we'll respond as soon as possible."
+      },
+      "sendMessage": "Send us a Message",
+      "name": "Name",
+      "subject": "Subject",
+      "message": "Message",
+      "consent": "I agree to be contacted regarding my inquiry. I understand my information will be used to respond to my message.",
+      "sendButton": "Send Message",
+      "sending": "Sending..."
+    },
+    "privacy": {
+      "heading": "Privacy Policy",
+      "subheading": "Last updated: June 2026",
+      "introduction": "HeatMatch (\"we,\" \"us,\" \"our,\" or \"Company\") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services.",
+      "section1": "Information We Collect",
+      "section1Text": "Personal Information: Name, phone number, and email address; Property address and type; Project details (service type, timeline, existing equipment); Photos of your property (optional); Any other information you provide directly. Automatically Collected Information: Browser type and IP address; Pages visited and time spent on site; Referring website information; Device information.",
+      "section2": "How We Use Your Information",
+      "section2Text": "We use the information we collect to: Match you with appropriate installers for your project; Share your project details with selected installers; Facilitate communication between you and installers; Provide customer support and respond to inquiries; Improve our website and services; Comply with legal obligations.",
+      "section3": "Sharing Your Information",
+      "section3Text": "When you submit a quote request, we share your project information with licensed heat pump installers who service your area. These installers use your information to provide quotes and contact you about your project. We may also share information with service providers who assist us in operating our website and conducting our business, subject to confidentiality agreements. We will not sell your personal information to third parties. We may disclose information if required by law or to protect our rights.",
+      "section4": "Data Security",
+      "section4Text": "We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet is completely secure.",
+      "section5": "Your Rights",
+      "section5Text": "You have the right to: Access your personal information; Request corrections to inaccurate information; Request deletion of your information; Opt-out of communications from us. To exercise these rights, contact us at +64 21 024 45 890.",
+      "section6": "Cookies",
+      "section6Text": "Our website may use cookies to enhance your experience. You can choose to disable cookies through your browser settings, though this may affect your ability to use certain features of our site.",
+      "section7": "Third-Party Links",
+      "section7Text": "Our website may contain links to third-party websites. We are not responsible for the privacy practices of external sites. We encourage you to review their privacy policies.",
+      "section8": "Children's Privacy",
+      "section8Text": "Our services are not intended for children under 13. We do not knowingly collect personal information from children under 13. If we become aware of such collection, we will delete it promptly.",
+      "section9": "Changes to This Policy",
+      "section9Text": "We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated \"Last updated\" date. Your continued use of our services constitutes acceptance of the updated policy.",
+      "section10": "Contact Us",
+      "section10Text": "If you have questions about this Privacy Policy or our privacy practices, please contact us at +64 21 024 45 890."
+    },
+    "terms": {
+      "heading": "Terms and Conditions",
+      "subheading": "Last updated: June 2026",
+      "section1Title": "Acceptance of Terms",
+      "section1Text": "By accessing and using HeatMatch, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.",
+      "section2Title": "Use License",
+      "section2Text": "Permission is granted to temporarily download one copy of the materials (information or software) on HeatMatch for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not: Modify or copy the materials; Use the materials for any commercial purpose or for any public display; Attempt to decompile or reverse engineer any software contained on the site; Transfer the materials to another person or \"mirror\" the materials on any other server; Remove any copyright or other proprietary notations from the materials.",
+      "section3Title": "Disclaimer",
+      "section3Text": "The materials on HeatMatch are provided on an 'as is' basis. HeatMatch makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.",
+      "section4Title": "Limitations",
+      "section4Text": "In no event shall HeatMatch or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on HeatMatch, even if we or our authorized representative has been notified orally or in writing of the possibility of such damage.",
+      "section5Title": "Accuracy of Materials",
+      "section5Text": "The materials appearing on HeatMatch could include technical, typographical, or photographic errors. HeatMatch does not warrant that any of the materials on the website are accurate, complete, or current. HeatMatch may make changes to the materials contained on the website at any time without notice.",
+      "section6Title": "Links",
+      "section6Text": "HeatMatch has not reviewed all of the sites linked to its website and is not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by HeatMatch of the site. Use of any such linked website is at the user's own risk.",
+      "section7Title": "Modifications",
+      "section7Text": "HeatMatch may revise these terms of service for the website at any time without notice. By using this website, you are agreeing to be bound by the then current version of these terms of service.",
+      "section8Title": "Governing Law",
+      "section8Text": "These terms and conditions are governed by and construed in accordance with the laws of New Zealand, and you irrevocably submit to the exclusive jurisdiction of the courts in that location.",
+      "section9Title": "User Responsibilities",
+      "section9Text": "When using HeatMatch, you agree to: Provide accurate and truthful information in your quote request; Not misrepresent your property or project details; Not engage in any unlawful or fraudulent activity; Respect the intellectual property rights of HeatMatch and installers; Not use the service to spam or harass installers.",
+      "section10Title": "Installer Independence",
+      "section10Text": "Installers using HeatMatch are independent contractors and not employees or agents of HeatMatch. HeatMatch does not control the quality, safety, or legality of services provided by installers. You are responsible for verifying installer credentials, licenses, and insurance before engaging their services.",
+      "section11Title": "Limitation of Liability",
+      "section11Text": "HeatMatch shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use the service, including but not limited to damages for loss of profits, goodwill, use, data, or other intangible losses.",
+      "section12Title": "Termination",
+      "section12Text": "HeatMatch reserves the right to terminate or suspend your access to the service at any time, with or without cause, with or without notice.",
+      "section13Title": "Contact Information",
+      "section13Text": "If you have any questions about these Terms and Conditions, please contact us at +64 21 024 45 890."
+    }
   }
 }

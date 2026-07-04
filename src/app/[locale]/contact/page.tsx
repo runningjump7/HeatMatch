@@ -1,9 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import Footer from '@/components/Footer';
 
 export default function ContactPage() {
+  const t = useTranslations();
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -71,8 +73,8 @@ export default function ContactPage() {
       {/* Header */}
       <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 text-white py-16">
         <div className="max-w-4xl mx-auto px-4">
-          <h1 className="text-4xl font-bold">Contact Us</h1>
-          <p className="text-emerald-100 mt-2">Get in touch with the HeatMatch team</p>
+          <h1 className="text-4xl font-bold">{t('pages.contact.heading')}</h1>
+          <p className="text-emerald-100 mt-2">{t('pages.contact.subheading')}</p>
         </div>
       </div>
 
@@ -81,60 +83,60 @@ export default function ContactPage() {
         <div className="grid md:grid-cols-3 gap-12 mb-16">
           {/* Contact Info */}
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-8">Get in Touch</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-8">{t('pages.contact.getInTouch')}</h2>
 
             <div className="mb-8">
-              <h3 className="font-semibold text-gray-900 mb-2">Phone</h3>
+              <h3 className="font-semibold text-gray-900 mb-2">{t('pages.contact.phone')}</h3>
               <a href="tel:+64210244590" className="text-emerald-600 hover:text-emerald-700 text-lg">
                 +64 21 024 45 890
               </a>
             </div>
 
             <div className="mb-8">
-              <h3 className="font-semibold text-gray-900 mb-2">Email</h3>
+              <h3 className="font-semibold text-gray-900 mb-2">{t('pages.contact.email')}</h3>
               <a href="mailto:hello@heatmatch.nz" className="text-emerald-600 hover:text-emerald-700">
                 hello@heatmatch.nz
               </a>
             </div>
 
             <div className="mb-8">
-              <h3 className="font-semibold text-gray-900 mb-2">Service Area</h3>
+              <h3 className="font-semibold text-gray-900 mb-2">{t('pages.contact.serviceArea')}</h3>
               <p className="text-gray-700">
-                Auckland's North Shore, including suburbs from Albany to Long Bay
+                {t('pages.contact.serviceAreaText')}
               </p>
             </div>
           </div>
 
           {/* Support Info */}
           <div className="md:col-span-2">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8">How We Can Help</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-8">{t('pages.contact.howWeCanHelp')}</h2>
 
             <div className="grid md:grid-cols-2 gap-8">
               <div>
-                <h3 className="font-semibold text-gray-900 mb-2">For Homeowners</h3>
+                <h3 className="font-semibold text-gray-900 mb-2">{t('pages.contact.forHomeowners.title')}</h3>
                 <p className="text-gray-700 text-sm">
-                  Have questions about your project? Need help with your quote request? Contact us and we'll get back to you quickly.
+                  {t('pages.contact.forHomeowners.text')}
                 </p>
               </div>
 
               <div>
-                <h3 className="font-semibold text-gray-900 mb-2">For Installers</h3>
+                <h3 className="font-semibold text-gray-900 mb-2">{t('pages.contact.forInstallers.title')}</h3>
                 <p className="text-gray-700 text-sm">
-                  Interested in becoming a partner installer? We're always looking to expand our network of trusted professionals. Reach out to discuss partnership opportunities.
+                  {t('pages.contact.forInstallers.text')}
                 </p>
               </div>
 
               <div>
-                <h3 className="font-semibold text-gray-900 mb-2">Feedback</h3>
+                <h3 className="font-semibold text-gray-900 mb-2">{t('pages.contact.feedback.title')}</h3>
                 <p className="text-gray-700 text-sm">
-                  We'd love to hear about your experience with HeatMatch. Your feedback helps us improve our service.
+                  {t('pages.contact.feedback.text')}
                 </p>
               </div>
 
               <div>
-                <h3 className="font-semibold text-gray-900 mb-2">General Inquiries</h3>
+                <h3 className="font-semibold text-gray-900 mb-2">{t('pages.contact.generalInquiries.title')}</h3>
                 <p className="text-gray-700 text-sm">
-                  Use the form below to send us a message, and we'll respond as soon as possible.
+                  {t('pages.contact.generalInquiries.text')}
                 </p>
               </div>
             </div>
@@ -143,7 +145,7 @@ export default function ContactPage() {
 
         {/* Contact Form */}
         <div className="bg-gray-50 rounded-lg p-8 max-w-2xl mx-auto">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('pages.contact.sendMessage')}</h2>
 
           {submitStatus && (
             <div
@@ -160,7 +162,7 @@ export default function ContactPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name */}
             <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-2">Name *</label>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">{t('pages.contact.name')} *</label>
               <input
                 type="text"
                 name="name"
@@ -174,7 +176,7 @@ export default function ContactPage() {
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-2">Email *</label>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">{t('pages.contact.email')} *</label>
               <input
                 type="email"
                 name="email"
@@ -188,7 +190,7 @@ export default function ContactPage() {
 
             {/* Phone */}
             <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-2">Phone</label>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">{t('pages.contact.phone')}</label>
               <input
                 type="tel"
                 name="phone"
@@ -218,7 +220,7 @@ export default function ContactPage() {
 
             {/* Subject */}
             <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-2">Subject *</label>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">{t('pages.contact.subject')} *</label>
               <input
                 type="text"
                 name="subject"
@@ -232,7 +234,7 @@ export default function ContactPage() {
 
             {/* Message */}
             <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-2">Message *</label>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">{t('pages.contact.message')} *</label>
               <textarea
                 name="message"
                 value={form.message}
@@ -256,7 +258,7 @@ export default function ContactPage() {
                   className="mt-1 w-5 h-5 border border-gray-300 rounded accent-emerald-600"
                 />
                 <span className="text-sm text-gray-700">
-                  I agree to be contacted regarding my inquiry. I understand my information will be used to respond to my message. *
+                  {t('pages.contact.consent')} *
                 </span>
               </label>
             </div>
@@ -267,7 +269,7 @@ export default function ContactPage() {
               disabled={isSubmitting}
               className="w-full px-6 py-3 bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-400 text-white font-semibold rounded-lg transition"
             >
-              {isSubmitting ? 'Sending...' : 'Send Message'}
+              {isSubmitting ? t('pages.contact.sending') : t('pages.contact.sendButton')}
             </button>
           </form>
         </div>
