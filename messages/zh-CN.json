@@ -205,7 +205,9 @@
       "consent2Prefix": "我同意",
       "consent2Suffix": "并理解安装商可能通过电话、电子邮件或短信与我联系。",
       "privacyPolicy": "隐私政策",
-      "termsAndConditions": "条款和条件"
+      "termsAndConditions": "条款和条件",
+      "submitting": "提交中...",
+      "submit": "获取报价 →"
     },
     "buttons": {
       "back": "← 返回",

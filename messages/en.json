@@ -205,7 +205,9 @@
       "consent2Prefix": "I agree to the",
       "consent2Suffix": "and understand that installers may contact me via phone, email, or SMS.",
       "privacyPolicy": "Privacy Policy",
-      "termsAndConditions": "Terms and Conditions"
+      "termsAndConditions": "Terms and Conditions",
+      "submitting": "Submitting...",
+      "submit": "Get Your Quote →"
     },
     "buttons": {
       "back": "← Back",
