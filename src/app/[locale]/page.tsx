@@ -255,19 +255,16 @@ export default function Home() {
 
           <div className="grid md:grid-cols-6 gap-6">
             {[
-              { title: t('whyHeatMatch.stopCalling.title'), desc: t('whyHeatMatch.stopCalling.desc') },
-              { title: t('whyHeatMatch.trustedInstallers.title'), desc: t('whyHeatMatch.trustedInstallers.desc') },
-              { title: t('whyHeatMatch.freeToUse.title'), desc: t('whyHeatMatch.freeToUse.desc') },
-              { title: t('whyHeatMatch.noObligation.title'), desc: t('whyHeatMatch.noObligation.desc') },
-              { title: t('whyHeatMatch.northShoreExperts.title'), desc: t('whyHeatMatch.northShoreExperts.desc') },
-              { title: t('whyHeatMatch.multipleOptions.title'), desc: t('whyHeatMatch.multipleOptions.desc') },
+              { title: t('whyHeatMatch.stopCalling.title'), desc: t('whyHeatMatch.stopCalling.desc'), icon: '/icons/stop-calling-around.svg' },
+              { title: t('whyHeatMatch.trustedInstallers.title'), desc: t('whyHeatMatch.trustedInstallers.desc'), icon: '/icons/trusted-local-installers.svg' },
+              { title: t('whyHeatMatch.freeToUse.title'), desc: t('whyHeatMatch.freeToUse.desc'), icon: '/icons/free-to-use.svg' },
+              { title: t('whyHeatMatch.noObligation.title'), desc: t('whyHeatMatch.noObligation.desc'), icon: '/icons/no-obligation.svg' },
+              { title: t('whyHeatMatch.northShoreExperts.title'), desc: t('whyHeatMatch.northShoreExperts.desc'), icon: '/icons/north-shore-experts.svg' },
+              { title: t('whyHeatMatch.multipleOptions.title'), desc: t('whyHeatMatch.multipleOptions.desc'), icon: '/icons/multiple-options.svg' },
             ].map((item, idx) => (
               <div key={idx} className="text-center">
                 <div className="mb-6 flex justify-center">
-                  <svg width="48" height="48" viewBox="0 0 64 64" className="w-12 h-12">
-                    <circle cx="32" cy="32" r="18" fill="none" stroke="#10B981" strokeWidth="3"/>
-                    <path d="M32 20v12l8 8" fill="none" stroke="#10B981" strokeWidth="3" strokeLinecap="round"/>
-                  </svg>
+                  <img src={item.icon} alt="" className="w-12 h-12" />
                 </div>
                 <h3 className="text-sm font-bold text-gray-900 mb-2">{item.title}</h3>
                 <p className="text-xs text-gray-600 leading-relaxed">{item.desc}</p>
