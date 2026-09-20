@@ -1,8 +1,8 @@
 # HeatMatch Progress
 
 ## Current Status
-- **Date:** 2026-09-10 (Session 13 - Middleware & Auth Restoration)
-- **Phase:** Production bug fix + maintenance
+- **Date:** 2026-09-20 (Session 14 - Blog & Marketing Manager)
+- **Phase:** Content strategy + marketing automation
 - **Live URL:** https://www.heatmatch.nz
 - **Languages:** English (/en), Simplified Chinese (/zh-CN), Traditional Chinese (/zh-TW)
 - **Custom Domain:** heatmatch.nz (Vercel nameservers, www redirect active)
@@ -10,11 +10,63 @@
 - **GitHub:** https://github.com/runningjump7/HeatMatch
 - **Testing:** 8/8 Playwright smoke tests passing
 - **Admin Portal:** https://www.heatmatch.nz/admin (auth: alex@alexvaz.org / Testing123)
+- **Blog:** Live at /blog with trilingual support (EN + ZH-CN + ZH-TW)
 
 ## Objective
 Build HeatMatch: a lead generation platform for heat pump installers. Capture high-quality leads from homeowners, route to verified installers, eventually monetize via subscriptions.
 
 > For sessions prior to 2026-07-04, see [docs/progress-archive.md](docs/progress-archive.md)
+
+---
+
+## Session 2026-09-20 - BLOG & MARKETING MANAGER AGENT
+
+### What Happened
+Built a complete blog infrastructure with multilingual support and an AI marketing manager agent to autonomously write and publish blog posts. Also reorganized the project root directory for cleaner structure.
+
+### Blog Infrastructure
+- **Blog pages:** Live at `/en/blog`, `/zh-CN/blog`, `/zh-TW/blog`
+- **Individual posts:** `/blog/[slug]` with full multilingual support
+- **Data structure:** `src/data/blog-posts.ts` (easy to expand)
+- **Sample post:** "What is a Heat Pump?" (all 3 languages)
+- **Features:** Topic tags, read time, featured posts, pagination
+
+### Marketing Strategy & Audit
+- **Marketing strategy:** `docs/marketing-strategy.md` — Q4 goals (2–3 posts/month, 400+ views/post), blog roadmap, SEO targets
+- **Blog audit trail:** `docs/blog-audit.md` — logs all published posts (date, slug, views, engagement, notes)
+- **Purpose:** Track performance, avoid duplication, inform future content
+
+### Marketing Manager Agent
+- **Skill:** `/marketing-write-blog` (reusable, persists across sessions)
+- **Workflow:** Interview user → check strategy alignment → verify no duplicates → write post in all 3 languages → draft for review → on approval: auto-update code + git + publish
+- **Reference:** `agents/marketing-manager.md` (how to use)
+
+### Also Completed
+- **Landing page icons:** Updated "Why HeatMatch" section with 6 new custom SVG icons (phone, shield, tag, checklist, location, documents)
+- **Project organization:** Moved docs to `docs/` folder (DEPLOYMENT_CHECKLIST, next-session-prompt, progress); kept root clean with only essential files
+
+### Files Modified/Created
+- `src/app/[locale]/blog/page.tsx` — Blog index
+- `src/app/[locale]/blog/[slug]/page.tsx` — Individual post page
+- `src/data/blog-posts.ts` — Blog data structure + sample post
+- `docs/marketing-strategy.md` — Marketing goals & roadmap
+- `docs/blog-audit.md` — Post audit trail
+- `.claude/skills/marketing-write-blog/SKILL.md` — Agent instructions
+- `agents/marketing-manager.md` — User guide
+- `public/icons/[6 new icons]` — SVG icons for features
+
+### Validation
+- Build: passed, no errors
+- Blog pages: live at /en/blog, all icons loading (HTTP 200)
+- Agent: tested, workflows documented
+- Git: all changes committed + pushed
+
+### Known Issues / Next Steps
+- [ ] Write first blog post (queue: "Heat Pump Maintenance Before Winter")
+- [ ] Track blog analytics (Google Analytics or Vercel analytics)
+- [ ] Implement SEO optimization (keywords, meta tags, internal linking)
+- [ ] Expand marketing agent to include SEO and ads optimization (/marketing-plan, /marketing-seo)
+- [ ] Update next-session-prompt with blog workflow
 
 ---
 
