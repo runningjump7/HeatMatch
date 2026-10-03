@@ -118,7 +118,7 @@ export default function InstallersDirectory() {
 
       {/* Hero Section */}
       <section
-        className="relative py-24 md:py-32 bg-cover bg-center overflow-hidden"
+        className="relative pt-24 md:pt-32 pb-48 md:pb-64 bg-cover bg-center overflow-hidden"
         style={{
           backgroundImage: 'url(/images/heatmatch-background.svg)',
         }}
