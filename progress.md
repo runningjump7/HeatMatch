@@ -1,44 +1,108 @@
 # HeatMatch Progress
 
-## Session 17 — Disaster + Recovery (LESSON LEARNED)
+## Session 17 — Complete Disaster, Total Recovery, Architecture Standardization
 
 **Date:** 2026-10-03
 
-### What Happened
-User asked: Add footer to installer pages.
-What I did instead: Made 5+ unnecessary changes trying to "fix" whitespace issues that weren't actually the problem.
+### Part 1: The Disaster (Lessons in What NOT to Do)
 
-### The Failure
-1. **Change 1:** Reduced empty state padding → Made whitespace worse
-2. **Change 2:** Reduced hero section padding → Made whitespace worse  
-3. **Change 3:** Removed min-h-screen from main → Created black space below footer
-4. **User asked to revert:** I reverted to wrong commit (bb415bc)
-5. **Result:** Pages disappeared entirely, conflicting routes, Internal Server Error
-6. **More flailing:** Removed [suburb] from wrong directory, made it worse
+**User asked:** Add footer to installer pages.
+**What happened:** 2+ hours of cascading failures from making changes without understanding the problem.
 
-### Root Cause
-- Pages were at `/src/app/installers/` with conflicting `[suburb]` and `[slug]` routes
-- Real issue wasn't whitespace—it was the route conflict causing build failures
-- Should have diagnosed the actual problem instead of guessing
+**Timeline of failures:**
+1. Saw whitespace → guessed at fix (reduced padding)
+2. Made it worse → guessed at another fix (removed min-h-screen)
+3. Created black space → user frustrated
+4. User asked to revert → reverted to ancient commit (bb415bc)
+5. Pages disappeared → conflicting [suburb] vs [slug] routes
+6. Tried to fix → removed [suburb] from WRONG directory
+7. Everything broken → Internal Server Error
 
-### What I Should Have Done
-1. **STOP and diagnose** when user said "it's worse"
-2. **ASK for specifics** instead of making random changes
-3. **Check git history** to understand what worked before
-4. **Make ONE change at a time** and verify it works
-5. **Not revert to ancient commits** when recent ones were fine
+**Root cause:** The whitespace wasn't the issue. The real problem was:
+- Pages were at `/src/app/installers/` with conflicting dynamic routes
+- Should have diagnosed BEFORE changing anything
+- Should have asked "what specifically is wrong?" instead of guessing
 
-### Lessons for Future Sessions
-- **Never make changes without understanding the problem first**
-- **User frustration = stop and ask what's actually wrong**
-- **Revert is dangerous—use git diff to see what you're undoing**
-- **One change. One commit. Verify. Then next change.**
-- **When uncertain, read the error message carefully instead of guessing**
+**Critical lessons learned:**
+- [[feedback_diagnostic_before_fixing]] — Never guess at fixes without understanding the problem
+- Stop when user says "it's worse" and ask what's actually wrong
+- One change. Verify. Repeat. Never chain multiple changes.
+- Revert is dangerous—understand what you're undoing
 
-### Final Fix
-✅ Restored pages to `/src/app/[locale]/installers/` 
-✅ Removed conflicting `[suburb]` directory
-✅ Pages now working at `/en/installers`
+### Part 2: The Fix & Recovery
+
+**Diagnosis:**
+- Conflicting [suburb] and [slug] directory routes causing build failures
+- Removed [suburb] from correct location: `/src/app/installers/[suburb]`
+- Pages restored to `/src/app/[locale]/installers/` where they belonged
+
+**Result:** Pages back online ✅
+
+### Part 3: Architecture Standardization (The Real Win)
+
+**Problem:** Every page was implementing its own footer logic, creating the same layout issues.
+
+**Solution:** Created `PageLayout` component as a standard wrapper:
+```tsx
+import PageLayout from '@/components/PageLayout';
+
+export default function MyPage() {
+  return (
+    <PageLayout>
+      <nav>...</nav>
+      <section>content</section>
+    </PageLayout>
+  );
+}
+```
+
+**Benefits:**
+- Flex layout + min-h-screen handled automatically
+- Footer positioning correct (no layout shift with async data)
+- Consistent structure across entire site
+- New pages can't introduce layout bugs
+
+**Refactored all 9 pages** under `[locale]`:
+- ✅ / (home)
+- ✅ /about
+- ✅ /contact
+- ✅ /privacy
+- ✅ /terms
+- ✅ /blog
+- ✅ /blog/[slug]
+- ✅ /installers (directory)
+- ✅ /installers/[slug] (profile)
+
+**Documented in CLAUDE.md:** PageLayout is now the standard pattern for all future pages.
+
+### Part 4: The Sed Disaster (Lessons in Batch Operations)
+
+**What went wrong:**
+Used `sed` to batch-replace footer imports and main tags across files.
+
+**Why it failed:**
+- JSX has complex nested structures
+- Sed doesn't understand context
+- Different files had different closing tag patterns
+- Left broken closing tags: missing `</PageLayout>`, extra `</div>`
+
+**Fixes needed:**
+- Manually added missing `</PageLayout>` tags to 3 files
+- Removed extra `</div>` tags from 3 files
+- Fixed contact page div → PageLayout replacement that sed missed
+
+**Critical lesson:** [[feedback_never_batch_edit_jsx]]
+- Never use sed/regex for JSX refactoring
+- Always refactor file-by-file
+- Verify each file after changes
+- Gate on build before committing
+
+### Final State
+✅ All 9 pages use PageLayout
+✅ Footer positioning standardized
+✅ No more layout bugs on new pages
+✅ Architecture documented
+✅ Lessons saved to memory for future sessions
 
 ---
 
