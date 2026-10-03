@@ -1,5 +1,89 @@
 # HeatMatch Progress
 
+## Session 20 — Search Results Layout Overhaul & Website Field Addition
+
+**Date:** 2026-10-03 (late evening)
+
+### Completed
+
+#### Part 1: Search Results Card Layout Refactor ✅
+- ✅ Refactored installer search results from 3-column grid to single-column stacked layout
+- ✅ Changed card structure from vertical cards to horizontal flex layout:
+  - **Left:** Image section (md:w-48, responsive sizing)
+  - **Middle:** Installer info (name, verified badge, location, description, services)
+  - **Right:** Action buttons (Contact + View Profile)
+- ✅ Updated `/src/app/[locale]/installers/page.tsx`:
+  - Removed `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3` grid layout
+  - Added `flex flex-col md:flex-row gap-6` horizontal flex structure
+  - Changed wrapper to `max-w-4xl` (narrower than previous 3-col grid)
+  - Added `space-y-4` for consistent card spacing
+- ✅ Responsive design:
+  - Mobile: Cards stack vertically (image on top, content below, buttons below that)
+  - Desktop: Side-by-side layout (image | content | buttons)
+- ✅ Service badges now display inline with checkmarks (Installation, Servicing, Repairs)
+- ✅ Contact button added as primary action (placeholder, not yet wired)
+- ✅ Verified in dev server at http://localhost:3000/en/installers
+
+#### Part 2: Website Field Implementation ✅
+- ✅ **Database migration:** Added `website VARCHAR(255)` column to installers table
+  - Created migration script: `scripts/add-website-field.ts`
+  - Successfully ran against Neon database
+  
+- ✅ **API updates:**
+  - Updated `/api/installers/[slug]` endpoint to SELECT website column
+  - Added website to response object returned to frontend
+  
+- ✅ **Profile page display:**
+  - Updated interface to include `website: string | null`
+  - Added website in "Get in Touch" sidebar section (after email)
+  - Website displays with globe icon (🌐)
+  - Auto-linkifies URLs (handles both `example.com` and `https://example.com`)
+  - Opens in new tab with `target="_blank" rel="noopener noreferrer"`
+  
+- ✅ **Onboarding form enhancement:**
+  - Added "Website" input field to installer onboarding form
+  - Placed after phone number for logical flow
+  - Field is optional (accepts full URLs or domain names)
+  - Added helper text: "Optional - your business website URL"
+  - Type="url" for native browser validation
+  
+- ✅ **Created `/api/installer/onboarding` endpoint:**
+  - Handles POST requests with installer onboarding data
+  - Creates new installer record with slug generation
+  - Validates required fields (business_name, phone, primary_suburb)
+  - Sets initial status to 'pending' for admin approval
+  - Returns success response with installer ID and slug
+
+### Files Modified/Created
+- `src/app/[locale]/installers/page.tsx` — Refactored card layout to stacked/horizontal
+- `src/app/[locale]/installers/[slug]/page.tsx` — Added website display in Get in Touch sidebar
+- `src/app/installer-onboarding/page.tsx` — Added website form field
+- `src/app/api/installers/[slug]/route.ts` — Updated to return website field
+- `src/app/api/installer/onboarding/route.ts` — NEW: Onboarding endpoint
+- `scripts/add-website-field.ts` — NEW: Database migration
+
+### Technical Details
+- Website URL handling: Automatically prepends `https://` if not present
+- Website display is conditional: Only renders if website value exists
+- Website field is optional in onboarding (null-safe)
+- Responsive layout tested on multiple viewport sizes
+- Contact button click handler in place (ready for future wiring to modal/form)
+
+### Testing Done
+- ✅ Dev server running, cards render correctly
+- ✅ Layout responsive at mobile/tablet/desktop breakpoints
+- ✅ Database migration ran successfully
+- ✅ API endpoint responds with website field
+- ✅ Profile page displays website correctly
+
+### Next Steps
+1. Wire up Contact button to lead capture modal/form
+2. Installer dashboard to view/edit their website
+3. Test end-to-end onboarding flow with new website field
+4. Add website validation (URL format checking)
+
+---
+
 ## Session 19 — Mobile Resolution Optimization
 
 **Date:** 2026-10-03 (evening)
