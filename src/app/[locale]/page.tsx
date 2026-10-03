@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
 import QuoteFormStepper from '@/components/QuoteFormStepper';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import PageLayout from '@/components/PageLayout';
 
 export default function Home() {
   const t = useTranslations();
@@ -61,7 +62,7 @@ export default function Home() {
   ];
 
   return (
-    <main className="min-h-screen bg-white">
+    <PageLayout>
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
@@ -474,46 +475,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 py-12">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <img src="/icons/heatmatch-logo-white.svg" alt="HeatMatch" className="h-8 mb-4" />
-              <p className="text-sm">{t('footer.tagline')}</p>
-            </div>
-            <div>
-              <h4 className="font-semibold text-white mb-4">{t('footer.company')}</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="/about" className="hover:text-white transition">{t('footer.about')}</a></li>
-                <li><a href="/contact" className="hover:text-white transition">{t('footer.contact')}</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold text-white mb-4">{t('footer.legal')}</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="/privacy" className="hover:text-white transition">{t('footer.privacy')}</a></li>
-                <li><a href="/terms" className="hover:text-white transition">{t('footer.terms')}</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold text-white mb-4">{t('footer.contactLabel')}</h4>
-              <p className="text-sm">{t('footer.email')}</p>
-            </div>
-          </div>
-
-          <div className="border-t border-gray-800 pt-8 text-sm text-center">
-            <p>{t('footer.copyright')}</p>
-          </div>
-        </div>
-      </footer>
-
       {/* Quote Form Stepper Modal */}
       <QuoteFormStepper
         isOpen={showStepper}
         onClose={() => setShowStepper(false)}
         initialServiceType={selectedService || undefined}
       />
-    </main>
+    </PageLayout>
   );
 }

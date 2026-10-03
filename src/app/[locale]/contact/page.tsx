@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import Footer from '@/components/Footer';
+import PageLayout from '@/components/PageLayout';
 
 export default function ContactPage() {
   const t = useTranslations();
@@ -275,7 +275,7 @@ export default function ContactPage() {
         </div>
       </div>
 
-      <Footer />
+
     </div>
   );
 }

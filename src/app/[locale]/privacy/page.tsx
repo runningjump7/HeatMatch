@@ -1,13 +1,13 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import Footer from '@/components/Footer';
+import PageLayout from '@/components/PageLayout';
 
 export default function PrivacyPolicyPage() {
   const t = useTranslations();
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <PageLayout>
       {/* Header */}
       <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 text-white py-16">
         <div className="max-w-4xl mx-auto px-4">
@@ -76,7 +76,7 @@ export default function PrivacyPolicyPage() {
         </div>
       </div>
 
-      <Footer />
+
     </div>
   );
 }

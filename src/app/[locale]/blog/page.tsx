@@ -19,7 +19,7 @@ export default function BlogPage() {
   const posts = getAllBlogPosts(locale);
 
   return (
-    <main className="min-h-screen bg-white">
+    <PageLayout>
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
@@ -157,6 +157,6 @@ export default function BlogPage() {
           <p>© 2026 HeatMatch. All rights reserved.</p>
         </div>
       </footer>
-    </main>
+    </PageLayout>
   );
 }

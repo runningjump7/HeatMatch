@@ -4,6 +4,7 @@ import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import { getBlogPost } from '@/data/blog-posts';
 import { notFound } from 'next/navigation';
+import PageLayout from '@/components/PageLayout';
 
 const topicLabels: Record<string, { en: string; 'zh-CN': string; 'zh-TW': string }> = {
   maintenance: { en: 'Maintenance', 'zh-CN': '维护', 'zh-TW': '維護' },
@@ -38,7 +39,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
   });
 
   return (
-    <main className="min-h-screen bg-white">
+    <PageLayout>
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
@@ -143,13 +144,6 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           </button>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 py-12">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <p>© 2026 HeatMatch. All rights reserved.</p>
-        </div>
-      </footer>
-    </main>
+    </PageLayout>
   );
 }
