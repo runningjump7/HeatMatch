@@ -4,9 +4,9 @@ import { query } from '@/lib/db';
 const VALID_LANGUAGES = ['en', 'zh-cn', 'zh-tw'];
 const DEFAULT_LANGUAGE = 'en';
 
-export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   try {
-    const slug = params.slug;
+    const { slug } = await params;
     const lang = (request.nextUrl.searchParams.get('lang') || DEFAULT_LANGUAGE).toLowerCase();
 
     // Validate language
