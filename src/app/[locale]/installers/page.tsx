@@ -146,7 +146,7 @@ export default function InstallersDirectory() {
 
             {/* Search Form */}
             <form onSubmit={handleSearch} className="max-w-2xl mx-auto mb-10">
-              <div className="flex gap-3">
+              <div className="flex flex-col md:flex-row gap-3">
                 <div className="flex-1 relative">
                   <img src="/icons/location-pin.svg" alt="Location" className="absolute left-4 top-4 w-6 h-6 text-gray-500" style={{color: '#9CA3AF'}} />
                   <input
@@ -159,7 +159,7 @@ export default function InstallersDirectory() {
                 </div>
                 <button
                   type="submit"
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-lg font-semibold transition flex items-center gap-2 whitespace-nowrap"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-lg font-semibold transition flex items-center justify-center gap-2 whitespace-nowrap md:px-8 w-full md:w-auto"
                 >
                   <img src="/icons/search.svg" alt="Search" className="w-5 h-5" />
                   {t('installers.searchButton')}
