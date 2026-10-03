@@ -211,85 +211,102 @@ export default function InstallersDirectory() {
         </div>
       )}
 
-      {/* Installers Grid */}
+      {/* Installers Stack */}
       {!loading && installers.length > 0 && (
         <section className="py-16">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {installers.map((installer) => (
-                <Link
-                  key={installer.id}
-                  href={`/installers/${installer.slug}`}
-                  className="group bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg hover:border-emerald-200 transition duration-300"
-                >
-                  {/* Card Image */}
-                  {installer.photoUrl ? (
-                    <div className="w-full h-48 bg-gray-100 overflow-hidden">
-                      <img
-                        src={installer.photoUrl}
-                        alt={installer.businessName}
-                        className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                      />
-                    </div>
-                  ) : (
-                    <div className="w-full h-48 bg-gradient-to-br from-emerald-50 to-blue-50 flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="text-4xl text-emerald-200 mb-2">🔧</div>
-                        <p className="text-gray-400 text-sm">No photo</p>
+          <div className="max-w-4xl mx-auto px-4 space-y-4">
+            {installers.map((installer) => (
+              <div
+                key={installer.id}
+                className="group bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg hover:border-emerald-200 transition duration-300"
+              >
+                <div className="flex flex-col md:flex-row gap-6 p-6">
+                  {/* Left: Image */}
+                  <div className="md:w-48 flex-shrink-0">
+                    {installer.photoUrl ? (
+                      <div className="w-full h-40 bg-gray-100 rounded-lg overflow-hidden">
+                        <img
+                          src={installer.photoUrl}
+                          alt={installer.businessName}
+                          className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                        />
                       </div>
-                    </div>
-                  )}
+                    ) : (
+                      <div className="w-full h-40 bg-gradient-to-br from-emerald-50 to-blue-50 rounded-lg flex items-center justify-center">
+                        <div className="text-center">
+                          <div className="text-3xl text-emerald-200 mb-2">🔧</div>
+                          <p className="text-gray-400 text-xs">No photo</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
 
-                  {/* Card Content */}
-                  <div className="p-6">
-                    {/* Status Badge */}
-                    <div className="mb-3 flex items-center justify-between">
-                      <span
-                        className={`inline-block px-3 py-1 text-xs font-semibold rounded-full ${
-                          installer.status === 'verified'
-                            ? 'bg-emerald-100 text-emerald-800'
-                            : 'bg-gray-100 text-gray-800'
-                        }`}
-                      >
-                        {installer.status === 'verified' ? '✓ Verified' : 'Unclaimed'}
+                  {/* Middle: Content */}
+                  <div className="flex-1 flex flex-col justify-between">
+                    {/* Top Section: Name, Badge, Location */}
+                    <div>
+                      <div className="flex items-start gap-3 mb-2">
+                        <div>
+                          <h3 className="text-xl font-bold text-gray-900 group-hover:text-emerald-600 transition">
+                            {installer.businessName}
+                          </h3>
+                        </div>
+                        <span
+                          className={`inline-block px-3 py-1 text-xs font-semibold rounded-full flex-shrink-0 whitespace-nowrap ${
+                            installer.status === 'verified'
+                              ? 'bg-emerald-100 text-emerald-800'
+                              : 'bg-gray-100 text-gray-800'
+                          }`}
+                        >
+                          {installer.status === 'verified' ? '✓ Verified' : 'Unclaimed'}
+                        </span>
+                      </div>
+
+                      <p className="text-sm text-gray-600 mb-3">📍 {installer.suburb}</p>
+
+                      {/* Bio */}
+                      {installer.bio && (
+                        <p className="text-sm text-gray-600 line-clamp-2 mb-4">
+                          {installer.bio}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Meta Info - Services */}
+                    <div className="flex flex-wrap gap-3 pt-4 border-t border-gray-100">
+                      <span className="text-xs text-gray-600 px-3 py-1 bg-gray-50 rounded-full">
+                        ✓ Installation
+                      </span>
+                      <span className="text-xs text-gray-600 px-3 py-1 bg-gray-50 rounded-full">
+                        ✓ Servicing
+                      </span>
+                      <span className="text-xs text-gray-600 px-3 py-1 bg-gray-50 rounded-full">
+                        ✓ Repairs
                       </span>
                     </div>
-
-                    {/* Business Name */}
-                    <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-emerald-600 transition">
-                      {installer.businessName}
-                    </h3>
-
-                    {/* Location */}
-                    <p className="text-sm text-gray-600 mb-3">📍 {installer.suburb}</p>
-
-                    {/* Bio */}
-                    {installer.bio && (
-                      <p className="text-sm text-gray-600 line-clamp-2 mb-4">
-                        {installer.bio}
-                      </p>
-                    )}
-
-                    {/* Meta Info */}
-                    <div className="flex items-center justify-between text-xs text-gray-500 pt-4 border-t border-gray-100">
-                      {installer.yearsInBusiness && (
-                        <span>{installer.yearsInBusiness} years in business</span>
-                      )}
-                      {installer.serviceSuburbs.length > 0 && (
-                        <span>{installer.serviceSuburbs.length} suburbs</span>
-                      )}
-                    </div>
-
-                    {/* CTA */}
-                    <div className="mt-4 pt-4 border-t border-gray-100">
-                      <p className="text-emerald-600 font-semibold text-sm group-hover:text-emerald-700">
-                        View Profile →
-                      </p>
-                    </div>
                   </div>
-                </Link>
-              ))}
-            </div>
+
+                  {/* Right: Actions */}
+                  <div className="md:w-40 flex flex-col gap-3 justify-center">
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        // Contact button - not hooked up yet
+                      }}
+                      className="w-full bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-3 rounded-lg font-semibold transition text-sm whitespace-nowrap"
+                    >
+                      Contact
+                    </button>
+                    <Link
+                      href={`/installers/${installer.slug}`}
+                      className="w-full text-center border border-emerald-600 text-emerald-600 hover:bg-emerald-50 px-4 py-3 rounded-lg font-semibold transition text-sm whitespace-nowrap"
+                    >
+                      View Profile
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
       )}
