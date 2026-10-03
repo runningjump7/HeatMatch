@@ -2,7 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import PageLayout from '@/components/PageLayout';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 interface Installer {
   id: string;
@@ -32,6 +34,7 @@ interface ListResponse {
 }
 
 export default function InstallersDirectory() {
+  const t = useTranslations();
   const [installers, setInstallers] = useState<Installer[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -96,21 +99,18 @@ export default function InstallersDirectory() {
           <Link href="/">
             <img src="/icons/heatmatch-logo.svg" alt="HeatMatch" className="h-10" />
           </Link>
-          <div className="flex gap-6 items-center">
-            <Link href="/" className="text-gray-600 hover:text-gray-900 font-medium text-sm transition">
-              How it works
-            </Link>
-            <Link href="/" className="text-gray-600 hover:text-gray-900 font-medium text-sm transition">
-              Get quotes
-            </Link>
-            <Link href="/" className="text-gray-600 hover:text-gray-900 font-medium text-sm transition">
-              For installers
-            </Link>
+          <div className="hidden md:flex items-center gap-8">
+            <a href="/#how-it-works" className="text-gray-600 hover:text-gray-900 text-sm">{t('nav.howItWorks')}</a>
+            <a href="/#coverage" className="text-gray-600 hover:text-gray-900 text-sm">{t('nav.coverage')}</a>
+            <a href="/#faq" className="text-gray-600 hover:text-gray-900 text-sm">{t('nav.faq')}</a>
+          </div>
+          <div className="flex items-center gap-4">
+            <LanguageSwitcher />
             <Link
               href="/"
-              className="text-emerald-600 hover:text-emerald-700 font-medium text-sm border border-emerald-600 px-4 py-2 rounded-lg transition"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-medium text-sm transition"
             >
-              ← Back to Home
+              {t('nav.getQuote')}
             </Link>
           </div>
         </div>
