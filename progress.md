@@ -20,6 +20,18 @@
   - `src/app/[locale]/installers/page.tsx` (installers page header)
 - ✅ Verified changes live in dev server at http://localhost:3000
 
+#### Mobile Search Form Layout Fix ✅
+- ✅ Identified: Search input and button were squeezing on one line on mobile
+- ✅ Applied responsive stack layout to search form:
+  - Changed form container from `flex gap-3` to `flex flex-col md:flex-row gap-3`
+  - Mobile: input and button stack vertically on separate lines
+  - Desktop (md+): input and button display side-by-side as before
+  - Added `w-full md:w-auto` to button for full-width mobile, auto on desktop
+  - Added `justify-center` to button for proper alignment when full-width
+- ✅ Files updated:
+  - `src/app/[locale]/installers/page.tsx` (search form)
+- ✅ Verified changes live in dev server
+
 ### Technical Details
 - Mobile viewport (375px) now properly squeezes spacing without text wrapping
 - Button stays consistently right-aligned across both pages at all viewport sizes
