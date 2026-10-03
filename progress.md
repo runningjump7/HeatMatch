@@ -38,9 +38,23 @@
 - Responsive Tailwind classes ensure proper layout: mobile → tablet → desktop
 - No layout shift or unexpected wrapping on narrow viewports
 
+#### Test Installer Image Replacement ✅
+- ✅ Identified: Test installer accounts had broken placeholder.com images
+- ✅ Saved 3 professional heat pump installation photos:
+  - `public/images/heat-pump-1.jpg` — Outdoor unit installation in garden
+  - `public/images/heat-pump-2.jpg` — Indoor split unit wall mount
+  - `public/images/heat-pump-3.jpg` — Technician installing outdoor unit
+- ✅ Updated seed script to use local image URLs instead of broken external placeholders
+- ✅ Verified images accessible from dev server (HTTP 200)
+- ✅ To complete: Run `tsx scripts/seed-test-installers.ts` to sync database with new image URLs
+
 ### Files Modified
 - `src/app/[locale]/page.tsx` — Enhanced header responsive classes
-- `src/app/[locale]/installers/page.tsx` — Enhanced header responsive classes
+- `src/app/[locale]/installers/page.tsx` — Enhanced header responsive classes + search form layout
+- `scripts/seed-test-installers.ts` — Updated photoUrl paths to local images
+- `public/images/heat-pump-1.jpg` — New image asset
+- `public/images/heat-pump-2.jpg` — New image asset
+- `public/images/heat-pump-3.jpg` — New image asset
 
 ---
 
