@@ -82,7 +82,7 @@ export default function InstallersDirectory() {
   };
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="flex flex-col min-h-screen bg-white">
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
@@ -98,6 +98,7 @@ export default function InstallersDirectory() {
         </div>
       </nav>
 
+      <div className="flex-1 flex flex-col">
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-6xl mx-auto px-4">
@@ -328,6 +329,7 @@ export default function InstallersDirectory() {
           </Link>
         </div>
       </section>
+      </div>
 
       <Footer />
     </main>
