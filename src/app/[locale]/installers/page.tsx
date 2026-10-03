@@ -81,6 +81,13 @@ export default function InstallersDirectory() {
     setCurrentPage(1);
   };
 
+  const popularSuburbs = ['Takapuna', 'Albany', 'Glenfield', 'Browns Bay', 'Milford'];
+
+  const handleSuburbClick = (suburbName: string) => {
+    setSuburb(suburbName);
+    setCurrentPage(1);
+  };
+
   return (
     <PageLayout>
       {/* Navigation */}
@@ -89,49 +96,93 @@ export default function InstallersDirectory() {
           <Link href="/">
             <img src="/icons/heatmatch-logo.svg" alt="HeatMatch" className="h-10" />
           </Link>
-          <Link
-            href="/"
-            className="text-gray-600 hover:text-gray-900 font-medium text-sm transition"
-          >
-            ← Back to Home
-          </Link>
+          <div className="flex gap-6 items-center">
+            <Link href="/" className="text-gray-600 hover:text-gray-900 font-medium text-sm transition">
+              How it works
+            </Link>
+            <Link href="/" className="text-gray-600 hover:text-gray-900 font-medium text-sm transition">
+              Get quotes
+            </Link>
+            <Link href="/" className="text-gray-600 hover:text-gray-900 font-medium text-sm transition">
+              For installers
+            </Link>
+            <Link
+              href="/"
+              className="text-emerald-600 hover:text-emerald-700 font-medium text-sm border border-emerald-600 px-4 py-2 rounded-lg transition"
+            >
+              ← Back to Home
+            </Link>
+          </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+      <section
+        className="relative py-24 md:py-32 bg-cover bg-center overflow-hidden"
+        style={{
+          backgroundImage: 'url(/images/heatmatch-background.svg)',
+        }}
+      >
+        {/* Overlay for readability */}
+        <div className="absolute inset-0 bg-black/20" />
+
+        <div className="relative max-w-6xl mx-auto px-4">
+          <div className="text-center">
+            {/* Tagline */}
+            <p className="text-sm md:text-base font-semibold text-white tracking-widest mb-6 drop-shadow-lg">
+              LOCAL • VERIFIED • NO OBLIGATION
+            </p>
+
+            {/* Main Heading */}
+            <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 leading-tight drop-shadow-lg">
               Find Trusted Heat Pump Installers
             </h1>
-            <p className="text-lg text-gray-600">
-              Browse verified and unclaimed installers across the North Shore
-            </p>
-          </div>
 
-          {/* Search Form */}
-          <form onSubmit={handleSearch} className="max-w-md mx-auto mb-12">
-            <div className="flex gap-2">
-              <input
-                type="text"
-                placeholder="Search by suburb..."
-                value={suburb}
-                onChange={(e) => setSuburb(e.target.value)}
-                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              />
-              <button
-                type="submit"
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-medium transition"
-              >
-                Search
-              </button>
+            {/* Subtitle */}
+            <p className="text-lg md:text-xl text-white/90 mb-12 drop-shadow-lg">
+              Browse verified heat pump installers across Auckland's North Shore.
+            </p>
+
+            {/* Search Form */}
+            <form onSubmit={handleSearch} className="max-w-2xl mx-auto mb-10">
+              <div className="flex gap-3">
+                <div className="flex-1 relative">
+                  <span className="absolute left-4 top-4 text-gray-400">📍</span>
+                  <input
+                    type="text"
+                    placeholder="Enter your suburb or postcode"
+                    value={suburb}
+                    onChange={(e) => setSuburb(e.target.value)}
+                    className="w-full pl-12 pr-4 py-4 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-gray-900 placeholder-gray-500"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-lg font-semibold transition flex items-center gap-2 whitespace-nowrap"
+                >
+                  🔍 Search
+                </button>
+              </div>
+            </form>
+
+            {/* Popular Suburbs */}
+            <div className="flex flex-wrap justify-center gap-3 drop-shadow-lg">
+              <span className="text-white/80 text-sm font-medium self-center">Popular suburbs:</span>
+              {popularSuburbs.map((suburbName) => (
+                <button
+                  key={suburbName}
+                  onClick={() => handleSuburbClick(suburbName)}
+                  className="px-4 py-2 bg-white/20 hover:bg-white/30 text-white rounded-full text-sm font-medium border border-white/40 transition backdrop-blur-sm"
+                >
+                  {suburbName}
+                </button>
+              ))}
             </div>
-          </form>
+          </div>
 
           {/* Results info */}
           {installers.length > 0 && (
-            <p className="text-center text-gray-600 mb-8">
+            <p className="text-center text-white/80 mt-12 drop-shadow-lg">
               Showing {installers.length} installer{installers.length !== 1 ? 's' : ''}
             </p>
           )}
