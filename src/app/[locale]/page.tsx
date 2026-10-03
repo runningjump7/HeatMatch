@@ -65,18 +65,18 @@ export default function Home() {
     <PageLayout>
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-          <img src="/icons/heatmatch-logo.svg" alt="HeatMatch" className="h-10" />
+        <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-2 md:gap-4">
+          <img src="/icons/heatmatch-logo.svg" alt="HeatMatch" className="h-10 flex-shrink-0" />
           <div className="hidden md:flex items-center gap-8">
             <a href="#how-it-works" className="text-gray-600 hover:text-gray-900 text-sm">{t('nav.howItWorks')}</a>
             <a href="#coverage" className="text-gray-600 hover:text-gray-900 text-sm">{t('nav.coverage')}</a>
             <a href="#faq" className="text-gray-600 hover:text-gray-900 text-sm">{t('nav.faq')}</a>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4 ml-auto flex-shrink-0">
             <LanguageSwitcher />
             <button
               onClick={() => { setSelectedService(null); setShowStepper(true); }}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-medium text-sm transition">
+              className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 md:px-6 py-2 rounded-lg font-medium text-sm transition whitespace-nowrap">
               {t('nav.getQuote')}
             </button>
           </div>
