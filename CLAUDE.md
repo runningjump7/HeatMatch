@@ -57,6 +57,24 @@ Use this template whenever asked for a PRD:
 - Keep handoff context in next-session-prompt.md.
 - Store long-form product docs under docs/ when available.
 
+## Page Structure & Layout
+**All pages must use PageLayout component.** Never implement custom main/footer layout.
+
+```tsx
+import PageLayout from '@/components/PageLayout';
+
+export default function MyPage() {
+  return (
+    <PageLayout>
+      <nav>...</nav>
+      <section>content</section>
+    </PageLayout>
+  );
+}
+```
+
+PageLayout handles: flex layout, min-h-screen, footer positioning, footer component. This prevents layout shift with async data and ensures consistent structure across the site. **Enforce this pattern—no exceptions.**
+
 ## Collaboration Style
 - Be decisive but transparent.
 - Flag assumptions early.
