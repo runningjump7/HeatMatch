@@ -147,7 +147,7 @@ export default function InstallersDirectory() {
             <form onSubmit={handleSearch} className="max-w-2xl mx-auto mb-10">
               <div className="flex gap-3">
                 <div className="flex-1 relative">
-                  <span className="absolute left-4 top-4 text-gray-400">📍</span>
+                  <img src="/icons/location-pin.svg" alt="Location" className="absolute left-4 top-4 w-6 h-6 text-gray-500" style={{color: '#9CA3AF'}} />
                   <input
                     type="text"
                     placeholder="Enter your suburb or postcode"
