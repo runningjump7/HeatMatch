@@ -10,7 +10,7 @@ const testInstallers = [
     serviceSuburbs: ['Takapuna', 'Devonport', 'Birkenhead'],
     yearsInBusiness: 8,
     bio: 'Award-winning heat pump installers specializing in premium residential solutions across the North Shore.',
-    photoUrl: 'https://via.placeholder.com/400x300?text=Green+Energy+Solutions',
+    photoUrl: '/images/heat-pump-1.jpg',
     status: 'verified',
   },
   {
@@ -22,7 +22,7 @@ const testInstallers = [
     serviceSuburbs: ['Albany', 'Glenfield', 'Mairangi Bay'],
     yearsInBusiness: 5,
     bio: 'Expert heat pump installation and maintenance. Fast, reliable service with 5-year warranty.',
-    photoUrl: 'https://via.placeholder.com/400x300?text=Thermal+Comfort',
+    photoUrl: '/images/heat-pump-2.jpg',
     status: 'verified',
   },
   {
@@ -34,7 +34,7 @@ const testInstallers = [
     serviceSuburbs: ['Browns Bay', 'Long Bay', 'Milford'],
     yearsInBusiness: 3,
     bio: 'New to the market but fully certified. Competitive pricing on quality heat pump systems.',
-    photoUrl: 'https://via.placeholder.com/400x300?text=Cozy+Climate',
+    photoUrl: '/images/heat-pump-3.jpg',
     status: 'verified',
   },
 ];
