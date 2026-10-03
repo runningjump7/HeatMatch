@@ -277,5 +277,6 @@ export default function ContactPage() {
 
 
     </div>
+    </PageLayout>
   );
 }
