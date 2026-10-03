@@ -62,7 +62,7 @@ export default function InstallersDirectory() {
         const response = await fetch(`/api/installers?${params}`);
         const data: ListResponse = await response.json();
 
-        if (!data.success) {
+        if (!data.success || !data.data) {
           setError(data.error || 'Failed to load installers');
           return;
         }
