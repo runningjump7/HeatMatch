@@ -41,6 +41,12 @@ const testInstallers = [
 
 async function seedInstallers() {
   try {
+    // Delete old test installers
+    const slugs = testInstallers.map(i => i.slug);
+    await query('DELETE FROM installers WHERE slug = ANY($1)', [slugs]);
+    console.log('✓ Deleted old test installers');
+
+    // Create new ones with images
     for (const installer of testInstallers) {
       const sql = `
         INSERT INTO installers (
@@ -59,7 +65,6 @@ async function seedInstallers() {
         ) VALUES (
           $1, $2, $3, $4, $5, $6::text[], $7, $8, $9, $10, true, NOW()
         )
-        ON CONFLICT (slug) DO NOTHING
       `;
 
       await query(sql, [
@@ -75,10 +80,10 @@ async function seedInstallers() {
         installer.status,
       ]);
 
-      console.log(`✓ Added ${installer.businessName}`);
+      console.log(`✓ Created ${installer.businessName} with image: ${installer.photoUrl}`);
     }
 
-    console.log('\n✓ Test installers seeded successfully');
+    console.log('\n✓ Test installers recreated successfully with images!');
     process.exit(0);
   } catch (error) {
     console.error('Error seeding installers:', error);
