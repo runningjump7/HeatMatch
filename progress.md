@@ -38,18 +38,18 @@
 - Responsive Tailwind classes ensure proper layout: mobile → tablet → desktop
 - No layout shift or unexpected wrapping on narrow viewports
 
-#### Test Installer Image Replacement ✅
+#### Test Installer Image Replacement ✅ COMPLETE
 - ✅ Identified: Test installer accounts had broken placeholder.com images
 - ✅ Saved 3 professional heat pump installation photos:
   - `public/images/heat-pump-1.jpg` — Outdoor unit installation in garden
   - `public/images/heat-pump-2.jpg` — Indoor split unit wall mount
   - `public/images/heat-pump-3.jpg` — Technician installing outdoor unit
-- ✅ Updated seed script to:
-  - DELETE old test installer accounts (with broken images)
-  - CREATE new ones with real heat pump images
-  - Much simpler than manual database updates!
-- ✅ Verified images accessible from dev server (HTTP 200)
-- ✅ Ready to use: Run `tsx scripts/seed-test-installers.ts` locally to recreate test accounts with images
+- ✅ Updated seed script to DELETE old records and CREATE new ones with real images
+- ✅ Ran SQL in Neon dashboard to update database:
+  - Deleted old test installer records
+  - Created new Green Energy Solutions, Thermal Comfort NZ, Cozy Climate Installers
+  - All now displaying real heat pump images
+- ✅ Verified images live on installers page at `/en/installers`
 
 ### Files Modified
 - `src/app/[locale]/page.tsx` — Enhanced header responsive classes
