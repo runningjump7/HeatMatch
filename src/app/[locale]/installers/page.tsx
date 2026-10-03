@@ -160,7 +160,8 @@ export default function InstallersDirectory() {
                   type="submit"
                   className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-lg font-semibold transition flex items-center gap-2 whitespace-nowrap"
                 >
-                  🔍 Search
+                  <img src="/icons/search.svg" alt="Search" className="w-5 h-5" />
+                  Search
                 </button>
               </div>
             </form>
