@@ -1,35 +1,64 @@
 # HeatMatch Progress
 
-## Session 16 — v1.2 Database Migration Complete
+## Session 16 — v1.2 Database Migration + API Implementation
 
 **Date:** 2026-10-03
 
 ### Completed
-✅ Created reversible database migration (v1.2-installer-directory-migration.ts)
-✅ Created installer_translations table (multilingual ready: EN/ZH-CN/ZH-TW)
-✅ Added slug (unique, indexed) for URL routing
-✅ Added status enum (verified/unclaimed) replacing approved boolean
-✅ Added verified_at timestamp for audit trail
-✅ Generated slugs for 2 existing installers
-✅ Migrated approved boolean → status enum
-✅ Backfilled English translations
-✅ Created 5 performance indices
-✅ Migration wrapped in transaction with rollback capability
-✅ Ran migration successfully against Neon Postgres
+
+#### Part 1: Database Migration ✅
+- ✅ Created reversible database migration (v1.2-installer-directory-migration.ts)
+- ✅ Created installer_translations table (multilingual: EN/ZH-CN/ZH-TW)
+- ✅ Added slug (unique, indexed), status (verified/unclaimed), verified_at columns
+- ✅ Generated slugs for 2 existing installers
+- ✅ Backfilled English translations + status enum migration
+- ✅ Created 5 performance indices
+- ✅ Migration wrapped in transaction with rollback capability
+- ✅ Ran successfully against Neon Postgres
+
+#### Part 2: API Implementation ✅
+- ✅ Built `GET /api/installers` endpoint
+  - Pagination (default 20/page, max 100)
+  - Suburb filtering (case-insensitive, partial match, primary or service suburbs)
+  - Status filtering (verified/unclaimed)
+  - Language support with fallback (en → zh-tw → zh-cn)
+  - Returns both verified + unclaimed (SEO exposure)
+  - Cache: 5 minutes
+  - Filters out inactive installers (profileActive=false)
+
+- ✅ Built `GET /api/installers/[slug]` endpoint
+  - Full profile with all fields
+  - Language parameter with fallback chain (requested → ZH-TW → ZH-CN → EN)
+  - Shows which language was used + fallback chain
+  - 404 if not found
+  - Cache: 10 minutes
+  - Filters out inactive installers
+
+- ✅ Created comprehensive integration tests (22 tests)
+  - List endpoint: 12 tests (pagination, filtering, languages, edge cases)
+  - Detail endpoint: 10 tests (slugs, languages, null handling, fallback)
+  - Test data setup/teardown with 4 installers + translations
+
+### Technical Decisions Locked
+- Slug is permanent (never changes even if business name changes)
+- Inactive installers (profileActive=false) filtered from all responses
+- Language fallback: Requested → ZH-TW → ZH-CN → EN
+- Both verified and unclaimed installers publicly visible
+- HTTP caching headers for CDN performance
+- Analytics tracking deferred to v1.2.1
 
 ### Database Changes Summary
 - **New table:** installer_translations(installer_id, language, business_name, bio)
 - **New columns on installers:** slug, status, verified_at
-- **Migration of data:** approved=true → status='verified', approved=false → status='unclaimed'
-- **Backfill:** all existing data (business_name, bio) → translations table (language='en')
+- **Data migration:** approved=true → status='verified', approved=false → status='unclaimed'
+- **Backfill:** business_name, bio → translations table (language='en')
 
-### Next Steps (Ready to Code)
-1. Build public API: `/api/installers` (list + single profile)
-2. Build public pages: `/installers` (directory) + `/installers/[slug]` (profiles)
-3. Add multilingual support (i18n routing: /en, /zh-cn, /zh-tw)
-4. Update admin UI: status badge toggle (verified/unclaimed)
-5. Add SEO: meta tags, schema.org LocalBusiness structured data
-6. Testing + QA
+### Next Steps (Ready for Pages)
+1. Build public pages: `/installers` (directory) + `/installers/[slug]` (profiles)
+2. Add multilingual routing (i18n path-based: /en, /zh-cn, /zh-tw)
+3. Update admin UI: status badge toggle (verified/unclaimed)
+4. Add SEO: meta tags, schema.org LocalBusiness structured data
+5. Manual testing + QA
 
 ---
 
