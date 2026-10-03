@@ -1,5 +1,69 @@
 # HeatMatch Progress
 
+## Session 18 (Continued) — Header Standardization, Multilingual Support & Deployment Fixes
+
+**Date:** 2026-10-03 (afternoon)
+
+### Completed
+
+#### Part 1: Unified Header Across All Pages ✅
+- ✅ Standardized installers page header to match landing page:
+  - Removed custom "Back to Home" button
+  - Added LanguageSwitcher component with language toggles (English, 簡體中文, 繁體中文)
+  - Updated navigation to use translations: "How it Works", "Areas We Service", "FAQ"
+  - Replaced custom buttons with green "Get Quote" button matching landing page
+  - Navigation now responsive and consistent across all pages
+
+#### Part 2: Multilingual Support for Installers Directory ✅
+- ✅ Added complete translation keys for installer page:
+  - Created `installers` section in en.json, zh-CN.json, zh-TW.json
+  - Translated all page content:
+    - Tagline: "LOCAL • VERIFIED • NO OBLIGATION" (tagline)
+    - Heading: "Find Trusted Heat Pump Installers"
+    - Subtitle and all UI copy
+    - Search placeholder, buttons
+    - Empty states, footer CTA
+  - Updated page component to use `t()` function for all text
+  - Language switcher now properly changes ALL installer page content
+  - Chinese users can browse directory in their preferred language
+
+#### Part 3: Deployment Fixes ✅
+- ✅ **Bug 1 (Build failure):** Missing PageLayout import in blog page
+  - Added: `import PageLayout from '@/components/PageLayout'`
+  
+- ✅ **Bug 2 (TypeScript error):** ListResponse interface missing error property
+  - Made `data` and `error` properties optional
+  - Type: `data?: {...}` and `error?: string`
+  
+- ✅ **Bug 3 (TypeScript error):** Unsafe access to potentially undefined `data.data`
+  - Added null check: `if (!data.success || !data.data)`
+  - Prevents accessing undefined nested properties
+
+- ✅ **Result:** All three deployments succeeded after fixes
+
+### Technical Details
+- Multilingual routing uses Next.js i18n with `[locale]` dynamic segments
+- Language switcher uses `useLocale()` hook to detect current language
+- All translation keys follow naming convention: `installers.keyName`
+- Installer cards and results still work with translations
+
+### Files Modified
+- `messages/en.json` — Added installers section with 20 translation keys
+- `messages/zh-CN.json` — Added Simplified Chinese translations
+- `messages/zh-TW.json` — Added Traditional Chinese translations
+- `src/app/[locale]/installers/page.tsx` — Updated to use translations + import fixes
+- `src/app/[locale]/blog/page.tsx` — Added missing PageLayout import
+
+### Testing Done
+- ✅ Verified language switcher changes all text on installers page
+- ✅ Confirmed TypeScript build passes with all fixes
+- ✅ Deployment succeeded on third attempt
+
+### Blockers Cleared
+- None remaining; deployment pipeline now clean
+
+---
+
 ## Session 18 — Public Installer Directory Hero Section & Search UX
 
 **Date:** 2026-10-03
