@@ -69,7 +69,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <PageLayout>
       {/* Header */}
       <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 text-white py-16">
         <div className="max-w-4xl mx-auto px-4">
