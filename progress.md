@@ -44,9 +44,12 @@
   - `public/images/heat-pump-1.jpg` — Outdoor unit installation in garden
   - `public/images/heat-pump-2.jpg` — Indoor split unit wall mount
   - `public/images/heat-pump-3.jpg` — Technician installing outdoor unit
-- ✅ Updated seed script to use local image URLs instead of broken external placeholders
+- ✅ Updated seed script to:
+  - DELETE old test installer accounts (with broken images)
+  - CREATE new ones with real heat pump images
+  - Much simpler than manual database updates!
 - ✅ Verified images accessible from dev server (HTTP 200)
-- ✅ To complete: Run `tsx scripts/seed-test-installers.ts` to sync database with new image URLs
+- ✅ Ready to use: Run `tsx scripts/seed-test-installers.ts` locally to recreate test accounts with images
 
 ### Files Modified
 - `src/app/[locale]/page.tsx` — Enhanced header responsive classes
