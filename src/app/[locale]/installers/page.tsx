@@ -22,7 +22,7 @@ interface Installer {
 
 interface ListResponse {
   success: boolean;
-  data: {
+  data?: {
     installers: Installer[];
     pagination: {
       page: number;
@@ -31,6 +31,7 @@ interface ListResponse {
       pages: number;
     };
   };
+  error?: string;
 }
 
 export default function InstallersDirectory() {
