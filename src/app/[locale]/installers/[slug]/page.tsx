@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Footer from '@/components/Footer';
 
 interface DetailResponse {
   success: boolean;
@@ -329,6 +330,8 @@ export default function InstallerProfile({ params }: { params: Promise<{ slug: s
           </div>
         </div>
       </section>
+
+      <Footer />
     </main>
   );
 }

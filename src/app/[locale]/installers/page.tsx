@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Footer from '@/components/Footer';
 
 interface Installer {
   id: string;
@@ -327,6 +328,8 @@ export default function InstallersDirectory() {
           </Link>
         </div>
       </section>
+
+      <Footer />
     </main>
   );
 }
