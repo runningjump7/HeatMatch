@@ -130,17 +130,17 @@ export default function InstallersDirectory() {
           <div className="text-center">
             {/* Tagline */}
             <p className="text-sm md:text-base font-semibold text-gray-600 tracking-widest mb-6">
-              LOCAL • VERIFIED • NO OBLIGATION
+              {t('installers.tagline')}
             </p>
 
             {/* Main Heading */}
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4 leading-tight">
-              Find Trusted Heat Pump Installers
+              {t('installers.heading')}
             </h1>
 
             {/* Subtitle */}
             <p className="text-lg md:text-xl text-gray-600 mb-12">
-              Browse verified heat pump installers across Auckland's North Shore.
+              {t('installers.subheading')}
             </p>
 
             {/* Search Form */}
@@ -150,7 +150,7 @@ export default function InstallersDirectory() {
                   <img src="/icons/location-pin.svg" alt="Location" className="absolute left-4 top-4 w-6 h-6 text-gray-500" style={{color: '#9CA3AF'}} />
                   <input
                     type="text"
-                    placeholder="Enter your suburb or postcode"
+                    placeholder={t('installers.searchPlaceholder')}
                     value={suburb}
                     onChange={(e) => setSuburb(e.target.value)}
                     className="w-full pl-12 pr-4 py-4 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-gray-900 placeholder-gray-500 bg-white"
@@ -161,14 +161,14 @@ export default function InstallersDirectory() {
                   className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-lg font-semibold transition flex items-center gap-2 whitespace-nowrap"
                 >
                   <img src="/icons/search.svg" alt="Search" className="w-5 h-5" />
-                  Search
+                  {t('installers.searchButton')}
                 </button>
               </div>
             </form>
 
             {/* Popular Suburbs */}
             <div className="flex flex-wrap justify-center gap-3">
-              <span className="text-gray-700 text-sm font-medium self-center">Popular suburbs:</span>
+              <span className="text-gray-700 text-sm font-medium self-center">{t('installers.popularSuburbs')}</span>
               {popularSuburbs.map((suburbName) => (
                 <button
                   key={suburbName}
@@ -298,11 +298,11 @@ export default function InstallersDirectory() {
         <section className="py-16">
           <div className="max-w-4xl mx-auto px-4 text-center">
             <div className="text-6xl mb-4">🔍</div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">No installers found</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('installers.noInstallersFound')}</h2>
             <p className="text-gray-600 mb-8">
               {suburb
-                ? `Try searching for a different suburb or browse all installers.`
-                : 'Start by searching for a suburb to find installers near you.'}
+                ? t('installers.tryDifferent')
+                : t('installers.startSearching')}
             </p>
             {suburb && (
               <button
@@ -312,7 +312,7 @@ export default function InstallersDirectory() {
                 }}
                 className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-medium transition"
               >
-                Clear Search
+                {t('installers.clearSearch')}
               </button>
             )}
           </div>
@@ -367,16 +367,16 @@ export default function InstallersDirectory() {
       <section className="py-16 md:py-24 bg-gradient-to-r from-gray-900 to-gray-800">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Ready for Your Heat Pump Installation?
+            {t('installers.readyForInstallation')}
           </h2>
           <p className="text-lg text-gray-300 mb-8">
-            Contact an installer directly or get a free quote from multiple providers.
+            {t('installers.contactInstaller')}
           </p>
           <Link
             href="/"
             className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-lg font-semibold transition"
           >
-            Get Free Quote →
+            {t('installers.getQuoteButton')}
           </Link>
         </div>
       </section>

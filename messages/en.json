@@ -315,6 +315,28 @@
     "successMessage": "Thank you for your message. We'll get back to you soon!",
     "errorMessage": "There was an error sending your message. Please try again."
   },
+  "installers": {
+    "tagline": "LOCAL • VERIFIED • NO OBLIGATION",
+    "heading": "Find Trusted Heat Pump Installers",
+    "subheading": "Browse verified heat pump installers across Auckland's North Shore.",
+    "searchPlaceholder": "Enter your suburb or postcode",
+    "searchButton": "Search",
+    "popularSuburbs": "Popular suburbs:",
+    "noInstallersFound": "No installers found",
+    "startSearching": "Start by searching for a suburb to find installers near you.",
+    "tryDifferent": "Try searching for a different suburb or browse all installers.",
+    "clearSearch": "Clear Search",
+    "showingResults": "Showing {{count}} installer{{plural}}",
+    "viewProfile": "View Profile →",
+    "yearsInBusiness": "{{years}} years in business",
+    "serviceSuburbs": "{{count}} suburbs",
+    "verified": "✓ Verified",
+    "unclaimed": "Unclaimed",
+    "readyForInstallation": "Ready for Your Heat Pump Installation?",
+    "contactInstaller": "Contact an installer directly or get a free quote from multiple providers.",
+    "getQuoteButton": "Get Free Quote →",
+    "backToDirectory": "← Back to Directory"
+  },
   "pages": {
     "about": {
       "heading": "About HeatMatch",

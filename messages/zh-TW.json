@@ -426,5 +426,27 @@
       "section13Title": "聯繫信息",
       "section13Text": "如果您對這些條款和條件有任何疑問，請撥打 +64 21 024 45 890 聯繫我們。"
     }
+  },
+  "installers": {
+    "tagline": "本地 • 已驗證 • 無義務",
+    "heading": "尋找值得信賴的熱泵安裝商",
+    "subheading": "瀏覽奧克蘭北岸的已驗證熱泵安裝商。",
+    "searchPlaceholder": "輸入您的郊區或郵編",
+    "searchButton": "搜尋",
+    "popularSuburbs": "熱門郊區:",
+    "noInstallersFound": "未找到安裝商",
+    "startSearching": "開始搜尋郊區以查找您附近的安裝商。",
+    "tryDifferent": "嘗試搜尋不同的郊區或瀏覽所有安裝商。",
+    "clearSearch": "清除搜尋",
+    "showingResults": "顯示 {{count}} 個安裝商{{plural}}",
+    "viewProfile": "查看個人資料 →",
+    "yearsInBusiness": "營業 {{years}} 年",
+    "serviceSuburbs": "{{count}} 個郊區",
+    "verified": "✓ 已驗證",
+    "unclaimed": "未認領",
+    "readyForInstallation": "準備好進行熱泵安裝？",
+    "contactInstaller": "直接聯繫安裝商或從多個提供商獲得免費報價。",
+    "getQuoteButton": "獲取免費報價 →",
+    "backToDirectory": "← 返回目錄"
   }
 }
