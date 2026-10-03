@@ -120,7 +120,7 @@ export default function InstallersDirectory() {
       <section
         className="relative pt-24 md:pt-32 pb-48 md:pb-64 bg-cover bg-center overflow-hidden"
         style={{
-          backgroundImage: 'url(/images/heatmatch-background.svg)',
+          backgroundImage: 'url(/images/hero-heatpump.jpg)',
         }}
       >
         {/* White overlay to lighten background */}
