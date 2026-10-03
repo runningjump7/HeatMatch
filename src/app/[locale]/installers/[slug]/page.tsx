@@ -14,6 +14,7 @@ interface DetailResponse {
     photoUrl: string | null;
     email: string;
     phone: string;
+    website: string | null;
     businessNumber: string | null;
     suburb: string;
     serviceSuburbs: string[];
@@ -259,6 +260,22 @@ export default function InstallerProfile({ params }: { params: Promise<{ slug: s
                     {installer.email}
                   </a>
                 </div>
+
+                {/* Website */}
+                {installer.website && (
+                  <div className="mb-6">
+                    <p className="text-sm text-gray-600 mb-2">Website</p>
+                    <a
+                      href={installer.website.startsWith('http') ? installer.website : `https://${installer.website}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-emerald-600 hover:text-emerald-700 font-medium transition flex items-center gap-2"
+                    >
+                      <span>🌐</span>
+                      {installer.website.replace(/^https?:\/\//, '')}
+                    </a>
+                  </div>
+                )}
 
                 {/* Business Number */}
                 {installer.businessNumber && (

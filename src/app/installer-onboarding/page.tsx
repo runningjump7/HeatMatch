@@ -10,6 +10,7 @@ type OnboardingForm = {
   bio: string;
   primary_suburb: string;
   service_suburbs: string;
+  website: string;
   images: string[];
 };
 
@@ -22,6 +23,7 @@ export default function InstallerOnboardingPage() {
     bio: '',
     primary_suburb: '',
     service_suburbs: '',
+    website: '',
     images: [],
   });
   const [imageInput, setImageInput] = useState('');
@@ -62,6 +64,7 @@ export default function InstallerOnboardingPage() {
             .split(',')
             .map((s) => s.trim())
             .filter(Boolean),
+          website: form.website || null,
           images: form.images,
         }),
       });
@@ -123,6 +126,19 @@ export default function InstallerOnboardingPage() {
                 placeholder="+64 9 234 5678"
                 required
               />
+            </div>
+
+            {/* Website */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">Website</label>
+              <input
+                type="url"
+                value={form.website}
+                onChange={(e) => updateField('website', e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-600"
+                placeholder="e.g., https://www.example.com or example.com"
+              />
+              <p className="text-xs text-gray-500 mt-1">Optional - your business website URL</p>
             </div>
 
             {/* Years in Business */}

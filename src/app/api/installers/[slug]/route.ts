@@ -21,7 +21,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     const installerResult = await query(
       `SELECT id, slug, business_name, bio, photo_url, clerk_user_id, email, phone,
               business_number, suburb_primary, service_suburbs, years_in_business,
-              status, verified_at, created_at, updated_at, profile_active
+              status, verified_at, created_at, updated_at, profile_active, website
        FROM installers
        WHERE slug = $1`,
       [slug]
@@ -83,6 +83,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
           clerkUserId: installer.clerk_user_id,
           email: installer.email,
           phone: installer.phone,
+          website: installer.website,
           businessNumber: installer.business_number,
           suburb: installer.suburb_primary,
           serviceSuburbs: installer.service_suburbs || [],
