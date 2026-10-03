@@ -1,5 +1,117 @@
 # HeatMatch Progress
 
+## Session 18 — Public Installer Directory Hero Section & Search UX
+
+**Date:** 2026-10-03
+
+### Completed
+
+#### Part 1: Hero Section Design ✅
+- ✅ Built professional hero section at `/en/installers` with:
+  - Background image (heatmatch-background.svg) showing Auckland North Shore landscape
+  - White overlay (bg-white/40) for text readability without darkening the image
+  - "LOCAL • VERIFIED • NO OBLIGATION" tagline in gray-600
+  - Large bold heading "Find Trusted Heat Pump Installers" in gray-900
+  - Subtitle in gray-600 with location context
+  - Expanded hero height (pb-48 md:pb-64) to show more background imagery
+
+#### Part 2: Search Bar & UX Icons ✅
+- ✅ Replaced emoji icons with professional SVG icons:
+  - Search icon: Minimalist magnifying glass (w-5 h-5, white on green button)
+  - Location pin: Modern map marker icon (gray-500, matches placeholder text color)
+- ✅ Search bar styling:
+  - White background with gray-500 icon
+  - Full-width input with location placeholder "Enter your suburb or postcode"
+  - Green Search button with white icon
+  - Focus states (ring-2 ring-emerald-500)
+
+#### Part 3: Popular Suburbs Quick Links ✅
+- ✅ Added 5 popular suburb buttons below search:
+  - Takapuna, Albany, Glenfield, Browns Bay, Milford
+  - White background with gray borders
+  - Hover state (bg-gray-50)
+  - Click triggers instant search for that suburb
+
+#### Part 4: Test Data & Full Flow ✅
+- ✅ Created seed script (`scripts/seed-test-installers.ts`) with 3 test businesses:
+  1. **Green Energy Solutions** (Takapuna) — 8 years, verified
+  2. **Thermal Comfort NZ** (Albany) — 5 years, verified
+  3. **Cozy Climate Installers** (Browns Bay) — 3 years, verified
+- ✅ Installer directory grid displays all cards with:
+  - Photo (placeholder from via.placeholder.com)
+  - Business name
+  - Location
+  - Bio/description (truncated)
+  - Verified badge
+  - Service suburbs count
+  - Years in business
+  - "View Profile" CTA
+
+#### Part 5: Fixed Installer Detail API ✅
+- ✅ **Bug:** `params` is a Promise in Next.js 13+ but endpoint accessed it synchronously
+  - Changed: `params: { slug: string }` → `params: Promise<{ slug: string }>`
+  - Fixed: `const slug = params.slug` → `const { slug } = await params`
+- ✅ **Result:** Individual installer profile page now works
+  - `/en/installers/green-energy-solutions` loads successfully
+  - Returns full installer data (name, bio, contact, service areas, verified status)
+  - Proper error handling for not-found installers (404)
+
+#### Part 6: Navigation & UX ✅
+- ✅ Updated nav bar on installers page with:
+  - HeatMatch logo (links home)
+  - Navigation links: "How it works", "Get quotes", "For installers"
+  - "Back to Home" button (emerald border style)
+- ✅ Directory-level empty state: "No installers found" with helpful text
+- ✅ Full end-to-end flow working:
+  1. Land on `/en/installers` with hero
+  2. Search for suburb (or click popular suburb button)
+  3. See results grid with installer cards
+  4. Click card → see individual profile with full details
+  5. "Back to Directory" link to return to search
+
+### Technical Improvements
+- Removed incorrectly escaped route directory (`\[slug\]`) that was interfering with routing
+- All SVG icons use `currentColor` for theme flexibility (white in buttons, gray in inputs)
+- Installer API properly handles language fallback (requested → ZH-TW → ZH-CN → EN)
+- Database query performance verified (rows returned instantly for 3 test records)
+
+### UX/Design Decisions
+- **Hero image opacity:** White overlay (40%) chosen over dark overlay to preserve landscape beauty while ensuring text readability
+- **Text colors:** Matched to home page palette for consistency (gray-900 heading, gray-600 body)
+- **Button style:** Clean bordered aesthetic for suburb buttons (not frosted glass from earlier iteration)
+- **Icon colors:** Gray-500 for location pin (matches input placeholders), white for search (high contrast on green button)
+
+### Files Modified/Created
+- `src/app/[locale]/installers/page.tsx` — Hero section, search bar, results grid, empty state
+- `src/app/api/installers/[slug]/route.ts` — Fixed params Promise issue
+- `public/icons/search.svg` — New minimalist search icon
+- `public/icons/location-pin.svg` — New location pin icon
+- `scripts/seed-test-installers.ts` — Test data seeding script
+
+### Testing Done
+- ✅ Hero section renders with correct styling
+- ✅ Search bar accepts input (suburb or postcode)
+- ✅ Popular suburb buttons trigger search correctly
+- ✅ Results grid displays test data accurately
+- ✅ Individual profile pages load and display full installer info
+- ✅ Navigation buttons work ("Back to Directory", nav links)
+- ✅ Empty state displays when no results
+- ✅ Icons render at correct sizes with correct colors
+
+### Next Steps
+1. Add more test data or connect to real installer database
+2. Build installer profile detail page with full styling
+3. Add contact/quote CTA on profile page
+4. Implement search refinements (status filter, distance filter, etc.)
+5. SEO: Add meta tags, schema.org structured data
+6. Mobile responsiveness testing
+
+### Blockers/Notes
+- None at this time; full flow is working end-to-end
+- 3 test installers sufficient for demonstration; real data can be added when needed
+
+---
+
 ## Session 17 — Complete Disaster, Total Recovery, Architecture Standardization
 
 **Date:** 2026-10-03
