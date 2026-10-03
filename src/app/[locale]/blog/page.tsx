@@ -2,6 +2,7 @@
 
 import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
+import PageLayout from '@/components/PageLayout';
 import { getAllBlogPosts } from '@/data/blog-posts';
 
 const topicLabels: Record<string, { en: string; 'zh-CN': string; 'zh-TW': string }> = {
