@@ -123,23 +123,23 @@ export default function InstallersDirectory() {
           backgroundImage: 'url(/images/heatmatch-background.svg)',
         }}
       >
-        {/* Overlay for readability */}
-        <div className="absolute inset-0 bg-black/20" />
+        {/* White overlay to lighten background */}
+        <div className="absolute inset-0 bg-white/40" />
 
         <div className="relative max-w-6xl mx-auto px-4">
           <div className="text-center">
             {/* Tagline */}
-            <p className="text-sm md:text-base font-semibold text-white tracking-widest mb-6 drop-shadow-lg">
+            <p className="text-sm md:text-base font-semibold text-gray-600 tracking-widest mb-6">
               LOCAL • VERIFIED • NO OBLIGATION
             </p>
 
             {/* Main Heading */}
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 leading-tight drop-shadow-lg">
+            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4 leading-tight">
               Find Trusted Heat Pump Installers
             </h1>
 
             {/* Subtitle */}
-            <p className="text-lg md:text-xl text-white/90 mb-12 drop-shadow-lg">
+            <p className="text-lg md:text-xl text-gray-600 mb-12">
               Browse verified heat pump installers across Auckland's North Shore.
             </p>
 
@@ -153,7 +153,7 @@ export default function InstallersDirectory() {
                     placeholder="Enter your suburb or postcode"
                     value={suburb}
                     onChange={(e) => setSuburb(e.target.value)}
-                    className="w-full pl-12 pr-4 py-4 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-gray-900 placeholder-gray-500"
+                    className="w-full pl-12 pr-4 py-4 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-gray-900 placeholder-gray-500 bg-white"
                   />
                 </div>
                 <button
@@ -166,13 +166,13 @@ export default function InstallersDirectory() {
             </form>
 
             {/* Popular Suburbs */}
-            <div className="flex flex-wrap justify-center gap-3 drop-shadow-lg">
-              <span className="text-white/80 text-sm font-medium self-center">Popular suburbs:</span>
+            <div className="flex flex-wrap justify-center gap-3">
+              <span className="text-gray-700 text-sm font-medium self-center">Popular suburbs:</span>
               {popularSuburbs.map((suburbName) => (
                 <button
                   key={suburbName}
                   onClick={() => handleSuburbClick(suburbName)}
-                  className="px-4 py-2 bg-white/20 hover:bg-white/30 text-white rounded-full text-sm font-medium border border-white/40 transition backdrop-blur-sm"
+                  className="px-4 py-2 bg-white text-gray-700 rounded-lg text-sm font-medium border border-gray-300 hover:bg-gray-50 transition"
                 >
                   {suburbName}
                 </button>
@@ -182,7 +182,7 @@ export default function InstallersDirectory() {
 
           {/* Results info */}
           {installers.length > 0 && (
-            <p className="text-center text-white/80 mt-12 drop-shadow-lg">
+            <p className="text-center text-gray-700 mt-12">
               Showing {installers.length} installer{installers.length !== 1 ? 's' : ''}
             </p>
           )}
