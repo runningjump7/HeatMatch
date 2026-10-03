@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Footer from '@/components/Footer';
+import PageLayout from '@/components/PageLayout';
 
 interface DetailResponse {
   success: boolean;
@@ -133,7 +133,7 @@ export default function InstallerProfile({ params }: { params: Promise<{ slug: s
   }
 
   return (
-    <main className="flex flex-col min-h-screen bg-white">
+    <PageLayout>
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
@@ -146,7 +146,6 @@ export default function InstallerProfile({ params }: { params: Promise<{ slug: s
         </div>
       </nav>
 
-      <div className="flex-1 flex flex-col">
       {/* Hero Section with Photo */}
       <section className="relative h-96 bg-gray-100 overflow-hidden">
         {installer.photoUrl ? (
@@ -331,9 +330,6 @@ export default function InstallerProfile({ params }: { params: Promise<{ slug: s
           </div>
         </div>
       </section>
-      </div>
-
-      <Footer />
-    </main>
+    </PageLayout>
   );
 }
