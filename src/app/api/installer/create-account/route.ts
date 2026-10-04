@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
+import { sendEmail } from '@/lib/email';
+import * as emailTemplates from '@/lib/email-templates';
 import crypto from 'crypto';
 
 function hashPassword(password: string): string {
@@ -75,7 +77,21 @@ export async function POST(request: NextRequest) {
       ['verified', installerId]
     );
 
-    // TODO: Send welcome email
+    // Get installer name for welcome email
+    const installerResult = await query(
+      'SELECT business_name FROM installers WHERE id = $1',
+      [installerId]
+    );
+    const installerName = installerResult.rows[0]?.business_name || 'HeatMatch';
+
+    // Send welcome email
+    const emailTemplate = emailTemplates.welcomeEmail(fullName, installerName);
+    await sendEmail({
+      to: email,
+      subject: emailTemplate.subject,
+      html: emailTemplate.html,
+      text: emailTemplate.text,
+    });
 
     return NextResponse.json(
       {

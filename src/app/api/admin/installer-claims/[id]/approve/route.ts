@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
+import { sendEmail } from '@/lib/email';
+import * as emailTemplates from '@/lib/email-templates';
 import crypto from 'crypto';
 
 // Generate temp password (12 chars: alphanumeric + special chars)
@@ -80,6 +82,27 @@ export async function POST(
        WHERE installer_id = $3 AND status = 'pending' AND id != $4`,
       ['rejected', 'Another claim for this business was already approved', claim.installer_id, id]
     );
+
+    // 5. Get installer name for approval email
+    const installerResult = await query(
+      'SELECT business_name FROM installers WHERE id = $1',
+      [claim.installer_id]
+    );
+    const businessName = installerResult.rows[0]?.business_name || 'HeatMatch';
+
+    // 6. Send approval email with temp password
+    const emailTemplate = emailTemplates.claimApprovedEmail(
+      claim.full_name,
+      businessName,
+      claim.email,
+      tempPassword
+    );
+    await sendEmail({
+      to: claim.email,
+      subject: emailTemplate.subject,
+      html: emailTemplate.html,
+      text: emailTemplate.text,
+    });
 
     return NextResponse.json(
       {

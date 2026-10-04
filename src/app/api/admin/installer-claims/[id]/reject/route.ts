@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
+import { sendEmail } from '@/lib/email';
+import * as emailTemplates from '@/lib/email-templates';
 
 export async function POST(
   request: NextRequest,
@@ -38,6 +40,22 @@ export async function POST(
        WHERE id = $4`,
       ['rejected', null, reason, id]
     );
+
+    // Get installer name for rejection email
+    const installerResult = await query(
+      'SELECT business_name FROM installers WHERE id = $1',
+      [claim.installer_id]
+    );
+    const businessName = installerResult.rows[0]?.business_name || 'HeatMatch';
+
+    // Send rejection email
+    const emailTemplate = emailTemplates.claimRejectedEmail(claim.full_name, businessName, reason);
+    await sendEmail({
+      to: claim.email,
+      subject: emailTemplate.subject,
+      html: emailTemplate.html,
+      text: emailTemplate.text,
+    });
 
     return NextResponse.json(
       {

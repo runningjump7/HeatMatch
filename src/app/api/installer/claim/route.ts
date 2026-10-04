@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
+import { sendEmail } from '@/lib/email';
+import * as emailTemplates from '@/lib/email-templates';
 import crypto from 'crypto';
 
 export async function POST(request: NextRequest) {
@@ -62,6 +64,7 @@ export async function POST(request: NextRequest) {
       );
 
       let claimId: string;
+      const isNewClaim = existingPending.rows.length === 0;
 
       if (existingPending.rows.length > 0) {
         claimId = existingPending.rows[0].id;
@@ -73,6 +76,17 @@ export async function POST(request: NextRequest) {
           [installer.id, email, fullName, 'pending']
         );
         claimId = createResult.rows[0].id;
+      }
+
+      // Send claim submitted email (only for new claims, not resends)
+      if (isNewClaim) {
+        const emailTemplate = emailTemplates.claimSubmittedEmail(fullName, installer.business_name, email);
+        await sendEmail({
+          to: email,
+          subject: emailTemplate.subject,
+          html: emailTemplate.html,
+          text: emailTemplate.text,
+        });
       }
 
       return NextResponse.json(
@@ -116,8 +130,16 @@ export async function POST(request: NextRequest) {
       claimId = createResult.rows[0].id;
     }
 
-    // TODO: Send verification email with claimToken
-    console.log(`[DEBUG] Claim ${claimId}: Send code ${claimToken} to ${email}`);
+    // Send verification code email
+    const emailTemplate = emailTemplates.verificationCodeEmail(claimToken, fullName, installer.business_name);
+    await sendEmail({
+      to: email,
+      subject: emailTemplate.subject,
+      html: emailTemplate.html,
+      text: emailTemplate.text,
+    });
+
+    console.log(`[DEBUG] Claim ${claimId}: Code sent to ${email}`);
 
     return NextResponse.json(
       {
