@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import PageLayout from '@/components/PageLayout';
+import ClaimBusinessModal from '@/components/ClaimBusinessModal';
 
 interface DetailResponse {
   success: boolean;
@@ -32,6 +33,7 @@ export default function InstallerProfile({ params }: { params: Promise<{ slug: s
   const [installer, setInstaller] = useState<DetailResponse['data'] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [claimModalOpen, setClaimModalOpen] = useState(false);
 
   useEffect(() => {
     params.then((p) => setSlug(p.slug));
@@ -308,16 +310,26 @@ export default function InstallerProfile({ params }: { params: Promise<{ slug: s
       {/* Information Banner */}
       <section className="py-12 bg-blue-50 border-t border-blue-200">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="flex items-start gap-4">
-            <div className="text-2xl">ℹ️</div>
-            <div>
-              <h3 className="font-bold text-gray-900 mb-2">About This Listing</h3>
-              <p className="text-gray-700 text-sm">
-                {installer.status === 'verified'
-                  ? 'This installer has been verified and is eligible to receive leads through HeatMatch.'
-                  : 'This installer has not yet verified their profile. They are listed for informational purposes only.'}
-              </p>
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex items-start gap-4 flex-1">
+              <div className="text-2xl mt-1">ℹ️</div>
+              <div>
+                <h3 className="font-bold text-gray-900 mb-2">About This Listing</h3>
+                <p className="text-gray-700 text-sm">
+                  {installer.status === 'verified'
+                    ? 'This installer has been verified and is eligible to receive leads through HeatMatch.'
+                    : 'This installer has not yet verified their profile. They are listed for informational purposes only.'}
+                </p>
+              </div>
             </div>
+            {installer.status !== 'verified' && (
+              <button
+                onClick={() => setClaimModalOpen(true)}
+                className="flex-shrink-0 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-semibold transition whitespace-nowrap"
+              >
+                Claim This Business
+              </button>
+            )}
           </div>
         </div>
       </section>
@@ -347,6 +359,14 @@ export default function InstallerProfile({ params }: { params: Promise<{ slug: s
           </div>
         </div>
       </section>
+
+      {/* Claim Modal */}
+      <ClaimBusinessModal
+        slug={slug}
+        businessName={installer.businessName}
+        isOpen={claimModalOpen}
+        onClose={() => setClaimModalOpen(false)}
+      />
     </PageLayout>
   );
 }

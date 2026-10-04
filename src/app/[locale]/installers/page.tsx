@@ -246,11 +246,11 @@ export default function InstallersDirectory() {
                     {/* Top Section: Name, Badge, Location */}
                     <div>
                       <div className="flex items-start gap-3 mb-2">
-                        <div>
-                          <h3 className="text-xl font-bold text-gray-900 group-hover:text-emerald-600 transition">
+                        <Link href={`/installers/${installer.slug}`} className="flex-1">
+                          <h3 className="text-xl font-bold text-gray-900 hover:text-emerald-600 hover:underline transition cursor-pointer">
                             {installer.businessName}
                           </h3>
-                        </div>
+                        </Link>
                         <span
                           className={`inline-block px-3 py-1 text-xs font-semibold rounded-full flex-shrink-0 whitespace-nowrap ${
                             installer.status === 'verified'

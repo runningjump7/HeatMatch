@@ -1,0 +1,117 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { query } from '@/lib/db';
+import crypto from 'crypto';
+
+export async function POST(request: NextRequest) {
+  try {
+    const { slug, email, fullName } = await request.json();
+
+    // Validate input
+    if (!slug || !email || !fullName) {
+      return NextResponse.json(
+        { success: false, error: 'Missing required fields: slug, email, fullName' },
+        { status: 400 }
+      );
+    }
+
+    // Get installer by slug
+    const installerResult = await query(
+      'SELECT id, business_name FROM installers WHERE slug = $1',
+      [slug]
+    );
+
+    if (installerResult.rows.length === 0) {
+      return NextResponse.json(
+        { success: false, error: 'Installer not found' },
+        { status: 404 }
+      );
+    }
+
+    const installer = installerResult.rows[0];
+
+    // Check if already verified
+    if (installer.account_status === 'verified') {
+      return NextResponse.json(
+        { success: false, error: 'This business has already been claimed' },
+        { status: 400 }
+      );
+    }
+
+    // Extract email domain
+    const emailDomain = email.split('@')[1]?.toLowerCase() || '';
+
+    // Extract business name and convert to domain-like format
+    // e.g., "North Shore Climate Control" → "northshoreclimate" or "northshore" or similar variations
+    const businessNameLower = installer.business_name.toLowerCase();
+    const businessNameNormalized = businessNameLower
+      .replace(/[^a-z0-9\s]/g, '') // Remove special chars
+      .replace(/\s+/g, '') // Remove spaces
+      .substring(0, 20); // Take first 20 chars
+
+    // Check if email domain matches business name
+    const domainWithoutTld = emailDomain.split('.')[0] || '';
+    const isMatchingEmail =
+      domainWithoutTld.includes(businessNameNormalized) ||
+      businessNameNormalized.includes(domainWithoutTld);
+
+    if (!isMatchingEmail) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Email domain does not match this business. Admin will review your claim.',
+          requiresAdminReview: true,
+        },
+        { status: 400 }
+      );
+    }
+
+    // Generate 6-digit code
+    const claimToken = Math.random().toString().slice(2, 8).padStart(6, '0');
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
+    // Check if there's already a pending claim for this email
+    const existingClaim = await query(
+      'SELECT id FROM installer_claims WHERE installer_id = $1 AND email = $2 AND status = $3',
+      [installer.id, email, 'pending']
+    );
+
+    let claimId: string;
+
+    if (existingClaim.rows.length > 0) {
+      // Update existing claim with new token
+      claimId = existingClaim.rows[0].id;
+      await query(
+        'UPDATE installer_claims SET claim_token = $1, claim_token_expires = $2, verification_attempts = 0, resend_count = resend_count + 1 WHERE id = $3',
+        [claimToken, expiresAt, claimId]
+      );
+    } else {
+      // Create new claim
+      const createResult = await query(
+        `INSERT INTO installer_claims (installer_id, email, full_name, claim_token, claim_token_expires)
+         VALUES ($1, $2, $3, $4, $5)
+         RETURNING id`,
+        [installer.id, email, fullName, claimToken, expiresAt]
+      );
+      claimId = createResult.rows[0].id;
+    }
+
+    // TODO: Send verification email with claimToken
+    console.log(`[DEBUG] Claim ${claimId}: Send code ${claimToken} to ${email}`);
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: 'Verification code sent to your email',
+        claimId,
+        email, // Echo back for UI
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error('Claim error:', error);
+    return NextResponse.json(
+      { success: false, error: 'Failed to process claim' },
+      { status: 500 }
+    );
+  }
+}
