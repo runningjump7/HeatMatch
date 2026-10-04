@@ -477,6 +477,14 @@ If Reject:
 - bd282d8: Phase 3 spec
 - 2c870e0: Phase 3 implementation
 - a4f7ac8: Phase 3 docs
+- d3bb1a7: Build fixes — deployed to production ✅
+
+### Post-Deploy Build Fixes (d3bb1a7)
+- create-account: `fullName` was undefined → now selects `full_name` from claim
+- claim: installer `status` wasn't selected → "already claimed" check never fired
+- email.ts: Resend client created at module load crashed build without `RESEND_API_KEY` → now lazy-init (matches contact/send-lead-email routes)
+- email.ts: Resend type fixes (`html`/`text` required, `result.data?.id`)
+- **To verify:** `RESEND_API_KEY` set in Vercel Production, else claim emails are skipped (logged)
 
 ---
 
