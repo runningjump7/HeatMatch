@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
 
     // Get the claim
     const claimResult = await query(
-      'SELECT installer_id, email FROM installer_claims WHERE id = $1 AND status = $2',
+      'SELECT installer_id, email, full_name FROM installer_claims WHERE id = $1 AND status = $2',
       [claimId, 'pending']
     );
 
@@ -51,6 +51,7 @@ export async function POST(request: NextRequest) {
     const claim = claimResult.rows[0];
     const installerId = claim.installer_id;
     const email = claim.email;
+    const fullName = claim.full_name;
 
     // Hash password
     const passwordHash = hashPassword(password);

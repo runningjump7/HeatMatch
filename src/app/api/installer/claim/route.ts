@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
 
     // Get installer by slug
     const installerResult = await query(
-      'SELECT id, business_name FROM installers WHERE slug = $1',
+      'SELECT id, business_name, status FROM installers WHERE slug = $1',
       [slug]
     );
 
