@@ -68,7 +68,7 @@ export async function POST(
     // 3. Update installer to verified
     await query(
       `UPDATE installers
-       SET account_status = $1
+       SET status = $1
        WHERE id = $2`,
       ['verified', claim.installer_id]
     );

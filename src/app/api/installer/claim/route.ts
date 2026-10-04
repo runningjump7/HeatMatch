@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     const installer = installerResult.rows[0];
 
     // Check if already verified
-    if (installer.account_status === 'verified') {
+    if (installer.status === 'verified') {
       return NextResponse.json(
         { success: false, error: 'This business has already been claimed' },
         { status: 400 }

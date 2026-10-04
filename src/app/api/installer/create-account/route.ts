@@ -69,9 +69,9 @@ export async function POST(request: NextRequest) {
       ['approved', userId, claimId]
     );
 
-    // Update installer status
+    // Update installer status to verified
     await query(
-      'UPDATE installers SET account_status = $1 WHERE id = $2',
+      'UPDATE installers SET status = $1 WHERE id = $2',
       ['verified', installerId]
     );
 
