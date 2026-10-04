@@ -315,7 +315,7 @@ export default function AdminClaimDetailsModal({
       {showSuccess && (
         <SuccessModal
           title="Success"
-          message={successMessage}
+          subtitle={successMessage}
           onClose={() => {
             setShowSuccess(false);
             onClose();
