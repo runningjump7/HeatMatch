@@ -146,21 +146,165 @@
 **Phase 2 Status:** 📋 Spec written, ready to build  
 **Phase 3 Status:** 📋 Email templates planned, ready to implement
 
-### Next: Phase 2 Implementation
+---
 
-**Phase 2 (Unhappy Path - Ready to Build):**
-- Email doesn't match → create pending claim
-- Route to admin portal with approval/rejection
-- Admin can approve (auto-user creation) or reject (with reason)
+## Session 23 — Claim Business Flow: Phase 2 Implementation (Admin Review) ✅
+
+**Date:** 2026-10-04 (evening)  
+**Status:** Phase 2 complete & ready for testing
+
+### Completed
+
+#### Part 1: Backend API Endpoints ✅
+- ✅ Modified **POST `/api/installer/claim`** 
+  - Now creates `pending` claim when email doesn't match business domain
+  - Stores claim with submitted_at timestamp
+  - Returns `requiresAdminReview: true` flag
+
+- ✅ Created **GET `/api/admin/installer-claims`**
+  - Fetches pending claims with pagination
+  - Query params: `status` (pending/approved/rejected/all), `page`, `limit`
+  - Returns claim list with installer details
+
+- ✅ Created **GET `/api/admin/installer-claims/{id}`**
+  - Fetch single claim details for modal
+  - Returns full claim + installer info for admin review
+
+- ✅ Created **POST `/api/admin/installer-claims/{id}/approve`**
+  - Generates random 12-char temp password
+  - Creates user record with hashed password
+  - Updates claim status to 'approved'
+  - Updates installer account_status to 'verified'
+  - **Auto-rejects other pending claims** for same installer
+  - Returns temp password for admin to share
+
+- ✅ Created **POST `/api/admin/installer-claims/{id}/reject`**
+  - Updates claim status to 'rejected'
+  - Stores rejection reason in admin_notes
+  - No user created, installer stays unverified
+
+#### Part 2: Frontend Components ✅
+- ✅ Created `AdminClaimDetailsModal` component
+  - **View state:** Shows claim details with approve/reject buttons
+  - **Approve state:** Modal for optional admin notes
+  - **Reject state:** Modal for rejection reason
+  - Displays temp password on successful approval
+  - Success/error feedback with SuccessModal/ErrorModal
+  - Clean state transitions
+
+- ✅ Updated **Admin Installers Page** (`/admin/installers`)
+  - Added view toggle: "All Installers" / "Pending Claims"
+  - Pending claims filter with badge showing count
+  - New table view for pending claims showing:
+    - Business name
+    - Claimed by (full name)
+    - Email submitted
+    - Submitted date
+    - "Review" button
+  - Integrated AdminClaimDetailsModal
+  - Auto-refresh claims after approve/reject actions
+
+- ✅ Updated **ClaimBusinessModal**
+  - Improved Phase 2 error message
+  - Shows info box with next steps
+  - Clear feedback that admin will review within 24 hours
+
+#### Part 3: Phase 2 Features ✅
+- ✅ **Pending Claim Creation:** Email mismatch routes to pending status
+- ✅ **Admin Filter:** Separate view for pending claims in admin portal
+- ✅ **Approval Workflow:** Admin can approve + create temp password
+- ✅ **Rejection Workflow:** Admin can reject with optional reason
+- ✅ **Claim Exclusivity:** Auto-rejects other pending claims when one is approved
+- ✅ **Duplicate Prevention:** Resends code if user resubmits while pending
+- ✅ **Temp Password Generation:** Random 12-char alphanumeric
+
+### Documentation
+- ✅ Created `docs/CLAIM_FLOW_PHASE_2.md` — Complete Phase 2 specification
+  - Full requirements (2.1-2.6)
+  - 4 new API endpoints documented
+  - AdminClaimDetailsModal component design
+  - Admin installers list integration
+  - Database changes & indexes
+  - Error handling matrix
+  - Implementation checklist (15+ tasks)
+
+- ✅ Created `docs/PHASE_2_TEST_PLAN.md` — Comprehensive test plan
+  - **8 test cases** covering all Phase 2 features:
+    1. Email mismatch creates pending claim
+    2. Admin sees pending claims in list
+    3. Admin approves claim (auto-user creation)
+    4. Admin rejects claim with reason
+    5. Claim exclusivity (can't claim verified installer)
+    6. Duplicate pending claims (resend code)
+    7. Multi-word business name handling
+    8. API endpoint response validation
+  - Edge cases: no claims, network errors, stale data
+  - UI/UX checks
+  - Rollback checklist
+  - Success criteria
+
+### Files Created/Modified
+- `src/app/api/admin/installer-claims/route.ts` — NEW: GET claims list
+- `src/app/api/admin/installer-claims/[id]/route.ts` — NEW: GET claim details
+- `src/app/api/admin/installer-claims/[id]/approve/route.ts` — NEW: Approve claim
+- `src/app/api/admin/installer-claims/[id]/reject/route.ts` — NEW: Reject claim
+- `src/components/AdminClaimDetailsModal.tsx` — NEW: Admin claim modal
+- `src/app/api/installer/claim/route.ts` — MODIFIED: Create pending claims
+- `src/app/admin/installers/page.tsx` — MODIFIED: Added pending claims view
+- `src/components/ClaimBusinessModal.tsx` — MODIFIED: Better Phase 2 messaging
+
+### Key Features
+1. **Email Mismatch Routing:** Automatic routing to admin review
+2. **Admin Dashboard:** Dedicated pending claims view with action buttons
+3. **Approval Automation:** One-click approval with temp password generation
+4. **Claim Exclusivity:** Enforced at claim creation and approval time
+5. **State Management:** Clean modal state transitions (view → approve → success)
+6. **Error Handling:** Network failures, invalid states, edge cases
+
+### Phase 2 Flow
+```
+User submits email mismatch
+  ↓
+Claim created with status='pending'
+  ↓
+Admin sees in "Pending Claims" tab
+  ↓
+Admin reviews details + [Approve] or [Reject]
+  ↓
+If Approve:
+  - Temp password generated
+  - User created automatically
+  - Other pending claims auto-rejected
+  - Installer marked verified
+  ↓
+If Reject:
+  - Reason recorded
+  - Installer stays unclaimed
+  - Other pending claims unchanged
+```
+
+### Ready for Testing
+- Start dev server: `npm run dev`
+- Follow tests in `docs/PHASE_2_TEST_PLAN.md`
+- All 8 test cases ready to execute
+
+### Next: Phase 3 (Email Notifications)
+
+**Phase 3 (Ready to Build):**
+- 5 email templates needed:
+  - Verification code sent (Phase 1)
+  - Claim submitted confirmation (Phase 2)
+  - Claim approved + password link (Phase 2)
+  - Claim rejected + reason (Phase 2)
+  - Welcome email (Phase 1)
+- Will integrate with Phase 1 & 2 workflows
 - Spec & test cases already documented in `docs/CLAIM_FLOW_SPEC_PHASE_1_2.md`
 
-**Phase 3 (Email Notifications):**
-- 5 email templates needed:
-  - Verification code (code + 10min expiry)
-  - Claim submitted (admin review needed)
-  - Claim approved (password setup link)
-  - Claim rejected (reason + appeal info)
-  - Welcome (account confirmed)
+### Deferred to Phase 4
+- Installer dashboard + authentication
+- Password reset functionality
+- Email-based password setup (currently on-screen for Phase 1)
+- bcrypt upgrade (currently SHA256)
 
 ---
 

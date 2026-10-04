@@ -55,17 +55,38 @@ export async function POST(request: NextRequest) {
       businessNameNormalized.includes(domainWithoutTld);
 
     if (!isMatchingEmail) {
+      // Phase 2: Email mismatch - create pending claim for admin review
+      const existingPending = await query(
+        'SELECT id FROM installer_claims WHERE installer_id = $1 AND email = $2 AND status = $3',
+        [installer.id, email, 'pending']
+      );
+
+      let claimId: string;
+
+      if (existingPending.rows.length > 0) {
+        claimId = existingPending.rows[0].id;
+      } else {
+        const createResult = await query(
+          `INSERT INTO installer_claims (installer_id, email, full_name, status, submitted_at)
+           VALUES ($1, $2, $3, $4, NOW())
+           RETURNING id`,
+          [installer.id, email, fullName, 'pending']
+        );
+        claimId = createResult.rows[0].id;
+      }
+
       return NextResponse.json(
         {
           success: false,
           error: 'Email domain does not match this business. Admin will review your claim.',
           requiresAdminReview: true,
+          claimId,
         },
         { status: 400 }
       );
     }
 
-    // Generate 6-digit code
+    // Phase 1: Email matches - generate code for instant verification
     const claimToken = Math.random().toString().slice(2, 8).padStart(6, '0');
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
@@ -87,10 +108,10 @@ export async function POST(request: NextRequest) {
     } else {
       // Create new claim
       const createResult = await query(
-        `INSERT INTO installer_claims (installer_id, email, full_name, claim_token, claim_token_expires)
-         VALUES ($1, $2, $3, $4, $5)
+        `INSERT INTO installer_claims (installer_id, email, full_name, status, claim_token, claim_token_expires)
+         VALUES ($1, $2, $3, $4, $5, $6)
          RETURNING id`,
-        [installer.id, email, fullName, claimToken, expiresAt]
+        [installer.id, email, fullName, 'pending', claimToken, expiresAt]
       );
       claimId = createResult.rows[0].id;
     }

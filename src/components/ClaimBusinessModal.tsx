@@ -327,16 +327,26 @@ export default function ClaimBusinessModal({ slug, businessName, isOpen, onClose
           </div>
         )}
 
-        {/* Step 5: Error (Admin Review) */}
+        {/* Step 5: Error (Admin Review - Phase 2) */}
         {step === 'error' && (
           <div className="text-center space-y-4">
             <div className="text-6xl mb-4">📋</div>
             <h3 className="text-xl font-bold text-gray-900">Manual Review Required</h3>
             <p className="text-gray-600">
-              {error}
+              Your email domain doesn't match this business name. Our admin team will review your claim and contact you within 24 hours.
             </p>
+            <div className="bg-blue-50 border border-blue-200 rounded p-4 text-left">
+              <p className="text-sm text-gray-700">
+                <strong>What's next?</strong>
+              </p>
+              <ul className="text-sm text-gray-600 mt-2 space-y-1 list-disc list-inside">
+                <li>We've received your claim</li>
+                <li>Admin will verify your business details</li>
+                <li>You'll get an email with the outcome</li>
+              </ul>
+            </div>
             <p className="text-sm text-gray-500">
-              We'll contact you at <strong>{email}</strong> within 24 hours to verify your claim.
+              We'll contact you at <strong>{email}</strong> within 24 hours.
             </p>
             <button
               onClick={onClose}
