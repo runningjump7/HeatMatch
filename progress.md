@@ -151,7 +151,7 @@
 ## Session 23 — Claim Business Flow: Phase 2 Implementation (Admin Review) ✅
 
 **Date:** 2026-10-04 (evening)  
-**Status:** Phase 2 complete & ready for testing
+**Status:** Phase 2 complete, bug fixes applied, ready for fresh testing
 
 ### Completed
 
@@ -299,6 +299,33 @@ If Reject:
   - Welcome email (Phase 1)
 - Will integrate with Phase 1 & 2 workflows
 - Spec & test cases already documented in `docs/CLAIM_FLOW_SPEC_PHASE_1_2.md`
+
+### Bug Fixes Applied During Testing
+
+**Bug 1: Wrong column name for installer verification**
+- ❌ Was updating `account_status` column (doesn't exist)
+- ✅ Fixed: Update `status` column instead
+- **Affected:** create-account, approve, claim endpoints
+- **Commit:** 71a6c49
+
+**Bug 2: TypeScript error in AdminClaimDetailsModal**
+- ❌ SuccessModal prop was `message` (doesn't exist)
+- ✅ Fixed: Changed to `subtitle` prop
+- **Commit:** 451609c
+
+### Testing Status
+- ✅ Admin portal UI working (pending claims list shows, filters work)
+- ✅ Claim details modal loads correctly
+- ⏳ Happy path verification test: pending (needs fresh test run)
+- ⏳ Phase 2 approval/rejection workflows: ready to test
+- ⏳ All 8 test cases in PHASE_2_TEST_PLAN.md: ready to execute
+
+### Next Session Actions
+1. Complete fresh happy path test (installer should mark as verified)
+2. Run all 8 Phase 2 test cases from PHASE_2_TEST_PLAN.md
+3. If all pass: Phase 2 ✅ complete
+4. If any fail: Debug and fix
+5. Then: Start Phase 3 (email notifications)
 
 ### Deferred to Phase 4
 - Installer dashboard + authentication
