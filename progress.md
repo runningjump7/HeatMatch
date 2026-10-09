@@ -1,5 +1,29 @@
 # HeatMatch Progress
 
+## Session 27 — Build Fix: Suspense Boundaries for useSearchParams() ✅
+
+**Date:** 2026-10-09  
+**Status:** Vercel build fixed and deployed
+
+### Completed
+
+#### Build Issue & Fix ✅
+- **Problem:** Vercel build failed with `useSearchParams() should be wrapped in a suspense boundary` error on `/installer-login` and `/reset-password` pages
+- **Root Cause:** Next.js 16 requires Suspense wrapper for `useSearchParams()` on server-rendered pages
+- **Solution:** Extracted component logic into separate functions and wrapped default exports with `<Suspense>` boundary
+  - `/installer-login/page.tsx` → `LoginContent` component wrapped in Suspense
+  - `/reset-password/page.tsx` → `ResetPasswordContent` component wrapped in Suspense
+- **Verification:** Local build passes, committed and pushed to remote
+
+### Commits This Session
+1. **02eed0b** — fix: Wrap useSearchParams() in Suspense boundaries on dynamic pages
+
+### Outcome
+✅ Vercel build now succeeds  
+✅ Phase 5a remains unchanged and functional
+
+---
+
 ## Session 26 — Phase 5a: Installer Profile Management (Basic Editing) 🚀
 
 **Date:** 2026-10-09  
