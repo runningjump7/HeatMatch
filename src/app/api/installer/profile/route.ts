@@ -49,7 +49,8 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       installer_id: installer.id,
       business_name: installer.business_name,
-      email: user.email,
+      login_email: user.email,
+      public_email: installer.email,
       phone: installer.phone,
       website: installer.website,
       description: installer.description,
@@ -84,7 +85,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { phone, website, description, services } = await request.json();
+    const { public_email, phone, website, description, services } = await request.json();
 
     // Get user
     const userResult = await query(
@@ -119,15 +120,17 @@ export async function POST(request: NextRequest) {
     // Update installer
     await query(
       `UPDATE installers SET
-        phone = $1,
-        website = $2,
-        description = $3,
-        service_installation = $4,
-        service_maintenance = $5,
-        service_repairs = $6,
+        email = $1,
+        phone = $2,
+        website = $3,
+        description = $4,
+        service_installation = $5,
+        service_maintenance = $6,
+        service_repairs = $7,
         updated_at = NOW()
-       WHERE id = $7`,
+       WHERE id = $8`,
       [
+        public_email || null,
         phone || null,
         website || null,
         description || null,

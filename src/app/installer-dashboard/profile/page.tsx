@@ -7,7 +7,8 @@ import Link from 'next/link';
 interface ProfileData {
   installer_id: string;
   business_name: string;
-  email: string;
+  login_email: string;
+  public_email: string;
   phone: string;
   website: string;
   description: string;
@@ -33,6 +34,7 @@ export default function ProfilePage() {
   const [showPasswordModal, setShowPasswordModal] = useState(false);
 
   // Form state
+  const [publicEmail, setPublicEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [website, setWebsite] = useState('');
   const [description, setDescription] = useState('');
@@ -64,6 +66,7 @@ export default function ProfilePage() {
 
         const profileData = await res.json();
         setData(profileData);
+        setPublicEmail(profileData.public_email || '');
         setPhone(profileData.phone || '');
         setWebsite(profileData.website || '');
         setDescription(profileData.description || '');
@@ -90,6 +93,7 @@ export default function ProfilePage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          public_email: publicEmail || null,
           phone: phone || null,
           website: website || null,
           description: description || null,
@@ -216,14 +220,14 @@ export default function ProfilePage() {
             <h2 className="text-xl font-semibold text-gray-900 mb-6">Account Settings</h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Login Email</label>
                 <input
                   type="email"
-                  value={data.email}
+                  value={data.login_email}
                   disabled
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-600 cursor-not-allowed"
                 />
-                <p className="text-xs text-gray-500 mt-1">Email cannot be changed (contact support to modify)</p>
+                <p className="text-xs text-gray-500 mt-1">Used for account login. Contact support to change.</p>
               </div>
 
               <div>
@@ -242,6 +246,18 @@ export default function ProfilePage() {
           <div className="bg-white border border-gray-200 rounded-lg p-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-6">Listing Information</h2>
             <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Public Contact Email</label>
+                <input
+                  type="email"
+                  value={publicEmail}
+                  onChange={(e) => setPublicEmail(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-gray-900"
+                  placeholder="contact@business.co.nz"
+                />
+                <p className="text-xs text-gray-500 mt-1">Shown to customers on your public profile</p>
+              </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
                 <input
