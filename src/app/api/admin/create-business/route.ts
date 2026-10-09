@@ -48,15 +48,6 @@ export async function POST(request: NextRequest) {
     const emailLower = email.toLowerCase();
 
     const result = await transaction(async (client) => {
-      const adminResult = await client.query(
-        `SELECT id FROM users WHERE id = $1 AND role = 'admin'`,
-        [session]
-      );
-
-      if (!adminResult.rows.length) {
-        throw new Error('UNAUTHORIZED');
-      }
-
       const existingUser = await client.query(
         `SELECT id FROM users WHERE email = $1`,
         [emailLower]

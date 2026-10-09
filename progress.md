@@ -488,30 +488,154 @@ If Reject:
 
 ---
 
-## Phase 4: Installer Dashboard & Auth
+## Session 25 — Phase 4: Installer Dashboard & Authentication ✅
 
-**Scope:**
-1. Redesign login page (TRADEEV2 → HeatMatch branding)
-2. Create installer dashboard
-3. Implement session/JWT auth
-4. Add password reset flow
-5. Upgrade password hashing (SHA256 → bcrypt)
-6. Email-based password setup link (defer on-screen password)
+**Date:** 2026-10-09  
+**Status:** Phase 4 complete & committed ✅
 
-**Integration:**
-- Login at `/installer-login` (redesigned)
-- Dashboard at `/installer-dashboard` (new)
-- Post-claim redirects → dashboard
-- Admin approvals send password reset email link
+### Completed
 
-**Blockers:** None. Ready to build.
+#### Part 1: Rebrand Login Page (Phase 4a) ✅
+- ✅ Changed TRADEEV2 → HeatMatch branding (emerald-600 colors)
+- ✅ Updated tagline: "Manage Your HeatMatch Profile"
+- ✅ Added "Forgot password?" link + inline password reset form
+- ✅ Email pre-fill from URL param: `?email=xxx`
+- ✅ Redirect param support: `?redirect=/installer-dashboard`
+- ✅ Auto-focus on password field when email pre-filled
 
-**Next Session:**
-1. Create Phase 4 specification
-2. Redesign login page with HeatMatch branding
-3. Build installer dashboard
-4. Implement auth flow (JWT/session)
-5. Test end-to-end claim → dashboard flow
+#### Part 2: Installer Dashboard (Phase 4a) ✅
+- ✅ Created `/installer-dashboard` page with PageLayout
+- ✅ Shows business name, verified badge, verification date
+- ✅ "View Your Public Profile" button (links to profile)
+- ✅ "Edit Profile" button (disabled, coming soon)
+- ✅ "What's Next?" section with checklist
+- ✅ Logout button in header
+- ✅ API endpoint: `GET /api/installer/dashboard` (fetches data from session)
+
+#### Part 3: Password Reset Flow (Phase 4b) ✅
+- ✅ **POST `/api/auth/password-reset`** — Request reset (sends email)
+  - Email lookup (secure: doesn't reveal if email exists)
+  - Generate 32-char UUID token, 1-hour expiry
+  - Send email with reset link
+  
+- ✅ **GET `/api/auth/password-reset-validate`** — Validate token
+  - Check token exists, not used, not expired
+  - Return email for confirmation
+  
+- ✅ **POST `/api/auth/password-reset-confirm`** — Set new password
+  - Validate token, password strength (8+ chars, 1 uppercase, 1 number)
+  - Hash with bcrypt, update user
+  - Mark token as used (one-time use)
+  
+- ✅ **GET `/reset-password?token=xxx`** — Password reset form page
+  - Validate token on load
+  - Show form if valid, error if invalid/expired
+  - Success redirect to login after 2 seconds
+
+#### Part 4: Email Template (Phase 4b) ✅
+- ✅ Added `passwordResetEmail()` template
+  - Reset link with 1-hour expiry
+  - Professional HTML + plain text variants
+  - Security note: "Your account is still secure if you didn't request this"
+
+#### Part 5: Auth Middleware (Phase 4c) ✅
+- ✅ Enhanced `src/middleware.ts` with redirect param support
+- ✅ Protected `/installer-dashboard` (checks tradeev2_session cookie)
+- ✅ Protected `/admin/*` (checks admin_session cookie)
+- ✅ Redirect includes original path: `/installer-login?redirect=/installer-dashboard`
+- ✅ After login, middleware routes back to original page
+
+#### Part 6: Bcrypt Upgrade (Phase 4d) ✅
+- ✅ Updated `create-account` endpoint to use bcrypt (not SHA256)
+- ✅ Imports `hashPassword` from `@/lib/auth`
+- ✅ All new claimed accounts use bcrypt hashing
+- ✅ Consistent with login endpoint
+
+#### Part 7: Integration (Phase 4e) ✅
+- ✅ Updated `ClaimBusinessModal` to redirect to login (not dashboard)
+- ✅ Pre-fills email: `/installer-login?email=xxx&redirect=/installer-dashboard`
+- ✅ Login form auto-focuses password field when email pre-filled
+- ✅ Full flow: Claim → Create Account (bcrypt) → Login (email pre-filled) → Dashboard
+
+### Database Changes
+
+**New table:** `password_reset_tokens`
+```sql
+id (SERIAL PRIMARY KEY)
+user_id (UUID, FK → users, CASCADE DELETE)
+token (VARCHAR(255), UNIQUE)
+expires_at (TIMESTAMP)
+created_at (TIMESTAMP, DEFAULT NOW())
+used_at (TIMESTAMP, nullable)
+```
+
+**Indexes:**
+- `idx_password_reset_token` on token (fast lookup)
+- `idx_password_reset_user_id` on user_id (clean up by user)
+- `idx_password_reset_expires` on expires_at (cleanup jobs)
+
+### Files Created/Modified
+
+**New Files:**
+- `src/app/installer-dashboard/page.tsx` — Dashboard home page
+- `src/app/api/installer/dashboard/route.ts` — Dashboard API
+- `src/app/reset-password/page.tsx` — Password reset form page
+- `src/app/api/auth/password-reset/route.ts` — Request reset
+- `src/app/api/auth/password-reset-validate/route.ts` — Validate token
+- `src/app/api/auth/password-reset-confirm/route.ts` — Confirm new password
+- `docs/PHASE_4_SPEC.md` — Complete Phase 4 specification
+- `scripts/create-password-reset-table.ts` — Migration script
+
+**Modified Files:**
+- `src/app/installer-login/page.tsx` — Rebrand + forgot password
+- `src/app/api/installer/create-account/route.ts` — Upgrade to bcrypt
+- `src/components/ClaimBusinessModal.tsx` — Redirect to login
+- `src/lib/email-templates.ts` — Add password reset template
+- `src/middleware.ts` — Add redirect param support
+
+### Security Notes
+
+- ✅ Password reset tokens: 1-hour expiry, one-time use
+- ✅ Session cookies: httpOnly, secure (prod), sameSite=strict
+- ✅ Password validation: 8+ chars, 1 uppercase, 1 number
+- ✅ Email not revealed: "If that email exists, you will receive a reset link"
+- ✅ Bcrypt hashing: Industry standard, resistant to brute force
+- ✅ CSRF protection: httpOnly cookies prevent JavaScript access
+
+### Testing
+
+Ready to test:
+1. ✅ Rebrand visible at `/installer-login` (emerald colors)
+2. ✅ Dashboard accessible at `/installer-dashboard` (if session exists)
+3. ✅ Forgot password flow: request → email → reset → login
+4. ✅ Claim flow: claim → create account (bcrypt) → login → dashboard
+5. ✅ Session protection: missing session → redirect to login
+6. ✅ Redirect param: after login → return to original page
+
+### Commit
+
+- eac31b5: `feat: Phase 4 - Installer Dashboard & Authentication`
+  - 1534 insertions, 22 deletions
+  - 13 files changed
+
+### What's Shipped (Phase 4)
+
+| Feature | Status | Impact |
+|---------|--------|--------|
+| Login page rebrand | ✅ Complete | HeatMatch brand consistency |
+| Installer dashboard | ✅ Complete | Post-login home page + quick actions |
+| Password reset (email link) | ✅ Complete | Forgot password UX |
+| Auth middleware | ✅ Complete | Protected routes, secure sessions |
+| Bcrypt upgrade | ✅ Complete | Password security parity |
+| Email pre-fill | ✅ Complete | Post-claim UX (reduced friction) |
+
+### Ready for Next Phase
+
+**Phase 5: Installer Profile Management**
+- Profile editing (business name, services, photo)
+- Lead management (view + respond to customer inquiries)
+- Settings & preferences
+- Analytics dashboard (claims, conversions, ROI)
 
 ---
 

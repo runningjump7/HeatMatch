@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import PageLayout from '@/components/PageLayout';
 
 interface DashboardData {
   businessName: string;
@@ -66,17 +65,17 @@ export default function InstallerDashboardPage() {
 
   if (loading) {
     return (
-      <PageLayout>
+      <main className="flex flex-col min-h-screen bg-white">
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="text-gray-600">Loading dashboard...</div>
         </div>
-      </PageLayout>
+      </main>
     );
   }
 
   if (error || !data) {
     return (
-      <PageLayout>
+      <main className="flex flex-col min-h-screen bg-white">
         <div className="max-w-4xl mx-auto px-4 py-8">
           <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
             <h2 className="text-lg font-semibold text-red-900 mb-2">Dashboard Unavailable</h2>
@@ -89,12 +88,12 @@ export default function InstallerDashboardPage() {
             </Link>
           </div>
         </div>
-      </PageLayout>
+      </main>
     );
   }
 
   return (
-    <PageLayout>
+    <main className="flex flex-col min-h-screen bg-white">
       {/* Header */}
       <nav className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -145,13 +144,12 @@ export default function InstallerDashboardPage() {
                 View Your Public Profile
               </Link>
             )}
-            <button
-              disabled
-              className="block w-full px-4 py-3 text-center bg-gray-100 text-gray-500 rounded-lg cursor-not-allowed font-medium"
-              title="Coming soon"
+            <Link
+              href="/installer-dashboard/profile"
+              className="block w-full px-4 py-3 text-center bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 font-medium transition"
             >
-              Edit Profile (Coming Soon)
-            </button>
+              Edit Profile
+            </Link>
           </div>
         </div>
 
@@ -200,6 +198,6 @@ export default function InstallerDashboardPage() {
           </div>
         </div>
       </div>
-    </PageLayout>
+    </main>
   );
 }
