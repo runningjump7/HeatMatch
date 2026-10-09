@@ -1,5 +1,64 @@
 # HeatMatch Progress
 
+## Session 26 — Phase 5a: Installer Profile Management (Basic Editing) 🚀
+
+**Date:** 2026-10-09  
+**Status:** Phase 5a built, committed, ready for testing
+
+### Completed
+
+#### Part 1: Database Schema ✅
+- ✅ Added columns to installers table:
+  - `phone`, `website`, `description`
+  - `cover_image_url`, `logo_url`
+  - `service_installation`, `service_maintenance`, `service_repairs`
+- ✅ Created `user_sessions` table (prepared for Phase 5c)
+
+#### Part 2: API Endpoints ✅
+- ✅ **GET/POST `/api/installer/profile`** — Fetch & update profile
+  - Separates login_email (locked) from public_email (editable)
+  - Validates: description max 500 chars, website URL format
+  
+- ✅ **POST `/api/installer/change-password`** — Password change with bcrypt
+  - Validates current password + new password requirements
+  - Session preserved after change
+  
+- ✅ **POST `/api/installer/upload-image`** — Upload cover/logo (base64 for now, Blob in 5b)
+  - Validates: JPG/PNG/WebP, max 5MB
+
+#### Part 3: Frontend ✅
+- ✅ Created `/installer-dashboard/profile/page.tsx` with:
+  - Account Settings (login email locked, password change modal)
+  - Listing Information (public email, phone, website, description 500-char)
+  - Services (Installation/Maintenance/Repairs checkboxes)
+  - Verification Status (business name + URL locked, verified badge)
+  
+- ✅ Dashboard → "Edit Profile" button now active
+
+### Key Design Decisions
+| Feature | Value | Why |
+|---------|-------|-----|
+| Email | Separate login (locked) + public (editable) | Flexibility—personal login, business contact |
+| Password | 8+ chars, 1 upper, 1 number, bcrypt | Industry standard + Phase 4 consistency |
+| Description | 500 char max, live counter | UX clarity + storage efficiency |
+
+### Commits This Session
+1. **914cf3b** — Phase 5a: Basic editing endpoints & profile page
+2. **dd6fefc** — Add editable public contact email
+
+### Ready to Test
+1. Dashboard → Edit Profile
+2. Test: public email, phone, website, description, services
+3. Test: password change modal
+4. Verify: data persists, appears on public profile
+
+### Deferred to Phase 5b/5c
+- Vercel Blob for images (currently base64)
+- Session management endpoints
+- Image preview in form
+
+---
+
 ## Session 22 — Claim Business Flow: Phase 1 Implementation + Spec + Testing ✅
 
 **Date:** 2026-10-04 (afternoon - late evening)  
