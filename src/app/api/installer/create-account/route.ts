@@ -2,11 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { sendEmail } from '@/lib/email';
 import * as emailTemplates from '@/lib/email-templates';
-import crypto from 'crypto';
-
-function hashPassword(password: string): string {
-  return crypto.createHash('sha256').update(password).digest('hex');
-}
+import { hashPassword } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
   try {
@@ -53,8 +49,8 @@ export async function POST(request: NextRequest) {
     const email = claim.email;
     const fullName = claim.full_name;
 
-    // Hash password
-    const passwordHash = hashPassword(password);
+    // Hash password with bcrypt
+    const passwordHash = await hashPassword(password);
 
     // Create user account
     const userResult = await query(

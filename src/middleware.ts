@@ -41,7 +41,9 @@ export function middleware(request: NextRequest) {
     }
 
     if (isInstallerRoute && !installerSession) {
-      return NextResponse.redirect(new URL('/installer-login', request.url));
+      const loginUrl = new URL('/installer-login', request.url);
+      loginUrl.searchParams.set('redirect', pathname);
+      return NextResponse.redirect(loginUrl);
     }
 
     return NextResponse.next();

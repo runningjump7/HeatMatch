@@ -268,3 +268,48 @@ HeatMatch Team`,
 </div>`,
   };
 }
+
+export function passwordResetEmail(email: string, resetLink: string): EmailTemplate {
+  return {
+    subject: 'Reset Your HeatMatch Password',
+    text: `Hi ${email},
+
+We received a request to reset your HeatMatch password. Click the link below to set a new password:
+
+${resetLink}
+
+This link expires in 1 hour. If you didn't request this, you can safely ignore this email.
+
+For security, never share this link with anyone.
+
+Have questions? Contact us at support@heatmatch.co.nz
+
+—
+HeatMatch Team`,
+    html: `<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+<h2 style="color: #1f2937;">Reset Your Password</h2>
+<p>Hi ${email},</p>
+
+<p>We received a request to reset your HeatMatch password.</p>
+
+<div style="text-align: center; margin: 30px 0;">
+  <a href="${resetLink}" style="display: inline-block; padding: 12px 24px; background: #10b981; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">
+    Reset Password
+  </a>
+</div>
+
+<p style="color: #666; font-size: 13px;">
+  Or copy this link: <a href="${resetLink}" style="color: #10b981; word-break: break-all;">${resetLink}</a>
+</p>
+
+<p><strong>This link expires in 1 hour.</strong></p>
+
+<div style="background: #fef2f2; padding: 15px; border-left: 4px solid #ef4444; margin: 20px 0;">
+  <p style="margin: 0;">If you didn't request a password reset, you can safely ignore this email. Your account is still secure.</p>
+</div>
+
+<hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
+<p style="color: #666; font-size: 12px;">HeatMatch Team<br/>support@heatmatch.co.nz</p>
+</div>`,
+  };
+}

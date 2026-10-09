@@ -313,16 +313,16 @@ export default function ClaimBusinessModal({ slug, businessName, isOpen, onClose
             <div className="text-6xl mb-4">✓</div>
             <h3 className="text-xl font-bold text-gray-900">Claim Successful!</h3>
             <p className="text-gray-600">
-              Your business has been verified. You can now manage your profile and leads.
+              Your account has been created. Log in to manage your profile and leads.
             </p>
             <button
               onClick={() => {
                 onClose();
-                window.location.href = '/installer-dashboard';
+                window.location.href = `/installer-login?email=${encodeURIComponent(email)}&redirect=/installer-dashboard`;
               }}
               className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded-lg font-semibold transition"
             >
-              Go to Dashboard
+              Log In
             </button>
           </div>
         )}
