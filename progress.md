@@ -1,5 +1,50 @@
 # HeatMatch Progress
 
+## Session 28 — Footer Updates + Contact Button ✅
+
+**Date:** 2026-10-12  
+**Status:** Partial completion
+
+### Completed
+
+#### Part 1: Footer Navigation Links ✅
+- Updated footer grid from 4 columns to 5 columns
+- Added "For Homeowners" section:
+  - Get a Quote → `/` (homepage)
+  - Search Installers → `/{locale}/installers`
+- Added "For Installers" section:
+  - Installer Login → `/installer-login`
+- Updated all 3 language files (en, zh-CN, zh-TW)
+- Files modified:
+  - `src/components/Footer.tsx`
+  - `messages/en.json`
+  - `messages/zh-CN.json`
+  - `messages/zh-TW.json`
+
+#### Part 2: Contact Button Modal (WIP)
+- Created `ContactInstallerModal` component (simple: phone + modal)
+- Added Contact button to installer profile page
+- Component created but needs verification
+- Files:
+  - `src/components/ContactInstallerModal.tsx` — NEW
+  - `src/app/[locale]/installers/[slug]/page.tsx` — MODIFIED
+
+#### Part 3: Cleanup (Not Used)
+- Created leads table migration (unnecessary - exists already)
+- Created `/api/leads` endpoint (not needed yet)
+- Can delete: `scripts/create-leads-table.ts` and `src/app/api/leads/route.ts`
+
+### Lesson Learned
+Over-engineered Option C with complex spec/tests when user just wanted: button → modal with phone number. Keep it simple.
+
+### Next Session
+- Verify Contact button/modal works
+- Test in browser
+- Delete unused files if not needed
+- Proceed to lead capture integration (embed full quote form in modal)
+
+---
+
 ## Session 27 — Build Fix: Suspense Boundaries for useSearchParams() ✅
 
 **Date:** 2026-10-09  

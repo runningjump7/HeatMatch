@@ -253,22 +253,18 @@
   },
   "footer": {
     "tagline": "Connecting North Shore homeowners with trusted heat pump installers.",
-    "company": "Company",
-    "about": "About",
-    "contact": "Contact",
-    "legal": "Legal",
-    "privacy": "Privacy Policy",
-    "terms": "Terms",
-    "contactLabel": "Contact",
-    "email": "hello@heatmatch.nz",
     "copyright": "© HeatMatch 2026. All rights reserved.",
     "companyHeading": "Company",
     "aboutLink": "About",
     "contactLink": "Contact",
+    "forHomeownersHeading": "For Homeowners",
+    "getQuoteLink": "Get a Quote",
+    "searchInstallersLink": "Search Installers",
+    "forInstallersHeading": "For Installers",
+    "installerLoginLink": "Installer Login",
     "legalHeading": "Legal",
     "privacyLink": "Privacy Policy",
-    "termsLink": "Terms",
-    "contactHeading": "Contact"
+    "termsLink": "Terms"
   },
   "suburbs": {
     "pageTitle": "Heat Pump Installation in {{suburb}}",

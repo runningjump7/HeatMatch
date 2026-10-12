@@ -253,22 +253,18 @@
   },
   "footer": {
     "tagline": "將奧克蘭北岸房主與值得信賴的熱泵安裝商聯繫。",
-    "company": "公司",
-    "about": "關於",
-    "contact": "聯繫",
-    "legal": "法律",
-    "privacy": "隱私政策",
-    "terms": "條款",
-    "contactLabel": "聯繫",
-    "email": "hello@heatmatch.nz",
     "copyright": "© HeatMatch 2026. 版權所有。",
     "companyHeading": "公司",
     "aboutLink": "關於",
     "contactLink": "聯繫",
+    "forHomeownersHeading": "為房主",
+    "getQuoteLink": "取得報價",
+    "searchInstallersLink": "搜尋安裝商",
+    "forInstallersHeading": "為安裝商",
+    "installerLoginLink": "安裝商登入",
     "legalHeading": "法律",
     "privacyLink": "隱私政策",
-    "termsLink": "條款",
-    "contactHeading": "聯繫"
+    "termsLink": "條款"
   },
   "contactForm": {
     "nameLabel": "姓名",
